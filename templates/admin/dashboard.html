@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Admin Dashboard | Kazimoto Technologies</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            padding: 30px;
+            background:
+                radial-gradient(circle at top, #234a74 0%, transparent 35%),
+                linear-gradient(135deg, #101d2f, #1b4d8b);
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            width: 420px;
+            height: 420px;
+            background: #1f6fff;
+            filter: blur(140px);
+            opacity: .15;
+            top: 20%;
+            left: 40%;
+            border-radius: 50%;
+        }
+
+        .dashboard-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            z-index: 2;
+            position: relative;
+        }
+
+        /* ===== HEADER ===== */
+        .dashboard-header {
+            background: rgba(55, 72, 89, .72);
+            backdrop-filter: blur(18px);
+            border: 1px solid rgba(255, 255, 255, .08);
+            border-radius: 18px;
+            padding: 20px 28px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, .35);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #5d7cff, #7d36ff);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .header-left h2 {
+            color: #fff;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .header-left p {
+            color: #c9d2de;
+            font-size: 13px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 8px 18px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: .3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-primary {
+            background: #5d7cff;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #4a6bff;
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            background: rgba(239, 68, 68, .15);
+            border: 1px solid rgba(239, 68, 68, .2);
+            color: #f87171;
+        }
+
+        .btn-danger:hover {
+            background: rgba(239, 68, 68, .25);
+        }
+
+        .btn-success {
+            background: rgba(16, 185, 129, .15);
+            border: 1px solid rgba(16, 185, 129, .2);
+            color: #34d399;
+        }
+
+        .btn-success:hover {
+            background: rgba(16, 185, 129, .25);
+        }
+
+        .btn-warning {
+            background: rgba(245, 158, 11, .15);
+            border: 1px solid rgba(245, 158, 11, .2);
+            color: #fbbf24;
+        }
+
+        .btn-warning:hover {
+            background: rgba(245, 158, 11, .25);
+        }
+
+        /* ===== STATS ===== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: rgba(55, 72, 89, .72);
+            backdrop-filter: blur(18px);
+            border: 1px solid rgba(255, 255, 255, .08);
+            border-radius: 14px;
+            padding: 18px 22px;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, .35);
+            text-align: center;
+        }
+
+        .stat-card .number {
+            font-size: 32px;
+            font-weight: 800;
+            color: #fff;
+        }
+
+        .stat-card .label {
+            color: #9aa5b5;
+            font-size: 13px;
+            font-weight: 500;
+            margin-top: 2px;
+        }
+
+        .stat-card .icon {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+
+        .stat-card.pending .number { color: #fbbf24; }
+        .stat-card.verified .number { color: #34d399; }
+        .stat-card.paid .number { color: #60a5fa; }
+        .stat-card.total .number { color: #fff; }
+
+        /* ===== TABLE SECTION ===== */
+        .table-section {
+            background: rgba(55, 72, 89, .72);
+            backdrop-filter: blur(18px);
+            border: 1px solid rgba(255, 255, 255, .08);
+            border-radius: 18px;
+            padding: 24px 28px;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, .35);
+        }
+
+        .table-section h3 {
+            color: #fff;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .table-section h3 i {
+            color: #5d7cff;
+        }
+
+        .table-section h3 .badge-count {
+            background: rgba(255, 255, 255, .08);
+            padding: 2px 12px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #c9d2de;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            padding: 12px 12px 12px 0;
+            color: #9aa5b5;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid rgba(255, 255, 255, .06);
+        }
+
+        td {
+            padding: 12px 12px 12px 0;
+            color: #e5e9f0;
+            font-size: 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, .04);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 12px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .badge-pending {
+            background: rgba(245, 158, 11, .15);
+            color: #fbbf24;
+            border: 1px solid rgba(245, 158, 11, .2);
+        }
+
+        .badge-paid {
+            background: rgba(59, 130, 246, .15);
+            color: #60a5fa;
+            border: 1px solid rgba(59, 130, 246, .2);
+        }
+
+        .badge-verified {
+            background: rgba(16, 185, 129, .15);
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, .2);
+        }
+
+        .action-btns {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .action-btns form {
+            display: inline;
+        }
+
+        .btn-sm {
+            padding: 4px 12px;
+            font-size: 11px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: .3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .btn-sm-success {
+            background: rgba(16, 185, 129, .15);
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, .2);
+        }
+
+        .btn-sm-success:hover {
+            background: rgba(16, 185, 129, .25);
+        }
+
+        .btn-sm-warning {
+            background: rgba(245, 158, 11, .15);
+            color: #fbbf24;
+            border: 1px solid rgba(245, 158, 11, .2);
+        }
+
+        .btn-sm-warning:hover {
+            background: rgba(245, 158, 11, .25);
+        }
+
+        .btn-sm-danger {
+            background: rgba(239, 68, 68, .15);
+            color: #f87171;
+            border: 1px solid rgba(239, 68, 68, .2);
+        }
+
+        .btn-sm-danger:hover {
+            background: rgba(239, 68, 68, .25);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 30px 0;
+            color: #9aa5b5;
+        }
+
+        .empty-state i {
+            font-size: 40px;
+            margin-bottom: 10px;
+            opacity: .3;
+        }
+
+        /* Flash Messages */
+        .flash-message {
+            padding: 12px 18px;
+            border-radius: 10px;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            animation: slideDown 0.4s ease;
+        }
+
+        .flash-message i { font-size: 1.1rem; }
+        .flash-success { background: rgba(16, 185, 129, .15); color: #34d399; border: 1px solid rgba(16, 185, 129, .2); }
+        .flash-error { background: rgba(239, 68, 68, .15); color: #f87171; border: 1px solid rgba(239, 68, 68, .2); }
+        .flash-info { background: rgba(59, 130, 246, .15); color: #60a5fa; border: 1px solid rgba(59, 130, 246, .2); }
+        .flash-warning { background: rgba(245, 158, 11, .15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, .2); }
+
+        @keyframes slideDown {
+            0% { opacity: 0; transform: translateY(-10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            body { padding: 15px; }
+            .dashboard-header { padding: 16px 18px; }
+            .table-section { padding: 16px 18px; }
+            .stats-grid { grid-template-columns: 1fr 1fr; }
+            .header-left h2 { font-size: 16px; }
+            .stat-card .number { font-size: 24px; }
+            .dashboard-header { flex-direction: column; align-items: stretch; text-align: center; }
+            .header-left { flex-direction: column; text-align: center; }
+            .header-actions { justify-content: center; }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid { grid-template-columns: 1fr; }
+            .action-btns { flex-direction: column; }
+            .table-section { padding: 12px; }
+            td, th { padding: 8px 6px 8px 0; font-size: 12px; }
+            .btn-sm { padding: 3px 8px; font-size: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard-container">
+
+        <!-- ===== FLASH MESSAGES ===== -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message flash-{{ category }}">
+                        <i class="fas {% if category == 'success' %}fa-check-circle{% elif category == 'error' %}fa-exclamation-circle{% elif category == 'warning' %}fa-exclamation-triangle{% else %}fa-info-circle{% endif %}"></i>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <!-- ===== HEADER ===== -->
+        <div class="dashboard-header">
+            <div class="header-left">
+                <div class="avatar">A</div>
+                <div>
+                    <h2>Welcome, {{ session.admin_username }}!</h2>
+                    <p><i class="fas fa-calendar-alt"></i> Admin Dashboard</p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <a href="{{ url_for('student_register') }}" class="btn btn-primary" target="_blank">
+                    <i class="fas fa-user-plus"></i> New Student
+                </a>
+                <a href="{{ url_for('admin_logout') }}" class="btn btn-danger">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
+        </div>
+
+        <!-- ===== STATS ===== -->
+        <div class="stats-grid">
+            <div class="stat-card total">
+                <div class="icon">👥</div>
+                <div class="number">{{ stats.total }}</div>
+                <div class="label">Total Students</div>
+            </div>
+            <div class="stat-card pending">
+                <div class="icon">⏳</div>
+                <div class="number">{{ stats.pending }}</div>
+                <div class="label">Pending Approval</div>
+            </div>
+            <div class="stat-card paid">
+                <div class="icon">💰</div>
+                <div class="number">{{ stats.paid }}</div>
+                <div class="label">Payment Received</div>
+            </div>
+            <div class="stat-card verified">
+                <div class="icon">✅</div>
+                <div class="number">{{ stats.verified }}</div>
+                <div class="label">Verified Students</div>
+            </div>
+        </div>
+
+        <!-- ===== PENDING STUDENTS ===== -->
+        <div class="table-section">
+            <h3>
+                <i class="fas fa-clock"></i>
+                Pending Students
+                <span class="badge-count">{{ pending|length }}</span>
+            </h3>
+
+            {% if pending %}
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Course</th>
+                                <th>Registered</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for student in pending %}
+                            <tr>
+                                <td><strong>{{ student.full_name }}</strong></td>
+                                <td>{{ student.email }}</td>
+                                <td>{{ student.phone }}</td>
+                                <td>{{ student.course }}</td>
+                                <td>{{ student.registration_date.strftime('%d %b %Y') }}</td>
+                                <td>
+                                    <div class="action-btns">
+                                        <form method="POST" action="{{ url_for('admin_verify_paid', student_id=student.id) }}">
+                                            <button type="submit" class="btn-sm btn-sm-warning">
+                                                <i class="fas fa-money-bill"></i> Paid
+                                            </button>
+                                        </form>
+                                        <form method="POST" action="{{ url_for('admin_verify', student_id=student.id) }}">
+                                            <button type="submit" class="btn-sm btn-sm-success">
+                                                <i class="fas fa-check"></i> Verify
+                                            </button>
+                                        </form>
+                                        <form method="POST" action="{{ url_for('admin_delete', student_id=student.id) }}"
+                                              onsubmit="return confirm('Delete {{ student.full_name }}?');">
+                                            <button type="submit" class="btn-sm btn-sm-danger">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    <i class="fas fa-check-circle"></i>
+                    <p>✅ No pending students! All registrations are verified.</p>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- ===== ALL STUDENTS ===== -->
+        <div class="table-section" style="margin-top: 20px;">
+            <h3>
+                <i class="fas fa-list"></i>
+                All Students
+                <span class="badge-count">{{ students|length }}</span>
+            </h3>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Course</th>
+                            <th>Status</th>
+                            <th>Registered</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for student in students %}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td><strong>{{ student.full_name }}</strong></td>
+                            <td>{{ student.email }}</td>
+                            <td>{{ student.course }}</td>
+                            <td>
+                                <span class="badge badge-{{ student.payment_status }}">
+                                    <i class="fas {% if student.payment_status == 'verified' %}fa-check-circle{% elif student.payment_status == 'paid' %}fa-clock{% else %}fa-hourglass-half{% endif %}"></i>
+                                    {{ student.payment_status.upper() }}
+                                </span>
+                            </td>
+                            <td>{{ student.registration_date.strftime('%d %b %Y') }}</td>
+                            <td>
+                                <form method="POST" action="{{ url_for('admin_delete', student_id=student.id) }}"
+                                      onsubmit="return confirm('Delete {{ student.full_name }}?');">
+                                    <button type="submit" class="btn-sm btn-sm-danger">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Admin Login | Kazimoto Technologies</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #0d1b2a 0%, #1a1a2e 50%, #2d1b69 100%);
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 70% 30%, rgba(109, 40, 217, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 30% 70%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(13, 71, 161, 0.08) 0%, transparent 50%);
+            z-index: 0;
+            animation: backgroundPulse 15s ease-in-out infinite alternate;
+        }
+
+        @keyframes backgroundPulse {
+            0% { opacity: 0.6; }
+            100% { opacity: 1; }
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 50%;
+            animation: floatParticle 20s infinite linear;
+        }
+
+        .particle:nth-child(1) { left: 10%; animation-delay: 0s; animation-duration: 25s; }
+        .particle:nth-child(2) { left: 30%; animation-delay: 3s; animation-duration: 20s; }
+        .particle:nth-child(3) { left: 50%; animation-delay: 5s; animation-duration: 30s; width: 10px; height: 10px; }
+        .particle:nth-child(4) { left: 70%; animation-delay: 2s; animation-duration: 22s; }
+        .particle:nth-child(5) { left: 90%; animation-delay: 7s; animation-duration: 28s; }
+        .particle:nth-child(6) { left: 15%; animation-delay: 4s; animation-duration: 18s; }
+        .particle:nth-child(7) { left: 55%; animation-delay: 1s; animation-duration: 35s; width: 12px; height: 12px; }
+        .particle:nth-child(8) { left: 85%; animation-delay: 6s; animation-duration: 24s; }
+
+        @keyframes floatParticle {
+            0% { transform: translateY(100vh) scale(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.2; }
+            90% { opacity: 0.2; }
+            100% { transform: translateY(-10vh) scale(1) rotate(720deg); opacity: 0; }
+        }
+
+        .login-container {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 420px;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 40px 35px;
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            animation: slideUp 0.8s ease;
+        }
+
+        @keyframes slideUp {
+            0% { opacity: 0; transform: translateY(40px) scale(0.95); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header .icon {
+            background: linear-gradient(135deg, #7c3aed, #6d28d9);
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px;
+            box-shadow: 0 8px 32px rgba(124, 58, 237, 0.35);
+            position: relative;
+        }
+
+        .header .icon i {
+            color: white;
+            font-size: 1.8rem;
+        }
+
+        .header .icon .shield-badge {
+            position: absolute;
+            bottom: -4px;
+            right: -4px;
+            background: #10b981;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header .icon .shield-badge i {
+            font-size: 0.7rem;
+            color: white;
+        }
+
+        .header h2 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: -0.5px;
+        }
+
+        .header p {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+            margin-top: 4px;
+        }
+
+        .flash-message {
+            padding: 14px 18px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: slideDown 0.5s ease;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .flash-message i { font-size: 1.2rem; }
+        .flash-success { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.2); }
+        .flash-error { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.2); }
+        .flash-info { background: rgba(59, 130, 246, 0.15); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.2); }
+
+        @keyframes slideDown {
+            0% { opacity: 0; transform: translateY(-15px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-group { margin-bottom: 18px; }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 6px;
+            letter-spacing: 0.3px;
+        }
+
+        .form-group .input-wrapper { position: relative; }
+
+        .form-group .input-wrapper i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.25);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 13px 16px 13px 44px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            color: #ffffff;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .form-group input::placeholder { color: rgba(255, 255, 255, 0.25); }
+
+        .form-group input:focus {
+            border-color: #8b5cf6;
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.1);
+        }
+
+        .form-group input:focus ~ .input-wrapper i,
+        .form-group input:focus + .input-wrapper i { color: #8b5cf6; }
+
+        .form-group .input-highlight {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #8b5cf6, #7c3aed);
+            transition: all 0.4s ease;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        .form-group input:focus ~ .input-highlight { width: 70%; }
+
+        .btn-submit {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #7c3aed, #6d28d9);
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #ffffff;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+            margin-top: 6px;
+        }
+
+        .btn-submit::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: all 0.6s ease;
+        }
+
+        .btn-submit:hover::before { left: 100%; }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(124, 58, 237, 0.4);
+        }
+
+        .btn-submit:active { transform: translateY(0); }
+
+        .btn-submit i { font-size: 1.1rem; }
+
+        .footer-links {
+            text-align: center;
+            margin-top: 22px;
+            padding-top: 22px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-links a {
+            color: #8b5cf6;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .footer-links a:hover { color: #a78bfa; }
+
+        .footer-links .back-link {
+            display: inline-block;
+            margin-top: 6px;
+            color: rgba(255, 255, 255, 0.3);
+            font-weight: 400;
+            font-size: 0.85rem;
+        }
+
+        .footer-links .back-link:hover { color: rgba(255, 255, 255, 0.6); }
+
+        @media (max-width: 640px) {
+            .glass-card { padding: 28px 20px; border-radius: 20px; }
+            .header h2 { font-size: 1.5rem; }
+            .header .icon { width: 56px; height: 56px; }
+            .header .icon i { font-size: 1.4rem; }
+            .header .icon .shield-badge { width: 20px; height: 20px; }
+            .header .icon .shield-badge i { font-size: 0.6rem; }
+            .form-group input { padding: 12px 14px 12px 40px; font-size: 0.9rem; }
+            .btn-submit { padding: 13px; font-size: 0.95rem; }
+        }
+
+        @media (max-width: 400px) {
+            .glass-card { padding: 20px 16px; }
+            .header h2 { font-size: 1.3rem; }
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.2); }
+    </style>
+</head>
+<body>
+
+    <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <div class="login-container">
+        <div class="glass-card">
+
+            <div class="header">
+                <div class="icon">
+                    <i class="fas fa-user-shield"></i>
+                    <div class="shield-badge">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                </div>
+                <h2>Admin Login</h2>
+                <p>Secure access for Kazimoto Technologies staff</p>
+            </div>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="flash-message flash-{{ category }}">
+                            <i class="fas {% if category == 'success' %}fa-check-circle{% elif category == 'error' %}fa-exclamation-circle{% else %}fa-info-circle{% endif %}"></i>
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <form method="POST" action="{{ url_for('admin_login') }}">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="username" name="username" placeholder="Enter username" required>
+                        <div class="input-highlight"></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-key"></i>
+                        <input type="password" id="password" name="password" placeholder="Enter password" required>
+                        <div class="input-highlight"></div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-submit">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+            </form>
+
+            <div class="footer-links">
+                <a href="{{ url_for('index') }}" class="back-link">
+                    <i class="fas fa-arrow-left"></i> Back to Home
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>

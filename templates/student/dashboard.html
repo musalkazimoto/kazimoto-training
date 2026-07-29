@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Student Dashboard | Kazimoto Technologies</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            background:
+                radial-gradient(circle at top, #234a74 0%, transparent 35%),
+                linear-gradient(135deg, #101d2f, #1b4d8b);
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            width: 420px;
+            height: 420px;
+            background: #1f6fff;
+            filter: blur(140px);
+            opacity: .15;
+            top: 20%;
+            left: 40%;
+            border-radius: 50%;
+        }
+
+        .dashboard-container {
+            width: 100%;
+            max-width: 680px;
+            z-index: 2;
+        }
+
+        .dashboard-card {
+            background: rgba(55, 72, 89, .72);
+            backdrop-filter: blur(18px);
+            border: 1px solid rgba(255, 255, 255, .08);
+            border-radius: 18px;
+            padding: 30px 28px;
+            box-shadow:
+                0 20px 45px rgba(0, 0, 0, .35),
+                inset 0 1px 0 rgba(255, 255, 255, .05);
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            padding-bottom: 18px;
+            border-bottom: 1px solid rgba(255, 255, 255, .08);
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .avatar {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #5d7cff, #7d36ff);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .header-left h2 {
+            color: #fff;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .header-left p {
+            color: #c9d2de;
+            font-size: 13px;
+        }
+
+        .logout-btn {
+            background: rgba(239, 68, 68, .15);
+            border: 1px solid rgba(239, 68, 68, .2);
+            color: #f87171;
+            padding: 8px 18px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            transition: .3s;
+        }
+
+        .logout-btn:hover {
+            background: rgba(239, 68, 68, .25);
+        }
+
+        /* Status Section */
+        .status-section {
+            margin-bottom: 24px;
+        }
+
+        .status-section h3 {
+            color: #fff;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .status-section h3 i {
+            color: #5d7cff;
+        }
+
+        .status-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .status-item {
+            background: rgba(255, 255, 255, .04);
+            border: 1px solid rgba(255, 255, 255, .06);
+            border-radius: 10px;
+            padding: 12px 16px;
+        }
+
+        .status-item label {
+            display: block;
+            color: #9aa5b5;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 3px;
+        }
+
+        .status-item .value {
+            color: #fff;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        /* Badge */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 14px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .badge-pending {
+            background: rgba(245, 158, 11, .15);
+            color: #fbbf24;
+            border: 1px solid rgba(245, 158, 11, .2);
+        }
+
+        .badge-paid {
+            background: rgba(59, 130, 246, .15);
+            color: #60a5fa;
+            border: 1px solid rgba(59, 130, 246, .2);
+        }
+
+        .badge-verified {
+            background: rgba(16, 185, 129, .15);
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, .2);
+        }
+
+        /* Status Box */
+        .status-box {
+            margin-top: 16px;
+            padding: 16px 20px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .status-box i {
+            font-size: 1.4rem;
+        }
+
+        .status-box.success {
+            background: rgba(16, 185, 129, .12);
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, .15);
+        }
+
+        .status-box.pending {
+            background: rgba(245, 158, 11, .12);
+            color: #fbbf24;
+            border: 1px solid rgba(245, 158, 11, .15);
+        }
+
+        .status-box.waiting {
+            background: rgba(59, 130, 246, .12);
+            color: #60a5fa;
+            border: 1px solid rgba(59, 130, 246, .15);
+        }
+
+        .status-box small {
+            font-weight: 400;
+            opacity: 0.7;
+            display: block;
+            margin-top: 2px;
+            font-size: 12px;
+        }
+
+        /* Back link */
+        .back-link {
+            display: inline-block;
+            margin-top: 18px;
+            color: #9fb0c4;
+            text-decoration: none;
+            font-size: 14px;
+            transition: .3s;
+        }
+
+        .back-link:hover {
+            color: #c9d2de;
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            .dashboard-container {
+                max-width: 100%;
+            }
+
+            .dashboard-card {
+                padding: 22px 18px;
+            }
+
+            .header {
+                flex-direction: column;
+                align-items: stretch;
+                text-align: center;
+            }
+
+            .header-left {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .status-grid {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+
+            .header h2 {
+                font-size: 18px;
+            }
+
+            .logout-btn {
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .dashboard-card {
+                padding: 16px 14px;
+            }
+
+            .status-item .value {
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard-container">
+        <div class="dashboard-card">
+
+            <!-- Header -->
+            <div class="header">
+                <div class="header-left">
+                    <div class="avatar">{{ student.full_name[0] }}</div>
+                    <div>
+                        <h2>Welcome, {{ student.full_name }}!</h2>
+                        <p><i class="fas fa-calendar-alt"></i> Registered on {{ student.registration_date.strftime('%d %B %Y') }}</p>
+                    </div>
+                </div>
+                <a href="{{ url_for('student_logout') }}" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
+
+            <!-- Status Section -->
+            <div class="status-section">
+                <h3>
+                    <i class="fas fa-id-card"></i>
+                    Registration Status
+                </h3>
+
+                <div class="status-grid">
+                    <div class="status-item">
+                        <label>Full Name</label>
+                        <div class="value">{{ student.full_name }}</div>
+                    </div>
+                    <div class="status-item">
+                        <label>Email</label>
+                        <div class="value">{{ student.email }}</div>
+                    </div>
+                    <div class="status-item">
+                        <label>Phone</label>
+                        <div class="value">{{ student.phone }}</div>
+                    </div>
+                    <div class="status-item">
+                        <label>Course</label>
+                        <div class="value">{{ student.course }}</div>
+                    </div>
+                    <div class="status-item">
+                        <label>Status</label>
+                        <div class="value">
+                            <span class="badge badge-{{ student.payment_status }}">
+                                <i class="fas {% if student.payment_status == 'verified' %}fa-check-circle{% elif student.payment_status == 'paid' %}fa-clock{% else %}fa-hourglass-half{% endif %}"></i>
+                                {{ student.payment_status.upper() }}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="status-item">
+                        <label>Registered</label>
+                        <div class="value">{{ student.registration_date.strftime('%d %b %Y, %H:%M') }}</div>
+                    </div>
+                </div>
+
+                <!-- Status Messages -->
+                {% if student.payment_status == 'verified' %}
+                    <div class="status-box success">
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <strong>🎉 Congratulations!</strong> You are now officially registered for
+                            <strong>{{ student.course }}</strong>!
+                            {% if student.verified_at %}
+                                <small>Verified on: {{ student.verified_at.strftime('%d %B %Y, %H:%M') }}</small>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% elif student.payment_status == 'paid' %}
+                    <div class="status-box pending">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <strong>⏳ Payment Received!</strong>
+                            Waiting for admin verification. You'll receive confirmation soon.
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="status-box waiting">
+                        <i class="fas fa-hourglass-half"></i>
+                        <div>
+                            <strong>⏳ Pending Approval</strong>
+                            <small>Please complete your payment and contact the admin for verification.</small>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Back Link -->
+            <a href="{{ url_for('index') }}" class="back-link">
+                <i class="fas fa-arrow-left"></i> Back to Home
+            </a>
+
+        </div>
+    </div>
+
+</body>
+</html>

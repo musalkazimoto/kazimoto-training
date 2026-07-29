@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Musa Kazimoto - ICT Specialist</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Flash messages */
+        .flash-message {
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: slideDown 0.5s ease;
+        }
+        .flash-success {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #34d399;
+        }
+        .flash-error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #f87171;
+        }
+        .flash-info {
+            background: #dbeafe;
+            color: #1e40af;
+            border: 1px solid #60a5fa;
+        }
+        @keyframes slideDown {
+            0% { opacity: 0; transform: translateY(-20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== STUDENT PORTAL STYLES (Matching Login/Register) ===== */
+        .portal-card {
+            background: #f9fafb;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            color: #374151;
+            transition: all 0.25s ease;
+            text-decoration: none;
+        }
+
+        .portal-card:hover {
+            border-color: #3b82f6;
+            background: #ffffff;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .portal-card .icon-circle {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .portal-card .icon-circle i {
+            font-size: 1rem;
+            color: white;
+        }
+
+        .portal-card .portal-label {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        /* Individual card colors */
+        .portal-card.register:hover {
+            border-color: #3b82f6;
+        }
+        .portal-card.register .icon-circle {
+            background: #3b82f6;
+        }
+        .portal-card.register .portal-label {
+            color: #1e40af;
+        }
+
+        .portal-card.login:hover {
+            border-color: #10b981;
+        }
+        .portal-card.login .icon-circle {
+            background: #10b981;
+        }
+        .portal-card.login .portal-label {
+            color: #065f46;
+        }
+
+        .portal-card.admin:hover {
+            border-color: #ef4444;
+        }
+        .portal-card.admin .icon-circle {
+            background: #ef4444;
+        }
+        .portal-card.admin .portal-label {
+            color: #991b1b;
+        }
+
+        .portal-card.status:hover {
+            border-color: #8b5cf6;
+        }
+        .portal-card.status .icon-circle {
+            background: #8b5cf6;
+        }
+        .portal-card.status .portal-label {
+            color: #5b21b6;
+        }
+
+        .section-badge {
+            display: inline-block;
+            background: #eff6ff;
+            color: #3b82f6;
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 6px 20px;
+            border-radius: 50px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        /* About section text */
+        .about-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+        }
+
+        .service-title {
+            font-size: 1.3rem !important;
+        }
+
+        .service-desc {
+            font-size: 1rem !important;
+            line-height: 1.6;
+        }
+
+        .portal-title {
+            font-size: 2.5rem !important;
+        }
+
+        .portal-subtitle {
+            font-size: 1.2rem !important;
+        }
+
+        @media (max-width: 640px) {
+            .portal-grid {
+                grid-template-columns: 1fr 1fr !important;
+                gap: 10px !important;
+            }
+            .portal-card {
+                padding: 14px 16px;
+                font-size: 0.9rem;
+            }
+            .portal-card .icon-circle {
+                width: 32px;
+                height: 32px;
+            }
+            .portal-card .icon-circle i {
+                font-size: 0.85rem;
+            }
+            .portal-card .portal-label {
+                font-size: 0.9rem;
+            }
+            .about-text {
+                font-size: 1rem;
+            }
+            .service-title {
+                font-size: 1.1rem !important;
+            }
+            .service-desc {
+                font-size: 0.9rem !important;
+            }
+            .portal-title {
+                font-size: 2rem !important;
+            }
+            .portal-subtitle {
+                font-size: 1rem !important;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .portal-grid {
+                grid-template-columns: 1fr !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="container mx-auto px-6 pt-4">
+                {% for category, message in messages %}
+                    <div class="flash-message flash-{{ category }}">
+                        {% if category == 'success' %}✅
+                        {% elif category == 'error' %}❌
+                        {% else %}ℹ️
+                        {% endif %}
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <!-- Hero Section -->
+    <section class="min-h-screen bg-gradient-to-r from-blue-800 to-indigo-900 text-white flex items-center justify-center">
+        <div class="container mx-auto px-6 text-center">
+            <h1 class="text-6xl md:text-7xl font-bold mb-4 fade-in">Musa Kazimoto - ICT Specialist</h1>
+            <p class="text-2xl md:text-3xl mb-8 fade-in">Innovating the Future of Information and Communication Technology</p>
+            <a href="#about" class="inline-block bg-white text-blue-600 font-semibold py-3 px-8 rounded-full hover:bg-blue-100 transition duration-300 text-lg fade-in">Learn More</a>
+            <div class="mt-8 fade-in">
+                <img src="{{ url_for('static', filename='images/musa1.png') }}" alt="Musa's Passport Photo" class="w-48 h-56 object-cover rounded-lg shadow-md mx-auto">
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-5xl font-bold text-center text-gray-800 mb-12 fade-in">About Me</h2>
+            <div class="max-w-4xl mx-auto text-center">
+                <p class="about-text text-gray-600 leading-relaxed fade-in">
+                    Musa Kazimoto is a skilled ICT specialist with a passion for designing and developing innovative technology solutions. 
+                    He has a strong foundation in network administration, cybersecurity, and software development, and excels in solving complex technical challenges 
+                    with creative and efficient solutions from Tanzania - UDOM (Bachelor Degree) MUST (Masters Degree), South Africa (Containerization, Virtualization) and Poland - WUST (Linux Server administration, AI)
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-20 bg-gray-100">
+        <div class="container mx-auto px-6">
+            <h2 class="text-5xl font-bold text-center text-gray-800 mb-12 fade-in">My Services</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Service 1 -->
+                <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 fade-in">
+                    <div class="text-blue-600 text-4xl mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" /></svg>
+                    </div>
+                    <h3 class="service-title text-xl font-semibold text-gray-800 mb-2">Network Design & Administration</h3>
+                    <p class="service-desc text-gray-600">Expert design, implementation, and management of secure and efficient network infrastructures for various applications.</p>
+                </div>
+                <!-- Service 2 -->
+                <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 fade-in">
+                    <div class="text-blue-600 text-4xl mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+                    </div>
+                    <h3 class="service-title text-xl font-semibold text-gray-800 mb-2">Cybersecurity Solutions</h3>
+                    <p class="service-desc text-gray-600">Comprehensive security assessments and solutions to protect systems and data from cyber threats. In his Masters degree, he is developing the AI model to prevent and detect the Zero-Day attack</p>
+                </div>
+                <!-- Service 3 -->
+                <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 fade-in">
+                    <div class="text-blue-600 text-4xl mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>
+                    </div>
+                    <h3 class="service-title text-xl font-semibold text-gray-800 mb-2">Software Development</h3>
+                    <p class="service-desc text-gray-600">Custom software solutions tailored to business needs, from web applications to enterprise systems.</p>
+                </div>
+                <!-- Service 4 -->
+                <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 fade-in">
+                    <div class="text-blue-600 text-4xl mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                    </div>
+                    <h3 class="service-title text-xl font-semibold text-gray-800 mb-2">Cloud Computing & Integration</h3>
+                    <p class="service-desc text-gray-600">Design and deployment of cloud-based solutions for scalability, efficiency, and seamless integration.</p>
+                </div>
+                <!-- Service 5 -->
+                <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 fade-in">
+                    <div class="text-blue-600 text-4xl mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+                    </div>
+                    <h3 class="service-title text-xl font-semibold text-gray-800 mb-2">IT Consulting & Project Management</h3>
+                    <p class="service-desc text-gray-600">Expert guidance and project oversight for ICT initiatives to ensure successful and timely delivery.</p>
+                </div>
+                <!-- Service 6 -->
+                <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 fade-in">
+                    <div class="text-blue-600 text-4xl mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                    </div>
+                    <h3 class="service-title text-xl font-semibold text-gray-800 mb-2">AI</h3>
+                    <p class="service-desc text-gray-600">Development and implementation of artificial intelligence solutions to enhance automation, data analysis, and decision-making.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== STUDENT PORTAL SECTION (Matching Login/Register Style) ===== -->
+    <!-- ================= STUDENT PORTAL ================= -->
+<section class="py-20 bg-gradient-to-br from-slate-50 via-blue-50 to-white">
+
+    <div class="max-w-6xl mx-auto px-6">
+
+        <!-- Heading -->
+        <div class="text-center mb-12">
+
+            <span class="inline-flex items-center px-6 py-2 rounded-full
+                         bg-blue-100 text-blue-700 font-semibold tracking-wide">
+
+                <i class="fas fa-graduation-cap mr-2"></i>
+                STUDENT PORTAL
+
+            </span>
+
+            <h2 class="text-5xl font-extrabold text-gray-800 mt-5">
+                Welcome to Student Portal
+            </h2>
+
+            <p class="text-xl text-gray-500 mt-3">
+                Register, login and manage your ICT training in one secure place.
+            </p>
+
+        </div>
+
+        <!-- Main Card -->
+
+        <div class="bg-white/90 backdrop-blur-lg rounded-3xl shadow-2xl border border-gray-100 overflow-hidden">
+
+            <!-- Header -->
+
+            <div class="bg-gradient-to-r from-blue-700 to-indigo-700 px-8 py-6">
+
+                <h3 class="text-white text-2xl font-bold flex items-center">
+
+                    <i class="fas fa-th-large mr-3"></i>
+
+                    Quick Access
+
+                </h3>
+
+                <p class="text-blue-100 mt-1">
+                    Select any service below
+                </p>
+
+            </div>
+
+            <!-- Buttons -->
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 p-8">
+
+                <!-- Register -->
+
+                <a href="{{ url_for('student_register') }}"
+                   class="group bg-white border rounded-2xl shadow-md
+                          hover:shadow-xl transition duration-300
+                          hover:-translate-y-2 p-6 text-center">
+
+                    <div class="w-16 h-16 rounded-2xl bg-blue-600 mx-auto
+                                flex items-center justify-center
+                                group-hover:scale-110 transition">
+
+                        <i class="fas fa-user-plus text-white text-2xl"></i>
+
+                    </div>
+
+                    <h4 class="font-bold text-xl text-gray-800 mt-5">
+                        Register
+                    </h4>
+
+                    <p class="text-gray-500 mt-2 text-sm">
+                        Create your student account
+                    </p>
+
+                </a>
+
+                <!-- Student Login -->
+
+                <a href="{{ url_for('student_login') }}"
+                   class="group bg-white border rounded-2xl shadow-md
+                          hover:shadow-xl transition duration-300
+                          hover:-translate-y-2 p-6 text-center">
+
+                    <div class="w-16 h-16 rounded-2xl bg-emerald-500 mx-auto
+                                flex items-center justify-center
+                                group-hover:scale-110 transition">
+
+                        <i class="fas fa-sign-in-alt text-white text-2xl"></i>
+
+                    </div>
+
+                    <h4 class="font-bold text-xl text-gray-800 mt-5">
+                        Student Login
+                    </h4>
+
+                    <p class="text-gray-500 mt-2 text-sm">
+                        Access your dashboard
+                    </p>
+
+                </a>
+
+                <!-- Admin -->
+
+                <a href="{{ url_for('admin_login') }}"
+                   class="group bg-white border rounded-2xl shadow-md
+                          hover:shadow-xl transition duration-300
+                          hover:-translate-y-2 p-6 text-center">
+
+                    <div class="w-16 h-16 rounded-2xl bg-red-500 mx-auto
+                                flex items-center justify-center
+                                group-hover:scale-110 transition">
+
+                        <i class="fas fa-user-shield text-white text-2xl"></i>
+
+                    </div>
+
+                    <h4 class="font-bold text-xl text-gray-800 mt-5">
+                        Admin Login
+                    </h4>
+
+                    <p class="text-gray-500 mt-2 text-sm">
+                        Administrator access
+                    </p>
+
+                </a>
+
+                <!-- Status -->
+
+                <a href="{{ url_for('check_status') }}"
+                   class="group bg-white border rounded-2xl shadow-md
+                          hover:shadow-xl transition duration-300
+                          hover:-translate-y-2 p-6 text-center">
+
+                    <div class="w-16 h-16 rounded-2xl bg-violet-500 mx-auto
+                                flex items-center justify-center
+                                group-hover:scale-110 transition">
+
+                        <i class="fas fa-search text-white text-2xl"></i>
+
+                    </div>
+
+                    <h4 class="font-bold text-xl text-gray-800 mt-5">
+                        Check Status
+                    </h4>
+
+                    <p class="text-gray-500 mt-2 text-sm">
+                        Track your registration
+                    </p>
+
+                </a>
+
+            </div>
+
+            <!-- Footer -->
+
+            <div class="border-t bg-gray-50 px-8 py-5 flex flex-col md:flex-row justify-between items-center">
+
+                <div class="flex items-center text-gray-600">
+
+                    <i class="fas fa-circle-info text-blue-500 mr-3"></i>
+
+                    Register for ICT training or monitor your application.
+
+                </div>
+
+                <div class="mt-4 md:mt-0">
+
+                    <span class="bg-green-100 text-green-700 px-5 py-2 rounded-full font-semibold">
+
+                        <i class="fas fa-lock mr-2"></i>
+
+                        Secure Portal
+
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-6">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-sm">© 2025 Musa Kazimoto, ICT Specialist. All rights reserved.</p>
+            <div class="mt-4 flex justify-center space-x-6">
+                <a href="https://www.instagram.com/musakazimoto" target="_blank" class="text-white hover:text-blue-400 transition duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2zm12 2h.01M12 8a4 4 0 110 8 4 4 0 010-8zm0 0a4 4 0 00-4 4 4 4 0 004 4 4 4 0 004-4 4 4 0 00-4-4zm5-3h.01" />
+                    </svg>
+                </a>
+                <a href="https://x.com/musakazimoto" target="_blank" class="text-white hover:text-blue-400 transition duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4l16 16m0-16L4 20" />
+                    </svg>
+                </a>
+                <a href="https://www.facebook.com/musakazimoto" target="_blank" class="text-white hover:text-blue-400 transition duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3V2z" />
+                    </svg>
+                </a>
+                <a href="https://www.youtube.com/@musakazimoto" target="_blank" class="text-white hover:text-blue-400 transition duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 10v4a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Add fade-in effect when elements come into view
+        document.addEventListener('DOMContentLoaded', () => {
+            const elements = document.querySelectorAll('.fade-in');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            elements.forEach(element => observer.observe(element));
+        });
+    </script>
+</body>
+</html>
