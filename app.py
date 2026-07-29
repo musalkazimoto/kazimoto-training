@@ -7,8 +7,20 @@ import os
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your-secret-key-change-in-production'
 
-# SQLite Configuration
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(os.path.dirname(os.path.abspath(__file__)), 'instance', 'kazimoto.db')
+# ===== SQLite Configuration - FIXED FOR RENDER =====
+# Use /tmp for Render (writable), otherwise use instance folder
+if os.environ.get('RENDER'):
+    # Ensure /tmp directory exists and is writable
+    db_path = '/tmp/kazimoto.db'
+    print(f"✅ Running on Render - Using database at: {db_path}")
+else:
+    # Local development - use instance folder
+    instance_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'instance')
+    os.makedirs(instance_dir, exist_ok=True)
+    db_path = os.path.join(instance_dir, 'kazimoto.db')
+    print(f"✅ Running locally - Using database at: {db_path}")
+
+app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{db_path}'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -46,6 +58,16 @@ with app.app_context():
         db.session.add(default_admin)
         db.session.commit()
         print("✅ Default admin created: admin / admin123")
+    
+    # Check if musa.kazimoto admin exists, if not create it
+    if not Admin.query.filter_by(username='musa.kazimoto').first():
+        musa_admin = Admin(
+            username='musa.kazimoto',
+            password=generate_password_hash('Al1983+,')
+        )
+        db.session.add(musa_admin)
+        db.session.commit()
+        print("✅ Admin created: musa.kazimoto / Al1983+, (for Render)")
 
 # ===== ROUTES =====
 
