@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
+import pytz
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your-secret-key-change-in-production'
@@ -25,6 +26,12 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
+# ===== TIMEZONE HELPER =====
+def get_eat_time():
+    """Returns current time in East Africa Time (UTC+3)"""
+    eat = pytz.timezone('Africa/Dar_es_Salaam')
+    return datetime.now(eat)
+
 # ===== DATABASE MODELS =====
 
 class Student(db.Model):
@@ -35,7 +42,7 @@ class Student(db.Model):
     course = db.Column(db.String(100), nullable=False)
     password = db.Column(db.String(255), nullable=False)
     payment_status = db.Column(db.String(20), default='pending')
-    registration_date = db.Column(db.DateTime, default=datetime.utcnow)
+    registration_date = db.Column(db.DateTime, default=get_eat_time)
     admin_remarks = db.Column(db.Text, nullable=True)
     verified_at = db.Column(db.DateTime, nullable=True)
 
@@ -210,7 +217,7 @@ def admin_verify(student_id):
     
     student = Student.query.get_or_404(student_id)
     student.payment_status = 'verified'
-    student.verified_at = datetime.utcnow()
+    student.verified_at = get_eat_time()
     db.session.commit()
     
     flash(f'✅ {student.full_name} has been verified successfully!', 'success')
