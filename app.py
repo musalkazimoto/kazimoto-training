@@ -7,20 +7,20 @@ import os
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your-secret-key-change-in-production'
 
-# ===== SQLite Configuration - FIXED FOR RENDER =====
-# Use /tmp for Render (writable), otherwise use instance folder
-if os.environ.get('RENDER'):
-    # Ensure /tmp directory exists and is writable
-    db_path = '/tmp/kazimoto.db'
-    print(f"✅ Running on Render - Using database at: {db_path}")
+# ===== Database Configuration =====
+# Use DATABASE_URL (PostgreSQL on Aiven) if available, otherwise fallback to SQLite
+if os.environ.get('DATABASE_URL'):
+    # Running on Render with PostgreSQL (Aiven)
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+    print(f"✅ Using PostgreSQL database from Aiven")
 else:
-    # Local development - use instance folder
+    # Local development - use SQLite
     instance_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'instance')
     os.makedirs(instance_dir, exist_ok=True)
     db_path = os.path.join(instance_dir, 'kazimoto.db')
-    print(f"✅ Running locally - Using database at: {db_path}")
+    app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{db_path}'
+    print(f"✅ Running locally - Using SQLite at: {db_path}")
 
-app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{db_path}'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
