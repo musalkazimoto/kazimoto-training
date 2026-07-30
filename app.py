@@ -3,7 +3,6 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
-import pytz
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your-secret-key-change-in-production'
@@ -29,8 +28,11 @@ db = SQLAlchemy(app)
 # ===== TIMEZONE HELPER =====
 def get_eat_time():
     """Returns current time in East Africa Time (UTC+3)"""
-    eat = pytz.timezone('Africa/Dar_es_Salaam')
-    return datetime.now(eat)
+    from datetime import timedelta
+    # Get UTC time and add 3 hours
+    utc_now = datetime.utcnow()
+    eat_now = utc_now + timedelta(hours=3)
+    return eat_now
 
 # ===== DATABASE MODELS =====
 
