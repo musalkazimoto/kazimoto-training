@@ -20,6 +20,12 @@
             opacity: 1;
             transform: translateY(0);
         }
+
+        /* Smooth scroll for the whole page */
+        html {
+            scroll-behavior: smooth;
+        }
+
         /* Flash messages */
         .flash-message {
             padding: 12px 20px;
@@ -204,6 +210,14 @@
             .portal-subtitle {
                 font-size: 1rem !important;
             }
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            .hero-buttons a {
+                width: 100%;
+                max-width: 280px;
+            }
         }
 
         @media (max-width: 400px) {
@@ -232,19 +246,29 @@
         {% endif %}
     {% endwith %}
 
-    <!-- Hero Section -->
+    <!-- ===== HERO SECTION ===== -->
     <section class="min-h-screen bg-gradient-to-r from-blue-800 to-indigo-900 text-white flex items-center justify-center">
         <div class="container mx-auto px-6 text-center">
             <h1 class="text-6xl md:text-7xl font-bold mb-4 fade-in">Musa Kazimoto - ICT Specialist</h1>
             <p class="text-2xl md:text-3xl mb-8 fade-in">Innovating the Future of Information and Communication Technology</p>
-            <a href="#about" class="inline-block bg-white text-blue-600 font-semibold py-3 px-8 rounded-full hover:bg-blue-100 transition duration-300 text-lg fade-in">Learn More</a>
+
+            <!-- Hero Buttons - Two buttons side by side -->
+            <div class="flex flex-wrap justify-center gap-4 fade-in hero-buttons">
+                <a href="#about" class="inline-block bg-white text-blue-600 font-semibold py-3 px-8 rounded-full hover:bg-blue-100 transition duration-300 text-lg">
+                    Learn More
+                </a>
+                <a href="#student-portal" class="inline-block bg-blue-500/20 backdrop-blur-sm text-white font-semibold py-3 px-8 rounded-full hover:bg-blue-500/30 transition duration-300 text-lg border border-white/20">
+                    Student Portal
+                </a>
+            </div>
+
             <div class="mt-8 fade-in">
                 <img src="{{ url_for('static', filename='images/musa1.png') }}" alt="Musa's Passport Photo" class="w-48 h-56 object-cover rounded-lg shadow-md mx-auto">
             </div>
         </div>
     </section>
 
-    <!-- About Section -->
+    <!-- ===== ABOUT SECTION ===== -->
     <section id="about" class="py-20 bg-white">
         <div class="container mx-auto px-6">
             <h2 class="text-5xl font-bold text-center text-gray-800 mb-12 fade-in">About Me</h2>
@@ -258,7 +282,7 @@
         </div>
     </section>
 
-    <!-- Services Section -->
+    <!-- ===== SERVICES SECTION ===== -->
     <section id="services" class="py-20 bg-gray-100">
         <div class="container mx-auto px-6">
             <h2 class="text-5xl font-bold text-center text-gray-800 mb-12 fade-in">My Services</h2>
@@ -315,182 +339,175 @@
         </div>
     </section>
 
-    <!-- ===== STUDENT PORTAL SECTION (Matching Login/Register Style) ===== -->
-    <!-- ================= STUDENT PORTAL ================= -->
-<section class="py-20 bg-gradient-to-br from-slate-50 via-blue-50 to-white">
+    <!-- ===== STUDENT PORTAL SECTION ===== -->
+    <section id="student-portal" class="py-20 bg-gradient-to-br from-slate-50 via-blue-50 to-white">
 
-    <div class="max-w-6xl mx-auto px-6">
+        <div class="max-w-6xl mx-auto px-6">
 
-        <!-- Heading -->
-        <div class="text-center mb-12">
+            <!-- Heading -->
+            <div class="text-center mb-12">
 
-            <span class="inline-flex items-center px-6 py-2 rounded-full
-                         bg-blue-100 text-blue-700 font-semibold tracking-wide">
+                <span class="inline-flex items-center px-6 py-2 rounded-full
+                             bg-blue-100 text-blue-700 font-semibold tracking-wide">
 
-                <i class="fas fa-graduation-cap mr-2"></i>
-                STUDENT PORTAL
+                    <i class="fas fa-graduation-cap mr-2"></i>
+                    STUDENT PORTAL
 
-            </span>
+                </span>
 
-            <h2 class="text-5xl font-extrabold text-gray-800 mt-5">
-                Welcome to Student Portal
-            </h2>
+                <h2 class="text-5xl font-extrabold text-gray-800 mt-5">
+                    Welcome to Student Portal
+                </h2>
 
-            <p class="text-xl text-gray-500 mt-3">
-                Register, login and manage your ICT training in one secure place.
-            </p>
-
-        </div>
-
-        <!-- Main Card -->
-
-        <div class="bg-white/90 backdrop-blur-lg rounded-3xl shadow-2xl border border-gray-100 overflow-hidden">
-
-            <!-- Header -->
-
-            <div class="bg-gradient-to-r from-blue-700 to-indigo-700 px-8 py-6">
-
-                <h3 class="text-white text-2xl font-bold flex items-center">
-
-                    <i class="fas fa-th-large mr-3"></i>
-
-                    Quick Access
-
-                </h3>
-
-                <p class="text-blue-100 mt-1">
-                    Select any service below
+                <p class="text-xl text-gray-500 mt-3">
+                    Register, login and manage your ICT training in one secure place.
                 </p>
 
             </div>
 
-            <!-- Buttons -->
+            <!-- Main Card -->
+            <div class="bg-white/90 backdrop-blur-lg rounded-3xl shadow-2xl border border-gray-100 overflow-hidden">
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 p-8">
+                <!-- Header -->
+                <div class="bg-gradient-to-r from-blue-700 to-indigo-700 px-8 py-6">
 
-                <!-- Register -->
+                    <h3 class="text-white text-2xl font-bold flex items-center">
 
-                <a href="{{ url_for('student_register') }}"
-                   class="group bg-white border rounded-2xl shadow-md
-                          hover:shadow-xl transition duration-300
-                          hover:-translate-y-2 p-6 text-center">
+                        <i class="fas fa-th-large mr-3"></i>
 
-                    <div class="w-16 h-16 rounded-2xl bg-blue-600 mx-auto
-                                flex items-center justify-center
-                                group-hover:scale-110 transition">
+                        Quick Access
 
-                        <i class="fas fa-user-plus text-white text-2xl"></i>
+                    </h3>
 
-                    </div>
-
-                    <h4 class="font-bold text-xl text-gray-800 mt-5">
-                        Register
-                    </h4>
-
-                    <p class="text-gray-500 mt-2 text-sm">
-                        Create your student account
+                    <p class="text-blue-100 mt-1">
+                        Select any service below
                     </p>
-
-                </a>
-
-                <!-- Student Login -->
-
-                <a href="{{ url_for('student_login') }}"
-                   class="group bg-white border rounded-2xl shadow-md
-                          hover:shadow-xl transition duration-300
-                          hover:-translate-y-2 p-6 text-center">
-
-                    <div class="w-16 h-16 rounded-2xl bg-emerald-500 mx-auto
-                                flex items-center justify-center
-                                group-hover:scale-110 transition">
-
-                        <i class="fas fa-sign-in-alt text-white text-2xl"></i>
-
-                    </div>
-
-                    <h4 class="font-bold text-xl text-gray-800 mt-5">
-                        Student Login
-                    </h4>
-
-                    <p class="text-gray-500 mt-2 text-sm">
-                        Access your dashboard
-                    </p>
-
-                </a>
-
-                <!-- Admin -->
-
-                <a href="{{ url_for('admin_login') }}"
-                   class="group bg-white border rounded-2xl shadow-md
-                          hover:shadow-xl transition duration-300
-                          hover:-translate-y-2 p-6 text-center">
-
-                    <div class="w-16 h-16 rounded-2xl bg-red-500 mx-auto
-                                flex items-center justify-center
-                                group-hover:scale-110 transition">
-
-                        <i class="fas fa-user-shield text-white text-2xl"></i>
-
-                    </div>
-
-                    <h4 class="font-bold text-xl text-gray-800 mt-5">
-                        Admin Login
-                    </h4>
-
-                    <p class="text-gray-500 mt-2 text-sm">
-                        Administrator access
-                    </p>
-
-                </a>
-
-                <!-- Status -->
-
-                <a href="{{ url_for('check_status') }}"
-                   class="group bg-white border rounded-2xl shadow-md
-                          hover:shadow-xl transition duration-300
-                          hover:-translate-y-2 p-6 text-center">
-
-                    <div class="w-16 h-16 rounded-2xl bg-violet-500 mx-auto
-                                flex items-center justify-center
-                                group-hover:scale-110 transition">
-
-                        <i class="fas fa-search text-white text-2xl"></i>
-
-                    </div>
-
-                    <h4 class="font-bold text-xl text-gray-800 mt-5">
-                        Check Status
-                    </h4>
-
-                    <p class="text-gray-500 mt-2 text-sm">
-                        Track your registration
-                    </p>
-
-                </a>
-
-            </div>
-
-            <!-- Footer -->
-
-            <div class="border-t bg-gray-50 px-8 py-5 flex flex-col md:flex-row justify-between items-center">
-
-                <div class="flex items-center text-gray-600">
-
-                    <i class="fas fa-circle-info text-blue-500 mr-3"></i>
-
-                    Register for ICT training or monitor your application.
 
                 </div>
 
-                <div class="mt-4 md:mt-0">
+                <!-- Buttons -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 p-8">
 
-                    <span class="bg-green-100 text-green-700 px-5 py-2 rounded-full font-semibold">
+                    <!-- Register -->
+                    <a href="{{ url_for('student_register') }}"
+                       class="group bg-white border rounded-2xl shadow-md
+                              hover:shadow-xl transition duration-300
+                              hover:-translate-y-2 p-6 text-center">
 
-                        <i class="fas fa-lock mr-2"></i>
+                        <div class="w-16 h-16 rounded-2xl bg-blue-600 mx-auto
+                                    flex items-center justify-center
+                                    group-hover:scale-110 transition">
 
-                        Secure Portal
+                            <i class="fas fa-user-plus text-white text-2xl"></i>
 
-                    </span>
+                        </div>
+
+                        <h4 class="font-bold text-xl text-gray-800 mt-5">
+                            Register
+                        </h4>
+
+                        <p class="text-gray-500 mt-2 text-sm">
+                            Create your student account
+                        </p>
+
+                    </a>
+
+                    <!-- Student Login -->
+                    <a href="{{ url_for('student_login') }}"
+                       class="group bg-white border rounded-2xl shadow-md
+                              hover:shadow-xl transition duration-300
+                              hover:-translate-y-2 p-6 text-center">
+
+                        <div class="w-16 h-16 rounded-2xl bg-emerald-500 mx-auto
+                                    flex items-center justify-center
+                                    group-hover:scale-110 transition">
+
+                            <i class="fas fa-sign-in-alt text-white text-2xl"></i>
+
+                        </div>
+
+                        <h4 class="font-bold text-xl text-gray-800 mt-5">
+                            Student Login
+                        </h4>
+
+                        <p class="text-gray-500 mt-2 text-sm">
+                            Access your dashboard
+                        </p>
+
+                    </a>
+
+                    <!-- Admin -->
+                    <a href="{{ url_for('admin_login') }}"
+                       class="group bg-white border rounded-2xl shadow-md
+                              hover:shadow-xl transition duration-300
+                              hover:-translate-y-2 p-6 text-center">
+
+                        <div class="w-16 h-16 rounded-2xl bg-red-500 mx-auto
+                                    flex items-center justify-center
+                                    group-hover:scale-110 transition">
+
+                            <i class="fas fa-user-shield text-white text-2xl"></i>
+
+                        </div>
+
+                        <h4 class="font-bold text-xl text-gray-800 mt-5">
+                            Admin Login
+                        </h4>
+
+                        <p class="text-gray-500 mt-2 text-sm">
+                            Administrator access
+                        </p>
+
+                    </a>
+
+                    <!-- Status -->
+                    <a href="{{ url_for('check_status') }}"
+                       class="group bg-white border rounded-2xl shadow-md
+                              hover:shadow-xl transition duration-300
+                              hover:-translate-y-2 p-6 text-center">
+
+                        <div class="w-16 h-16 rounded-2xl bg-violet-500 mx-auto
+                                    flex items-center justify-center
+                                    group-hover:scale-110 transition">
+
+                            <i class="fas fa-search text-white text-2xl"></i>
+
+                        </div>
+
+                        <h4 class="font-bold text-xl text-gray-800 mt-5">
+                            Check Status
+                        </h4>
+
+                        <p class="text-gray-500 mt-2 text-sm">
+                            Track your registration
+                        </p>
+
+                    </a>
+
+                </div>
+
+                <!-- Footer -->
+                <div class="border-t bg-gray-50 px-8 py-5 flex flex-col md:flex-row justify-between items-center">
+
+                    <div class="flex items-center text-gray-600">
+
+                        <i class="fas fa-circle-info text-blue-500 mr-3"></i>
+
+                        Register for ICT training or monitor your application.
+
+                    </div>
+
+                    <div class="mt-4 md:mt-0">
+
+                        <span class="bg-green-100 text-green-700 px-5 py-2 rounded-full font-semibold">
+
+                            <i class="fas fa-lock mr-2"></i>
+
+                            Secure Portal
+
+                        </span>
+
+                    </div>
 
                 </div>
 
@@ -498,11 +515,9 @@
 
         </div>
 
-    </div>
+    </section>
 
-</section>
-
-    <!-- Footer -->
+    <!-- ===== FOOTER ===== -->
     <footer class="bg-gray-800 text-white py-6">
         <div class="container mx-auto px-6 text-center">
             <p class="text-sm">© 2025 Musa Kazimoto, ICT Specialist. All rights reserved.</p>
