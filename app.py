@@ -197,7 +197,11 @@ def admin_dashboard():
         'paid': len(paid)
     }
     
-    return render_template('admin/dashboard.html', students=students, pending=pending, stats=stats)
+    # Debug: Print to logs so you can see what's happening
+    print(f"📊 Dashboard Stats: Total={stats['total']}, Pending={stats['pending']}, Paid={stats['paid']}, Verified={stats['verified']}")
+    
+    # FIX: Added paid=paid to the render_template call
+    return render_template('admin/dashboard.html', students=students, pending=pending, paid=paid, stats=stats)
 
 @app.route('/admin/verify/<int:student_id>', methods=['POST'])
 def admin_verify(student_id):
