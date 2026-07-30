@@ -257,7 +257,7 @@ def admin_delete(student_id):
 
 @app.context_processor
 def utility_processor():
-    return {'now': datetime.now()}
+    return {'now': get_eat_time()}
 
 # ===== RUN APP =====
 
