@@ -40,7 +40,6 @@
             position: relative;
         }
 
-        /* ===== HEADER ===== */
         .dashboard-header {
             background: rgba(55, 72, 89, .72);
             backdrop-filter: blur(18px);
@@ -147,7 +146,16 @@
             background: rgba(245, 158, 11, .25);
         }
 
-        /* ===== STATS ===== */
+        .btn-verify {
+            background: rgba(59, 130, 246, .15);
+            border: 1px solid rgba(59, 130, 246, .2);
+            color: #60a5fa;
+        }
+
+        .btn-verify:hover {
+            background: rgba(59, 130, 246, .25);
+        }
+
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -188,7 +196,6 @@
         .stat-card.paid .number { color: #60a5fa; }
         .stat-card.total .number { color: #fff; }
 
-        /* ===== TABLE SECTION ===== */
         .table-section {
             background: rgba(55, 72, 89, .72);
             backdrop-filter: blur(18px);
@@ -196,6 +203,7 @@
             border-radius: 18px;
             padding: 24px 28px;
             box-shadow: 0 20px 45px rgba(0, 0, 0, .35);
+            margin-bottom: 20px;
         }
 
         .table-section h3 {
@@ -326,6 +334,16 @@
             background: rgba(245, 158, 11, .25);
         }
 
+        .btn-sm-verify {
+            background: rgba(59, 130, 246, .15);
+            color: #60a5fa;
+            border: 1px solid rgba(59, 130, 246, .2);
+        }
+
+        .btn-sm-verify:hover {
+            background: rgba(59, 130, 246, .25);
+        }
+
         .btn-sm-danger {
             background: rgba(239, 68, 68, .15);
             color: #f87171;
@@ -348,7 +366,6 @@
             opacity: .3;
         }
 
-        /* Flash Messages */
         .flash-message {
             padding: 12px 18px;
             border-radius: 10px;
@@ -372,7 +389,6 @@
             100% { opacity: 1; transform: translateY(0); }
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
             body { padding: 15px; }
             .dashboard-header { padding: 16px 18px; }
@@ -453,11 +469,70 @@
             </div>
         </div>
 
-        <!-- ===== PENDING STUDENTS ===== -->
+        <!-- ===== PENDING STUDENTS (Payment Received - Awaiting Verification) ===== -->
         <div class="table-section">
             <h3>
                 <i class="fas fa-clock"></i>
-                Pending Students
+                Payment Received - Awaiting Verification
+                <span class="badge-count">{{ paid|length }}</span>
+            </h3>
+
+            {% if paid %}
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Course</th>
+                                <th>Registered</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for student in paid %}
+                            <tr>
+                                <td><strong>{{ student.full_name }}</strong></td>
+                                <td>{{ student.email }}</td>
+                                <td>{{ student.phone }}</td>
+                                <td>{{ student.course }}</td>
+                                <td>{{ student.registration_date.strftime('%d %b %Y') }}</td>
+                                <td>
+                                    <div class="action-btns">
+                                        <!-- Verify Registration Button -->
+                                        <form method="POST" action="{{ url_for('admin_verify', student_id=student.id) }}">
+                                            <button type="submit" class="btn-sm btn-sm-verify">
+                                                <i class="fas fa-check-circle"></i> Verify Registration
+                                            </button>
+                                        </form>
+                                        <!-- Delete Button -->
+                                        <form method="POST" action="{{ url_for('admin_delete', student_id=student.id) }}"
+                                              onsubmit="return confirm('Delete {{ student.full_name }}?');">
+                                            <button type="submit" class="btn-sm btn-sm-danger">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    <i class="fas fa-check-circle"></i>
+                    <p>✅ No students with payment received. All are verified or pending.</p>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- ===== PENDING STUDENTS (No Payment Yet) ===== -->
+        <div class="table-section">
+            <h3>
+                <i class="fas fa-hourglass-half"></i>
+                Awaiting Payment
                 <span class="badge-count">{{ pending|length }}</span>
             </h3>
 
@@ -484,16 +559,13 @@
                                 <td>{{ student.registration_date.strftime('%d %b %Y') }}</td>
                                 <td>
                                     <div class="action-btns">
+                                        <!-- Mark as Paid -->
                                         <form method="POST" action="{{ url_for('admin_verify_paid', student_id=student.id) }}">
                                             <button type="submit" class="btn-sm btn-sm-warning">
-                                                <i class="fas fa-money-bill"></i> Paid
+                                                <i class="fas fa-money-bill"></i> Mark Paid
                                             </button>
                                         </form>
-                                        <form method="POST" action="{{ url_for('admin_verify', student_id=student.id) }}">
-                                            <button type="submit" class="btn-sm btn-sm-success">
-                                                <i class="fas fa-check"></i> Verify
-                                            </button>
-                                        </form>
+                                        <!-- Delete Button -->
                                         <form method="POST" action="{{ url_for('admin_delete', student_id=student.id) }}"
                                               onsubmit="return confirm('Delete {{ student.full_name }}?');">
                                             <button type="submit" class="btn-sm btn-sm-danger">
@@ -510,13 +582,13 @@
             {% else %}
                 <div class="empty-state">
                     <i class="fas fa-check-circle"></i>
-                    <p>✅ No pending students! All registrations are verified.</p>
+                    <p>✅ No pending payments! All students have paid or been verified.</p>
                 </div>
             {% endif %}
         </div>
 
         <!-- ===== ALL STUDENTS ===== -->
-        <div class="table-section" style="margin-top: 20px;">
+        <div class="table-section">
             <h3>
                 <i class="fas fa-list"></i>
                 All Students
@@ -551,8 +623,16 @@
                             </td>
                             <td>{{ student.registration_date.strftime('%d %b %Y') }}</td>
                             <td>
+                                <!-- Show Verify button for paid students in all list too -->
+                                {% if student.payment_status == 'paid' %}
+                                <form method="POST" action="{{ url_for('admin_verify', student_id=student.id) }}" style="display:inline;">
+                                    <button type="submit" class="btn-sm btn-sm-verify">
+                                        <i class="fas fa-check"></i> Verify
+                                    </button>
+                                </form>
+                                {% endif %}
                                 <form method="POST" action="{{ url_for('admin_delete', student_id=student.id) }}"
-                                      onsubmit="return confirm('Delete {{ student.full_name }}?');">
+                                      onsubmit="return confirm('Delete {{ student.full_name }}?');" style="display:inline;">
                                     <button type="submit" class="btn-sm btn-sm-danger">
                                         <i class="fas fa-trash"></i>
                                     </button>
