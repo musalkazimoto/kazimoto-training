@@ -261,6 +261,13 @@ def admin_delete(student_id):
 def utility_processor():
     return {'now': get_eat_time()}
 
+#===========COURSE CONTENT ROUTE=============
+@app.route('/courses')
+def courses():
+    """Course content page"""
+    return render_template('index.html', show_course='networking')
+
+
 # ===== RUN APP =====
 
 if __name__ == '__main__':
