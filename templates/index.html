@@ -56,7 +56,7 @@
             100% { opacity: 1; transform: translateY(0); }
         }
 
-        /* ===== STUDENT PORTAL STYLES (Matching Login/Register) ===== */
+        /* ===== STUDENT PORTAL STYLES ===== */
         .portal-card {
             background: #f9fafb;
             border: 2px solid #e5e7eb;
@@ -101,45 +101,25 @@
         }
 
         /* Individual card colors */
-        .portal-card.register:hover {
-            border-color: #3b82f6;
-        }
-        .portal-card.register .icon-circle {
-            background: #3b82f6;
-        }
-        .portal-card.register .portal-label {
-            color: #1e40af;
-        }
+        .portal-card.register:hover { border-color: #3b82f6; }
+        .portal-card.register .icon-circle { background: #3b82f6; }
+        .portal-card.register .portal-label { color: #1e40af; }
 
-        .portal-card.login:hover {
-            border-color: #10b981;
-        }
-        .portal-card.login .icon-circle {
-            background: #10b981;
-        }
-        .portal-card.login .portal-label {
-            color: #065f46;
-        }
+        .portal-card.login:hover { border-color: #10b981; }
+        .portal-card.login .icon-circle { background: #10b981; }
+        .portal-card.login .portal-label { color: #065f46; }
 
-        .portal-card.admin:hover {
-            border-color: #ef4444;
-        }
-        .portal-card.admin .icon-circle {
-            background: #ef4444;
-        }
-        .portal-card.admin .portal-label {
-            color: #991b1b;
-        }
+        .portal-card.admin:hover { border-color: #ef4444; }
+        .portal-card.admin .icon-circle { background: #ef4444; }
+        .portal-card.admin .portal-label { color: #991b1b; }
 
-        .portal-card.status:hover {
-            border-color: #8b5cf6;
-        }
-        .portal-card.status .icon-circle {
-            background: #8b5cf6;
-        }
-        .portal-card.status .portal-label {
-            color: #5b21b6;
-        }
+        .portal-card.status:hover { border-color: #8b5cf6; }
+        .portal-card.status .icon-circle { background: #8b5cf6; }
+        .portal-card.status .portal-label { color: #5b21b6; }
+
+        .portal-card.course:hover { border-color: #f59e0b; }
+        .portal-card.course .icon-circle { background: #f59e0b; }
+        .portal-card.course .portal-label { color: #92400e; }
 
         .section-badge {
             display: inline-block;
@@ -174,6 +154,90 @@
 
         .portal-subtitle {
             font-size: 1.2rem !important;
+        }
+
+        /* Course Cards */
+        .course-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid #e5e7eb;
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+            color: inherit;
+        }
+
+        .course-card:hover {
+            transform: translateY(-6px);
+            border-color: #3b82f6;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .course-card .course-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 2rem;
+            color: white;
+        }
+
+        .course-card h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #1a2332;
+            margin-bottom: 8px;
+        }
+
+        .course-card p {
+            color: #6b7280;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .course-card .arrow {
+            display: inline-block;
+            margin-top: 12px;
+            color: #3b82f6;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .course-card:hover .arrow {
+            transform: translateX(5px);
+        }
+
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* Back button */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #3b82f6;
+            font-weight: 600;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            border: 2px solid #e5e7eb;
+        }
+
+        .back-btn:hover {
+            background: #f3f4f6;
+            border-color: #3b82f6;
         }
 
         @media (max-width: 640px) {
@@ -218,12 +282,78 @@
                 width: 100%;
                 max-width: 280px;
             }
+            .course-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 15px;
+            }
+            .course-card {
+                padding: 20px 15px;
+            }
+            .course-card .course-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+            }
+            .course-card h3 {
+                font-size: 1rem;
+            }
         }
 
         @media (max-width: 400px) {
             .portal-grid {
                 grid-template-columns: 1fr !important;
             }
+            .course-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Lab section styles */
+        .lab-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-left: 5px solid #3b82f6;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            transition: all 0.3s ease;
+        }
+
+        .lab-card:hover {
+            box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+        }
+
+        .lab-card .lab-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #1a2332;
+            margin-bottom: 8px;
+        }
+
+        .lab-card .lab-title i {
+            color: #3b82f6;
+            margin-right: 10px;
+        }
+
+        .lab-card .lab-objective {
+            color: #4b5563;
+            line-height: 1.7;
+            margin-bottom: 10px;
+        }
+
+        .lab-card .lab-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .lab-card .lab-skills span {
+            background: #eff6ff;
+            color: #1e40af;
+            padding: 4px 14px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
         }
     </style>
 </head>
@@ -252,7 +382,6 @@
             <h1 class="text-6xl md:text-7xl font-bold mb-4 fade-in">Musa Kazimoto - ICT Specialist</h1>
             <p class="text-2xl md:text-3xl mb-8 fade-in">Innovating the Future of Information and Communication Technology</p>
 
-            <!-- Hero Buttons - Two buttons side by side -->
             <div class="flex flex-wrap justify-center gap-4 fade-in hero-buttons">
                 <a href="#about" class="inline-block bg-white text-blue-600 font-semibold py-3 px-8 rounded-full hover:bg-blue-100 transition duration-300 text-lg">
                     Learn More
@@ -287,7 +416,7 @@
         <div class="container mx-auto px-6">
             <h2 class="text-5xl font-bold text-center text-gray-800 mb-12 fade-in">My Services</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Service 1 -->
+                <!-- Services (kept the same as original) -->
                 <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 fade-in">
                     <div class="text-blue-600 text-4xl mb-4">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" /></svg>
@@ -295,7 +424,6 @@
                     <h3 class="service-title text-xl font-semibold text-gray-800 mb-2">Network Design & Administration</h3>
                     <p class="service-desc text-gray-600">Expert design, implementation, and management of secure and efficient network infrastructures for various applications.</p>
                 </div>
-                <!-- Service 2 -->
                 <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 fade-in">
                     <div class="text-blue-600 text-4xl mb-4">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
@@ -303,7 +431,6 @@
                     <h3 class="service-title text-xl font-semibold text-gray-800 mb-2">Cybersecurity Solutions</h3>
                     <p class="service-desc text-gray-600">Comprehensive security assessments and solutions to protect systems and data from cyber threats. In his Masters degree, he is developing the AI model to prevent and detect the Zero-Day attack</p>
                 </div>
-                <!-- Service 3 -->
                 <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 fade-in">
                     <div class="text-blue-600 text-4xl mb-4">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>
@@ -311,7 +438,6 @@
                     <h3 class="service-title text-xl font-semibold text-gray-800 mb-2">Software Development</h3>
                     <p class="service-desc text-gray-600">Custom software solutions tailored to business needs, from web applications to enterprise systems.</p>
                 </div>
-                <!-- Service 4 -->
                 <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 fade-in">
                     <div class="text-blue-600 text-4xl mb-4">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
@@ -319,7 +445,6 @@
                     <h3 class="service-title text-xl font-semibold text-gray-800 mb-2">Cloud Computing & Integration</h3>
                     <p class="service-desc text-gray-600">Design and deployment of cloud-based solutions for scalability, efficiency, and seamless integration.</p>
                 </div>
-                <!-- Service 5 -->
                 <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 fade-in">
                     <div class="text-blue-600 text-4xl mb-4">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
@@ -327,7 +452,6 @@
                     <h3 class="service-title text-xl font-semibold text-gray-800 mb-2">IT Consulting & Project Management</h3>
                     <p class="service-desc text-gray-600">Expert guidance and project oversight for ICT initiatives to ensure successful and timely delivery.</p>
                 </div>
-                <!-- Service 6 -->
                 <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 fade-in">
                     <div class="text-blue-600 text-4xl mb-4">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
@@ -340,182 +464,346 @@
     </section>
 
     <!-- ===== STUDENT PORTAL SECTION ===== -->
-    <section id="student-portal" class="py-20 bg-gradient-to-br from-slate-50 via-blue-50 to-white">
-
-        <div class="max-w-6xl mx-auto px-6">
-
-            <!-- Heading -->
-            <div class="text-center mb-12">
-
-                <span class="inline-flex items-center px-6 py-2 rounded-full
-                             bg-blue-100 text-blue-700 font-semibold tracking-wide">
-
-                    <i class="fas fa-graduation-cap mr-2"></i>
-                    STUDENT PORTAL
-
+    <section id="student-portal" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-10">
+                <span class="section-badge fade-in">
+                    <i class="fas fa-graduation-cap mr-1"></i> Student Portal
                 </span>
-
-                <h2 class="text-5xl font-extrabold text-gray-800 mt-5">
-                    Welcome to Student Portal
+                <h2 class="portal-title text-4xl font-bold text-gray-800 mt-3 fade-in">
+                    Student Portal
                 </h2>
-
-                <p class="text-xl text-gray-500 mt-3">
-                    Register, login and manage your ICT training in one secure place.
-                </p>
-
+                <p class="portal-subtitle text-xl text-gray-500 mt-2 fade-in">Access all student services in one place</p>
             </div>
 
-            <!-- Main Card -->
-            <div class="bg-white/90 backdrop-blur-lg rounded-3xl shadow-2xl border border-gray-100 overflow-hidden">
-
-                <!-- Header -->
-                <div class="bg-gradient-to-r from-blue-700 to-indigo-700 px-8 py-6">
-
-                    <h3 class="text-white text-2xl font-bold flex items-center">
-
-                        <i class="fas fa-th-large mr-3"></i>
-
+            <div class="max-w-3xl mx-auto">
+                <div class="bg-white rounded-2xl p-8 shadow-[0_4px_20px_rgba(0,0,0,0.04)] border border-gray-100/80 fade-in">
+                    
+                    <h3 class="text-lg font-bold text-gray-800 mb-5 flex items-center gap-2.5">
+                        <span class="w-1 h-6 bg-blue-500 rounded-full"></span>
                         Quick Access
-
                     </h3>
 
-                    <p class="text-blue-100 mt-1">
-                        Select any service below
-                    </p>
+                    <div class="grid grid-cols-2 md:grid-cols-5 gap-3 portal-grid">
+                        <!-- Register -->
+                        <a href="{{ url_for('student_register') }}" 
+                           class="portal-card register">
+                            <span class="icon-circle">
+                                <i class="fas fa-user-plus"></i>
+                            </span>
+                            <span class="portal-label">Register</span>
+                        </a>
 
-                </div>
+                        <!-- Student Login -->
+                        <a href="{{ url_for('student_login') }}" 
+                           class="portal-card login">
+                            <span class="icon-circle">
+                                <i class="fas fa-sign-in-alt"></i>
+                            </span>
+                            <span class="portal-label">Student Login</span>
+                        </a>
 
-                <!-- Buttons -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 p-8">
+                        <!-- Admin Login -->
+                        <a href="{{ url_for('admin_login') }}" 
+                           class="portal-card admin">
+                            <span class="icon-circle">
+                                <i class="fas fa-user-shield"></i>
+                            </span>
+                            <span class="portal-label">Admin Login</span>
+                        </a>
 
-                    <!-- Register -->
-                    <a href="{{ url_for('student_register') }}"
-                       class="group bg-white border rounded-2xl shadow-md
-                              hover:shadow-xl transition duration-300
-                              hover:-translate-y-2 p-6 text-center">
+                        <!-- Check Status -->
+                        <a href="{{ url_for('check_status') }}" 
+                           class="portal-card status">
+                            <span class="icon-circle">
+                                <i class="fas fa-search"></i>
+                            </span>
+                            <span class="portal-label">Check Status</span>
+                        </a>
 
-                        <div class="w-16 h-16 rounded-2xl bg-blue-600 mx-auto
-                                    flex items-center justify-center
-                                    group-hover:scale-110 transition">
-
-                            <i class="fas fa-user-plus text-white text-2xl"></i>
-
-                        </div>
-
-                        <h4 class="font-bold text-xl text-gray-800 mt-5">
-                            Register
-                        </h4>
-
-                        <p class="text-gray-500 mt-2 text-sm">
-                            Create your student account
-                        </p>
-
-                    </a>
-
-                    <!-- Student Login -->
-                    <a href="{{ url_for('student_login') }}"
-                       class="group bg-white border rounded-2xl shadow-md
-                              hover:shadow-xl transition duration-300
-                              hover:-translate-y-2 p-6 text-center">
-
-                        <div class="w-16 h-16 rounded-2xl bg-emerald-500 mx-auto
-                                    flex items-center justify-center
-                                    group-hover:scale-110 transition">
-
-                            <i class="fas fa-sign-in-alt text-white text-2xl"></i>
-
-                        </div>
-
-                        <h4 class="font-bold text-xl text-gray-800 mt-5">
-                            Student Login
-                        </h4>
-
-                        <p class="text-gray-500 mt-2 text-sm">
-                            Access your dashboard
-                        </p>
-
-                    </a>
-
-                    <!-- Admin -->
-                    <a href="{{ url_for('admin_login') }}"
-                       class="group bg-white border rounded-2xl shadow-md
-                              hover:shadow-xl transition duration-300
-                              hover:-translate-y-2 p-6 text-center">
-
-                        <div class="w-16 h-16 rounded-2xl bg-red-500 mx-auto
-                                    flex items-center justify-center
-                                    group-hover:scale-110 transition">
-
-                            <i class="fas fa-user-shield text-white text-2xl"></i>
-
-                        </div>
-
-                        <h4 class="font-bold text-xl text-gray-800 mt-5">
-                            Admin Login
-                        </h4>
-
-                        <p class="text-gray-500 mt-2 text-sm">
-                            Administrator access
-                        </p>
-
-                    </a>
-
-                    <!-- Status -->
-                    <a href="{{ url_for('check_status') }}"
-                       class="group bg-white border rounded-2xl shadow-md
-                              hover:shadow-xl transition duration-300
-                              hover:-translate-y-2 p-6 text-center">
-
-                        <div class="w-16 h-16 rounded-2xl bg-violet-500 mx-auto
-                                    flex items-center justify-center
-                                    group-hover:scale-110 transition">
-
-                            <i class="fas fa-search text-white text-2xl"></i>
-
-                        </div>
-
-                        <h4 class="font-bold text-xl text-gray-800 mt-5">
-                            Check Status
-                        </h4>
-
-                        <p class="text-gray-500 mt-2 text-sm">
-                            Track your registration
-                        </p>
-
-                    </a>
-
-                </div>
-
-                <!-- Footer -->
-                <div class="border-t bg-gray-50 px-8 py-5 flex flex-col md:flex-row justify-between items-center">
-
-                    <div class="flex items-center text-gray-600">
-
-                        <i class="fas fa-circle-info text-blue-500 mr-3"></i>
-
-                        Register for ICT training or monitor your application.
-
+                        <!-- Course Content -->
+                        <a href="#courses" 
+                           class="portal-card course">
+                            <span class="icon-circle">
+                                <i class="fas fa-book"></i>
+                            </span>
+                            <span class="portal-label">Course Content</span>
+                        </a>
                     </div>
 
-                    <div class="mt-4 md:mt-0">
-
-                        <span class="bg-green-100 text-green-700 px-5 py-2 rounded-full font-semibold">
-
-                            <i class="fas fa-lock mr-2"></i>
-
-                            Secure Portal
-
+                    <div class="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between flex-wrap gap-3">
+                        <p class="text-base text-gray-500">
+                            <i class="fas fa-info-circle text-blue-400 mr-1.5"></i>
+                            Register for ICT training or check your registration status
+                        </p>
+                        <span class="text-sm text-gray-400 bg-gray-50 px-3 py-1 rounded-full border border-gray-100">
+                            <i class="fas fa-lock text-gray-300 mr-1"></i> Secure
                         </span>
-
                     </div>
-
                 </div>
+            </div>
+        </div>
+    </section>
 
+    <!-- ===== COURSES SECTION ===== -->
+    <section id="courses" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12">
+                <span class="inline-block bg-orange-50 text-orange-600 px-4 py-2 rounded-full text-sm font-semibold mb-4">
+                    <i class="fas fa-book-open mr-2"></i> Course Content
+                </span>
+                <h2 class="text-4xl font-bold text-gray-800 mb-3">Available Courses</h2>
+                <p class="text-gray-500 text-lg max-w-2xl mx-auto">Select a course to view the full lab manual and curriculum</p>
             </div>
 
-        </div>
+            <div class="course-grid">
+                <!-- Course 1: Networking Essentials -->
+                <a href="{{ url_for('course_content', course='networking') }}" class="course-card fade-in">
+                    <div class="course-icon" style="background: linear-gradient(135deg, #3b82f6, #2563eb);">
+                        <i class="fas fa-network-wired"></i>
+                    </div>
+                    <h3>Networking Essentials</h3>
+                    <p>Complete hands-on lab manual from cabling to network installation</p>
+                    <span class="arrow">View Course <i class="fas fa-arrow-right"></i></span>
+                </a>
 
+                <!-- Course 2: Software Development -->
+                <a href="#" class="course-card fade-in">
+                    <div class="course-icon" style="background: linear-gradient(135deg, #10b981, #059669);">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>Software Development</h3>
+                    <p>Full-stack development with practical projects and real-world applications</p>
+                    <span class="arrow">Coming Soon <i class="fas fa-arrow-right"></i></span>
+                </a>
+
+                <!-- Course 3: Artificial Intelligence -->
+                <a href="#" class="course-card fade-in">
+                    <div class="course-icon" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3>Artificial Intelligence</h3>
+                    <p>Machine learning, neural networks, and AI application development</p>
+                    <span class="arrow">Coming Soon <i class="fas fa-arrow-right"></i></span>
+                </a>
+
+                <!-- Course 4: Cybersecurity -->
+                <a href="#" class="course-card fade-in">
+                    <div class="course-icon" style="background: linear-gradient(135deg, #ef4444, #dc2626);">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Cybersecurity</h3>
+                    <p>Ethical hacking, network security, and incident response training</p>
+                    <span class="arrow">Coming Soon <i class="fas fa-arrow-right"></i></span>
+                </a>
+
+                <!-- Course 5: Full Stack Web Development -->
+                <a href="#" class="course-card fade-in">
+                    <div class="course-icon" style="background: linear-gradient(135deg, #f59e0b, #d97706);">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h3>Full Stack Web Development</h3>
+                    <p>Complete web development with HTML, CSS, JavaScript, and frameworks</p>
+                    <span class="arrow">Coming Soon <i class="fas fa-arrow-right"></i></span>
+                </a>
+
+                <!-- Course 6: Linux Server Administration -->
+                <a href="#" class="course-card fade-in">
+                    <div class="course-icon" style="background: linear-gradient(135deg, #06b6d4, #0891b2);">
+                        <i class="fab fa-linux"></i>
+                    </div>
+                    <h3>Linux Server Administration</h3>
+                    <p>Server setup, configuration, and management on Linux platforms</p>
+                    <span class="arrow">Coming Soon <i class="fas fa-arrow-right"></i></span>
+                </a>
+            </div>
+        </div>
     </section>
+
+    <!-- ===== NETWORKING COURSE CONTENT (Hidden by default, shown when clicked) ===== -->
+    {% if show_course == 'networking' %}
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-6 max-w-4xl">
+            <div class="mb-8 flex items-center justify-between">
+                <h2 class="text-3xl font-bold text-gray-800">
+                    <i class="fas fa-network-wired text-blue-600 mr-3"></i>
+                    Complete Networking Hands-On Lab Manual
+                </h2>
+                <a href="#courses" class="back-btn">
+                    <i class="fas fa-arrow-left"></i> Back to Courses
+                </a>
+            </div>
+            <p class="text-gray-600 mb-8 text-lg">
+                For University Students (Computer Science, IT, Computer Engineering, ICT and Telecommunication Eng)
+                <br><span class="text-sm text-gray-400">Prerequisites: Students have theoretical knowledge of networking concepts</span>
+            </p>
+
+            <!-- Lab 1 -->
+            <div class="lab-card">
+                <div class="lab-title"><i class="fas fa-book"></i> LAB 1: Network Cabling & Termination</div>
+                <div class="lab-objective">
+                    <strong>Lab Objective</strong><br>
+                    Students will learn the fundamental skills of creating and terminating network cables. By the end of this lab, students will be able to identify different cable types, properly strip and prepare cables, terminate RJ45 connectors using both T568A and T568B standards, create straight-through, crossover, and rollover cables, test cables using a cable tester, and troubleshoot common cabling issues. Students will also understand the importance of proper cable installation techniques including maintaining bend radius and using appropriate cable management.
+                </div>
+                <div class="lab-skills">
+                    <span>Cable stripping</span>
+                    <span>RJ45 termination</span>
+                    <span>T568A/T568B standards</span>
+                    <span>Straight-through/Crossover/Rollover cables</span>
+                    <span>Cable testing</span>
+                    <span>Troubleshooting</span>
+                </div>
+            </div>
+
+            <!-- Lab 2 -->
+            <div class="lab-card" style="border-left-color: #10b981;">
+                <div class="lab-title"><i class="fas fa-book"></i> LAB 2: Ethernet Cable Jointing & Repair</div>
+                <div class="lab-objective">
+                    <strong>Lab Objective</strong><br>
+                    Students will learn how to repair damaged Ethernet cables and create cable joints for network installations. By the end of this lab, students will be able to identify different types of cable damage, properly prepare cable ends for jointing, use RJ45 couplers for indoor repairs, use gel-filled connectors for waterproof outdoor joints, apply heat shrink splices for permanent repairs, test the integrity of cable joints using cable testers, and properly document cable repairs for future reference. Students will also understand the importance of maintaining cable infrastructure and the cost-effectiveness of proper cable repair techniques.
+                </div>
+                <div class="lab-skills">
+                    <span>Cable damage identification</span>
+                    <span>RJ45 coupler jointing</span>
+                    <span>Gel-filled connector usage</span>
+                    <span>Heat shrink splicing</span>
+                    <span>Cable testing</span>
+                    <span>Repair documentation</span>
+                </div>
+            </div>
+
+            <!-- Lab 3 -->
+            <div class="lab-card" style="border-left-color: #8b5cf6;">
+                <div class="lab-title"><i class="fas fa-book"></i> LAB 3: Face Plate & Keystone Installation</div>
+                <div class="lab-objective">
+                    <strong>Lab Objective</strong><br>
+                    Students will learn the proper techniques for installing wall face plates and terminating keystone jacks. By the end of this lab, students will be able to identify different types of face plates and keystone jacks, properly terminate keystone jacks using the T568B wiring standard, install face plates on wall boxes, apply proper labeling conventions, and test their installations using cable testers. Students will also understand the importance of color coding and documentation in professional network installations.
+                </div>
+                <div class="lab-skills">
+                    <span>Keystone jack termination</span>
+                    <span>Punch down tool usage</span>
+                    <span>Face plate mounting</span>
+                    <span>Color coding</span>
+                    <span>Labeling conventions</span>
+                    <span>Cable testing</span>
+                </div>
+            </div>
+
+            <!-- Lab 4 -->
+            <div class="lab-card" style="border-left-color: #f59e0b;">
+                <div class="lab-title"><i class="fas fa-book"></i> LAB 4: Patch Panel & Cable Management</div>
+                <div class="lab-objective">
+                    <strong>Lab Objective</strong><br>
+                    Students will learn how to properly install and terminate patch panels in a network rack environment. By the end of this lab, students will be able to mount a patch panel in a rack, terminate cables to the patch panel using the T568B standard, organize cables using proper cable management techniques, label all connections according to professional standards, and test the completed installation. Students will also understand the importance of neat cable organization for maintainability and troubleshooting in enterprise networks.
+                </div>
+                <div class="lab-skills">
+                    <span>Patch panel mounting</span>
+                    <span>Cable termination</span>
+                    <span>110 punch down tool</span>
+                    <span>Cable management</span>
+                    <span>Velcro bundling</span>
+                    <span>Labeling</span>
+                    <span>Cable testing</span>
+                </div>
+            </div>
+
+            <!-- Lab 5 -->
+            <div class="lab-card" style="border-left-color: #ef4444;">
+                <div class="lab-title"><i class="fas fa-book"></i> LAB 5: Cabinet/Rack Installation</div>
+                <div class="lab-objective">
+                    <strong>Lab Objective</strong><br>
+                    Students will learn the complete process of installing a network cabinet or server rack. By the end of this lab, students will be able to assemble a server rack, properly position and level it in the designated location, install equipment in the rack using proper rack units and spacing, manage power distribution, ensure proper grounding, and organize cables for optimal airflow and accessibility. Students will also understand the importance of proper rack placement for cooling, maintenance, and scalability in network infrastructure.
+                </div>
+                <div class="lab-skills">
+                    <span>Rack assembly and leveling</span>
+                    <span>Equipment mounting</span>
+                    <span>Rack unit spacing</span>
+                    <span>Power distribution</span>
+                    <span>Grounding</span>
+                    <span>Cable management</span>
+                    <span>Cooling and airflow planning</span>
+                </div>
+            </div>
+
+            <!-- Lab 6 -->
+            <div class="lab-card" style="border-left-color: #06b6d4;">
+                <div class="lab-title"><i class="fas fa-book"></i> LAB 6: Switch Installation & VLAN Configuration</div>
+                <div class="lab-objective">
+                    <strong>Lab Objective</strong><br>
+                    Students will learn how to install and configure network switches in a structured network environment. By the end of this lab, students will be able to perform initial switch configuration including hostname, passwords, and management IP, create and configure VLANs for network segmentation, configure trunk ports for inter-switch connectivity, implement inter-VLAN routing using router-on-a-stick or layer 3 switching, configure DHCP services, and verify network connectivity across all VLANs. Students will also understand the security benefits of network segmentation and VLAN implementation.
+                </div>
+                <div class="lab-skills">
+                    <span>Switch initial configuration</span>
+                    <span>VLAN creation and assignment</span>
+                    <span>Trunk configuration</span>
+                    <span>Inter-VLAN routing</span>
+                    <span>DHCP configuration</span>
+                    <span>Network verification and testing</span>
+                </div>
+            </div>
+
+            <!-- Lab 7 -->
+            <div class="lab-card" style="border-left-color: #8b5cf6;">
+                <div class="lab-title"><i class="fas fa-book"></i> LAB 7: Router Installation & Configuration</div>
+                <div class="lab-objective">
+                    <strong>Lab Objective</strong><br>
+                    Students will learn how to install and configure routers to enable network connectivity between different networks. By the end of this lab, students will be able to perform initial router configuration including hostname, passwords, and interface IP addressing, configure static routes for fixed network paths, implement dynamic routing protocols (RIP and OSPF) for automatic route learning, configure access control lists (ACLs) for traffic filtering, implement NAT for internet connectivity, and verify routing functionality through ping and traceroute tests. Students will also understand the differences between static and dynamic routing and when to use each approach.
+                </div>
+                <div class="lab-skills">
+                    <span>Router initial configuration</span>
+                    <span>Static routing</span>
+                    <span>Dynamic routing (RIP/OSPF)</span>
+                    <span>Access Control Lists (ACL)</span>
+                    <span>NAT configuration</span>
+                    <span>Route verification and troubleshooting</span>
+                </div>
+            </div>
+
+            <!-- Lab 8 -->
+            <div class="lab-card" style="border-left-color: #ef4444;">
+                <div class="lab-title"><i class="fas fa-book"></i> LAB 8: Firewall Installation & Configuration</div>
+                <div class="lab-objective">
+                    <strong>Lab Objective</strong><br>
+                    Students will learn how to install and configure a firewall to secure a network environment. By the end of this lab, students will be able to install pfSense/OPNsense firewall software, configure network interfaces for WAN, LAN, and DMZ zones, implement firewall rules to control traffic flow between zones, configure NAT and port forwarding for public services, set up site-to-site VPN connectivity, implement traffic shaping for bandwidth management, and monitor firewall logs for security events. Students will also understand the importance of defense-in-depth and network security best practices.
+                </div>
+                <div class="lab-skills">
+                    <span>Firewall installation</span>
+                    <span>Interface configuration</span>
+                    <span>Firewall rule creation</span>
+                    <span>NAT and port forwarding</span>
+                    <span>VPN configuration</span>
+                    <span>Traffic shaping</span>
+                    <span>Security log monitoring</span>
+                </div>
+            </div>
+
+            <!-- Lab 9 -->
+            <div class="lab-card" style="border-left-color: #10b981;">
+                <div class="lab-title"><i class="fas fa-book"></i> LAB 9: Complete Network Installation (Capstone)</div>
+                <div class="lab-objective">
+                    <strong>Lab Objective</strong><br>
+                    Students will apply all the skills learned throughout the course to design, install, and configure a complete functional network. By the end of this capstone lab, students will be able to design a network addressing scheme, install face plates and terminate keystone jacks, mount a patch panel and organize cable management, install switches and configure VLANs, install routers and configure routing, install a firewall and implement security policies, test the entire network for functionality, and create complete network documentation including diagrams and configuration files. Students will also develop project management skills, teamwork abilities, and professional documentation practices essential for real-world network deployment.
+                </div>
+                <div class="lab-skills">
+                    <span>Network design</span>
+                    <span>Complete physical installation</span>
+                    <span>Device configuration (Switches/Routers/Firewall)</span>
+                    <span>Inter-VLAN routing</span>
+                    <span>DHCP and DNS services</span>
+                    <span>Network testing and verification</span>
+                    <span>Documentation and reporting</span>
+                    <span>Project management and teamwork</span>
+                </div>
+            </div>
+
+            <div class="text-center mt-10">
+                <a href="#courses" class="back-btn">
+                    <i class="fas fa-arrow-left"></i> Back to Courses
+                </a>
+            </div>
+        </div>
+    </section>
+    {% endif %}
 
     <!-- ===== FOOTER ===== -->
     <footer class="bg-gray-800 text-white py-6">
