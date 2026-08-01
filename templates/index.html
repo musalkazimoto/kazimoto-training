@@ -58,68 +58,71 @@
 
         /* ===== STUDENT PORTAL STYLES ===== */
         .portal-card {
-            background: #f9fafb;
-            border: 2px solid #e5e7eb;
-            border-radius: 12px;
-            padding: 16px 20px;
+            background: #ffffff;
+            border: 1px solid #f3f4f6;
+            border-radius: 14px;
+            padding: 24px 16px;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 12px;
-            font-weight: 600;
-            font-size: 1rem;
-            color: #374151;
-            transition: all 0.25s ease;
+            text-align: center;
+            gap: 4px;
             text-decoration: none;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+            transition: all 0.25s ease;
         }
 
         .portal-card:hover {
-            border-color: #3b82f6;
-            background: #ffffff;
-            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.08);
-            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            transform: translateY(-4px);
         }
 
         .portal-card .icon-circle {
-            width: 38px;
-            height: 38px;
-            border-radius: 10px;
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
+            margin-bottom: 10px;
+            transition: transform 0.25s ease;
+        }
+
+        .portal-card:hover .icon-circle {
+            transform: scale(1.1);
         }
 
         .portal-card .icon-circle i {
-            font-size: 1rem;
+            font-size: 1.25rem;
             color: white;
         }
 
         .portal-card .portal-label {
-            font-weight: 600;
+            font-weight: 700;
             font-size: 1rem;
+            color: #1f2937;
         }
 
-        /* Individual card colors */
-        .portal-card.register:hover { border-color: #3b82f6; }
-        .portal-card.register .icon-circle { background: #3b82f6; }
-        .portal-card.register .portal-label { color: #1e40af; }
+        .portal-card .portal-desc {
+            font-size: 0.8rem;
+            color: #9ca3af;
+            margin-top: 2px;
+        }
 
-        .portal-card.login:hover { border-color: #10b981; }
+        /* Individual card icon colors */
+        .portal-card.register .icon-circle { background: #2563eb; }
         .portal-card.login .icon-circle { background: #10b981; }
-        .portal-card.login .portal-label { color: #065f46; }
-
-        .portal-card.admin:hover { border-color: #ef4444; }
         .portal-card.admin .icon-circle { background: #ef4444; }
-        .portal-card.admin .portal-label { color: #991b1b; }
-
-        .portal-card.status:hover { border-color: #8b5cf6; }
         .portal-card.status .icon-circle { background: #8b5cf6; }
-        .portal-card.status .portal-label { color: #5b21b6; }
-
-        .portal-card.course:hover { border-color: #f59e0b; }
         .portal-card.course .icon-circle { background: #f59e0b; }
-        .portal-card.course .portal-label { color: #92400e; }
+
+        /* Quick Access gradient header */
+        .portal-header {
+            background: linear-gradient(90deg, #2563eb, #4f46e5);
+            padding: 24px 32px;
+        }
 
         /* Section badge */
         .section-badge {
@@ -226,21 +229,26 @@
         @media (max-width: 640px) {
             .portal-grid {
                 grid-template-columns: 1fr 1fr !important;
-                gap: 10px !important;
+                gap: 12px !important;
+            }
+            .portal-header {
+                padding: 18px 20px;
             }
             .portal-card {
-                padding: 14px 16px;
-                font-size: 0.9rem;
+                padding: 18px 12px;
             }
             .portal-card .icon-circle {
-                width: 32px;
-                height: 32px;
+                width: 46px;
+                height: 46px;
             }
             .portal-card .icon-circle i {
-                font-size: 0.85rem;
+                font-size: 1rem;
             }
             .portal-card .portal-label {
                 font-size: 0.9rem;
+            }
+            .portal-card .portal-desc {
+                font-size: 0.72rem;
             }
             .about-text {
                 font-size: 1rem;
@@ -399,85 +407,89 @@
     </section>
 
     <!-- ===== STUDENT PORTAL SECTION ===== -->
-    <!-- ===== STUDENT PORTAL SECTION ===== -->
     <section id="student-portal" class="py-16 bg-white">
         <div class="container mx-auto px-6">
             <div class="text-center mb-10">
-                <span class="inline-block bg-blue-50 text-blue-600 text-xs font-semibold px-4 py-1.5 rounded-full mb-3 tracking-wide uppercase">
+                <span class="section-badge fade-in">
                     <i class="fas fa-graduation-cap mr-1"></i> Student Portal
                 </span>
-                <h2 class="text-3xl font-bold text-gray-800 fade-in">
-                    Student Portal
+                <h2 class="portal-title text-4xl font-bold text-gray-800 mt-3 fade-in">
+                    Welcome to Student Portal
                 </h2>
-                <p class="text-gray-500 mt-2 fade-in">Access all student services in one place</p>
+                <p class="portal-subtitle text-xl text-gray-500 mt-2 fade-in">
+                    Register, login and manage your ICT training in one secure place.
+                </p>
             </div>
 
             <div class="max-w-4xl mx-auto">
-                <div class="bg-white rounded-2xl p-8 shadow-[0_4px_20px_rgba(0,0,0,0.04)] border border-gray-100/80 fade-in">
-                    
-                    <h3 class="text-lg font-bold text-gray-800 mb-2">Quick Access</h3>
-                    <p class="text-gray-500 text-sm mb-6">Select any service below</p>
+                <div class="bg-white rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] border border-gray-100/80 hover:shadow-[0_8px_40px_rgba(0,0,0,0.1)] transition-all duration-300 fade-in overflow-hidden">
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-                        <!-- Register -->
-                        <a href="{{ url_for('student_register') }}" 
-                           class="group bg-white border rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 p-5 text-center">
-                            <div class="w-14 h-14 rounded-xl bg-blue-600 mx-auto flex items-center justify-center group-hover:scale-110 transition">
-                                <i class="fas fa-user-plus text-white text-xl"></i>
-                            </div>
-                            <h4 class="font-bold text-gray-800 mt-3 text-sm">Register</h4>
-                            <p class="text-gray-500 text-xs mt-1">Create your student account</p>
-                        </a>
-
-                        <!-- Student Login -->
-                        <a href="{{ url_for('student_login') }}" 
-                           class="group bg-white border rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 p-5 text-center">
-                            <div class="w-14 h-14 rounded-xl bg-emerald-600 mx-auto flex items-center justify-center group-hover:scale-110 transition">
-                                <i class="fas fa-sign-in-alt text-white text-xl"></i>
-                            </div>
-                            <h4 class="font-bold text-gray-800 mt-3 text-sm">Student Login</h4>
-                            <p class="text-gray-500 text-xs mt-1">Access your dashboard</p>
-                        </a>
-
-                        <!-- Admin Login -->
-                        <a href="{{ url_for('admin_login') }}" 
-                           class="group bg-white border rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 p-5 text-center">
-                            <div class="w-14 h-14 rounded-xl bg-red-600 mx-auto flex items-center justify-center group-hover:scale-110 transition">
-                                <i class="fas fa-user-shield text-white text-xl"></i>
-                            </div>
-                            <h4 class="font-bold text-gray-800 mt-3 text-sm">Admin Login</h4>
-                            <p class="text-gray-500 text-xs mt-1">Administrator access</p>
-                        </a>
-
-                        <!-- Check Status -->
-                        <a href="{{ url_for('check_status') }}" 
-                           class="group bg-white border rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 p-5 text-center">
-                            <div class="w-14 h-14 rounded-xl bg-violet-600 mx-auto flex items-center justify-center group-hover:scale-110 transition">
-                                <i class="fas fa-search text-white text-xl"></i>
-                            </div>
-                            <h4 class="font-bold text-gray-800 mt-3 text-sm">Check Status</h4>
-                            <p class="text-gray-500 text-xs mt-1">Track your registration</p>
-                        </a>
-
-                        <!-- Course Content -->
-                        <a href="#courses" 
-                           class="group bg-white border rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 p-5 text-center">
-                            <div class="w-14 h-14 rounded-xl bg-amber-600 mx-auto flex items-center justify-center group-hover:scale-110 transition">
-                                <i class="fas fa-book text-white text-xl"></i>
-                            </div>
-                            <h4 class="font-bold text-gray-800 mt-3 text-sm">Course Content</h4>
-                            <p class="text-gray-500 text-xs mt-1">View available courses</p>
-                        </a>
+                    <!-- Gradient header banner -->
+                    <div class="portal-header">
+                        <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                            <i class="fas fa-th-large"></i> Quick Access
+                        </h3>
+                        <p class="text-blue-100 text-sm mt-1">Select any service below</p>
                     </div>
 
-                    <div class="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between flex-wrap gap-3">
-                        <p class="text-sm text-gray-500">
-                            <i class="fas fa-info-circle text-blue-400 mr-1.5"></i>
-                            Register for ICT training or monitor your application.
-                        </p>
-                        <span class="text-xs text-gray-400 bg-gray-50 px-3 py-1 rounded-full border border-gray-100">
-                            <i class="fas fa-lock text-gray-300 mr-1"></i> Secure Portal
-                        </span>
+                    <div class="p-8">
+                        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 portal-grid">
+                            <!-- Register -->
+                            <a href="{{ url_for('student_register') }}" class="portal-card register">
+                                <span class="icon-circle">
+                                    <i class="fas fa-user-plus"></i>
+                                </span>
+                                <span class="portal-label">Register</span>
+                                <span class="portal-desc">Create your student account</span>
+                            </a>
+
+                            <!-- Student Login -->
+                            <a href="{{ url_for('student_login') }}" class="portal-card login">
+                                <span class="icon-circle">
+                                    <i class="fas fa-sign-in-alt"></i>
+                                </span>
+                                <span class="portal-label">Student Login</span>
+                                <span class="portal-desc">Access your dashboard</span>
+                            </a>
+
+                            <!-- Admin Login -->
+                            <a href="{{ url_for('admin_login') }}" class="portal-card admin">
+                                <span class="icon-circle">
+                                    <i class="fas fa-user-shield"></i>
+                                </span>
+                                <span class="portal-label">Admin Login</span>
+                                <span class="portal-desc">Administrator access</span>
+                            </a>
+
+                            <!-- Check Status -->
+                            <a href="{{ url_for('check_status') }}" class="portal-card status">
+                                <span class="icon-circle">
+                                    <i class="fas fa-search"></i>
+                                </span>
+                                <span class="portal-label">Check Status</span>
+                                <span class="portal-desc">Track your registration</span>
+                            </a>
+
+                            <!-- Course Content -->
+                            <a href="#courses" class="portal-card course">
+                                <span class="icon-circle">
+                                    <i class="fas fa-book"></i>
+                                </span>
+                                <span class="portal-label">Course Content</span>
+                                <span class="portal-desc">View available courses</span>
+                            </a>
+                        </div>
+
+                        <!-- Footer -->
+                        <div class="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between flex-wrap gap-3">
+                            <p class="text-sm text-gray-500">
+                                <i class="fas fa-info-circle text-blue-400 mr-1.5"></i>
+                                Register for ICT training or monitor your application.
+                            </p>
+                            <span class="text-xs text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100">
+                                <i class="fas fa-lock text-emerald-500 mr-1"></i> Secure Portal
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
