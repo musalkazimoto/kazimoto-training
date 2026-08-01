@@ -267,6 +267,12 @@ def courses():
     """Course content page"""
     return render_template('index.html', show_course='networking')
 
+#=============Networking Essentials Route==========
+@app.route('/course/networking')
+def course_networking():
+    """Networking course content page"""
+    return render_template('course_networking.html')
+
 
 # ===== RUN APP =====
 
