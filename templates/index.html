@@ -399,77 +399,77 @@
     </section>
 
     <!-- ===== STUDENT PORTAL SECTION ===== -->
+    <!-- ===== STUDENT PORTAL SECTION ===== -->
     <section id="student-portal" class="py-16 bg-white">
         <div class="container mx-auto px-6">
             <div class="text-center mb-10">
-                <span class="section-badge fade-in">
+                <span class="inline-block bg-blue-50 text-blue-600 text-xs font-semibold px-4 py-1.5 rounded-full mb-3 tracking-wide uppercase">
                     <i class="fas fa-graduation-cap mr-1"></i> Student Portal
                 </span>
-                <h2 class="portal-title text-4xl font-bold text-gray-800 mt-3 fade-in">
-                    Welcome to Student Portal
+                <h2 class="text-3xl font-bold text-gray-800 fade-in">
+                    Student Portal
                 </h2>
-                <p class="portal-subtitle text-xl text-gray-500 mt-2 fade-in">
-                    Register, login and manage your ICT training in one secure place.
-                </p>
+                <p class="text-gray-500 mt-2 fade-in">Access all student services in one place</p>
             </div>
 
-            <div class="max-w-3xl mx-auto">
-                <div class="bg-white rounded-2xl p-8 shadow-[0_4px_20px_rgba(0,0,0,0.04)] border border-gray-100/80 hover:shadow-[0_8px_40px_rgba(0,0,0,0.06)] transition-all duration-300 fade-in">
+            <div class="max-w-4xl mx-auto">
+                <div class="bg-white rounded-2xl p-8 shadow-[0_4px_20px_rgba(0,0,0,0.04)] border border-gray-100/80 fade-in">
+                    
+                    <h3 class="text-lg font-bold text-gray-800 mb-2">Quick Access</h3>
+                    <p class="text-gray-500 text-sm mb-6">Select any service below</p>
 
-                    <h3 class="text-lg font-bold text-gray-800 mb-5 flex items-center gap-2.5">
-                        <span class="w-1 h-6 bg-blue-500 rounded-full"></span>
-                        Quick Access
-                    </h3>
-                    <p class="text-gray-500 text-sm mb-5">Select any service below</p>
-
-                    <div class="grid grid-cols-2 md:grid-cols-5 gap-3 portal-grid">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
                         <!-- Register -->
                         <a href="{{ url_for('student_register') }}" 
-                           class="portal-card register">
-                            <span class="icon-circle">
-                                <i class="fas fa-user-plus"></i>
-                            </span>
-                            <span class="portal-label">Register</span>
+                           class="group bg-white border rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 p-5 text-center">
+                            <div class="w-14 h-14 rounded-xl bg-blue-600 mx-auto flex items-center justify-center group-hover:scale-110 transition">
+                                <i class="fas fa-user-plus text-white text-xl"></i>
+                            </div>
+                            <h4 class="font-bold text-gray-800 mt-3 text-sm">Register</h4>
+                            <p class="text-gray-500 text-xs mt-1">Create your student account</p>
                         </a>
 
                         <!-- Student Login -->
                         <a href="{{ url_for('student_login') }}" 
-                           class="portal-card login">
-                            <span class="icon-circle">
-                                <i class="fas fa-sign-in-alt"></i>
-                            </span>
-                            <span class="portal-label">Student Login</span>
+                           class="group bg-white border rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 p-5 text-center">
+                            <div class="w-14 h-14 rounded-xl bg-emerald-600 mx-auto flex items-center justify-center group-hover:scale-110 transition">
+                                <i class="fas fa-sign-in-alt text-white text-xl"></i>
+                            </div>
+                            <h4 class="font-bold text-gray-800 mt-3 text-sm">Student Login</h4>
+                            <p class="text-gray-500 text-xs mt-1">Access your dashboard</p>
                         </a>
 
                         <!-- Admin Login -->
                         <a href="{{ url_for('admin_login') }}" 
-                           class="portal-card admin">
-                            <span class="icon-circle">
-                                <i class="fas fa-user-shield"></i>
-                            </span>
-                            <span class="portal-label">Admin Login</span>
+                           class="group bg-white border rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 p-5 text-center">
+                            <div class="w-14 h-14 rounded-xl bg-red-600 mx-auto flex items-center justify-center group-hover:scale-110 transition">
+                                <i class="fas fa-user-shield text-white text-xl"></i>
+                            </div>
+                            <h4 class="font-bold text-gray-800 mt-3 text-sm">Admin Login</h4>
+                            <p class="text-gray-500 text-xs mt-1">Administrator access</p>
                         </a>
 
                         <!-- Check Status -->
                         <a href="{{ url_for('check_status') }}" 
-                           class="portal-card status">
-                            <span class="icon-circle">
-                                <i class="fas fa-search"></i>
-                            </span>
-                            <span class="portal-label">Check Status</span>
+                           class="group bg-white border rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 p-5 text-center">
+                            <div class="w-14 h-14 rounded-xl bg-violet-600 mx-auto flex items-center justify-center group-hover:scale-110 transition">
+                                <i class="fas fa-search text-white text-xl"></i>
+                            </div>
+                            <h4 class="font-bold text-gray-800 mt-3 text-sm">Check Status</h4>
+                            <p class="text-gray-500 text-xs mt-1">Track your registration</p>
                         </a>
 
                         <!-- Course Content -->
                         <a href="#courses" 
-                           class="portal-card course">
-                            <span class="icon-circle">
-                                <i class="fas fa-book"></i>
-                            </span>
-                            <span class="portal-label">Course Content</span>
+                           class="group bg-white border rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 p-5 text-center">
+                            <div class="w-14 h-14 rounded-xl bg-amber-600 mx-auto flex items-center justify-center group-hover:scale-110 transition">
+                                <i class="fas fa-book text-white text-xl"></i>
+                            </div>
+                            <h4 class="font-bold text-gray-800 mt-3 text-sm">Course Content</h4>
+                            <p class="text-gray-500 text-xs mt-1">View available courses</p>
                         </a>
                     </div>
 
-                    <!-- Footer -->
                     <div class="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between flex-wrap gap-3">
                         <p class="text-sm text-gray-500">
                             <i class="fas fa-info-circle text-blue-400 mr-1.5"></i>
