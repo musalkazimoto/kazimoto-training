@@ -56,44 +56,79 @@
             100% { opacity: 1; transform: translateY(0); }
         }
 
-        /* ===== STUDENT PORTAL STYLES (Minimal) ===== */
+        /* ===== STUDENT PORTAL STYLES ===== */
         .portal-card {
+            background: #f9fafb;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            color: #374151;
             transition: all 0.25s ease;
-            border: 1px solid #f0f2f5;
+            text-decoration: none;
         }
 
         .portal-card:hover {
-            transform: translateY(-3px);
-            border-color: #e5e7eb;
+            border-color: #3b82f6;
+            background: #ffffff;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.08);
+            transform: translateY(-2px);
         }
 
         .portal-card .icon-circle {
-            width: 36px;
-            height: 36px;
+            width: 38px;
+            height: 38px;
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
-            transition: transform 0.25s ease;
         }
 
-        .portal-card:hover .icon-circle {
-            transform: scale(1.05);
+        .portal-card .icon-circle i {
+            font-size: 1rem;
+            color: white;
         }
 
         .portal-card .portal-label {
-            font-size: 0.85rem;
             font-weight: 600;
+            font-size: 1rem;
         }
 
+        /* Individual card colors */
+        .portal-card.register:hover { border-color: #3b82f6; }
+        .portal-card.register .icon-circle { background: #3b82f6; }
+        .portal-card.register .portal-label { color: #1e40af; }
+
+        .portal-card.login:hover { border-color: #10b981; }
+        .portal-card.login .icon-circle { background: #10b981; }
+        .portal-card.login .portal-label { color: #065f46; }
+
+        .portal-card.admin:hover { border-color: #ef4444; }
+        .portal-card.admin .icon-circle { background: #ef4444; }
+        .portal-card.admin .portal-label { color: #991b1b; }
+
+        .portal-card.status:hover { border-color: #8b5cf6; }
+        .portal-card.status .icon-circle { background: #8b5cf6; }
+        .portal-card.status .portal-label { color: #5b21b6; }
+
+        .portal-card.course:hover { border-color: #f59e0b; }
+        .portal-card.course .icon-circle { background: #f59e0b; }
+        .portal-card.course .portal-label { color: #92400e; }
+
+        /* Section badge */
         .section-badge {
             display: inline-block;
             background: #eff6ff;
-            color: #2563eb;
-            font-size: 0.7rem;
+            color: #3b82f6;
+            font-size: 0.8rem;
             font-weight: 700;
-            padding: 4px 16px;
+            padding: 6px 20px;
             border-radius: 50px;
             letter-spacing: 0.5px;
             text-transform: uppercase;
@@ -187,20 +222,25 @@
             margin: 0 auto;
         }
 
+        /* Media Queries */
         @media (max-width: 640px) {
             .portal-grid {
                 grid-template-columns: 1fr 1fr !important;
                 gap: 10px !important;
             }
             .portal-card {
-                padding: 12px 14px !important;
+                padding: 14px 16px;
+                font-size: 0.9rem;
             }
             .portal-card .icon-circle {
-                width: 30px;
-                height: 30px;
+                width: 32px;
+                height: 32px;
+            }
+            .portal-card .icon-circle i {
+                font-size: 0.85rem;
             }
             .portal-card .portal-label {
-                font-size: 0.75rem;
+                font-size: 0.9rem;
             }
             .about-text {
                 font-size: 1rem;
@@ -311,7 +351,7 @@
         <div class="container mx-auto px-6">
             <h2 class="text-5xl font-bold text-center text-gray-800 mb-12 fade-in">My Services</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Services -->
+                <!-- Services (kept the same) -->
                 <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 fade-in">
                     <div class="text-blue-600 text-4xl mb-4">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" /></svg>
@@ -358,74 +398,78 @@
         </div>
     </section>
 
-    <!-- ===== STUDENT PORTAL SECTION (Minimal Style) ===== -->
+    <!-- ===== STUDENT PORTAL SECTION ===== -->
     <section id="student-portal" class="py-16 bg-white">
         <div class="container mx-auto px-6">
             <div class="text-center mb-10">
                 <span class="section-badge fade-in">
                     <i class="fas fa-graduation-cap mr-1"></i> Student Portal
                 </span>
-                <h2 class="text-3xl font-bold text-gray-800 mt-3 fade-in">
-                    Student Portal
+                <h2 class="portal-title text-4xl font-bold text-gray-800 mt-3 fade-in">
+                    Welcome to Student Portal
                 </h2>
-                <p class="text-gray-500 mt-2 fade-in">Access all student services in one place</p>
+                <p class="portal-subtitle text-xl text-gray-500 mt-2 fade-in">
+                    Register, login and manage your ICT training in one secure place.
+                </p>
             </div>
 
             <div class="max-w-3xl mx-auto">
                 <div class="bg-white rounded-2xl p-8 shadow-[0_4px_20px_rgba(0,0,0,0.04)] border border-gray-100/80 hover:shadow-[0_8px_40px_rgba(0,0,0,0.06)] transition-all duration-300 fade-in">
-                    
-                    <h3 class="text-base font-bold text-gray-800 mb-5 flex items-center gap-2.5">
-                        <span class="w-1 h-5 bg-blue-500 rounded-full"></span>
+
+                    <h3 class="text-lg font-bold text-gray-800 mb-5 flex items-center gap-2.5">
+                        <span class="w-1 h-6 bg-blue-500 rounded-full"></span>
                         Quick Access
                     </h3>
+                    <p class="text-gray-500 text-sm mb-5">Select any service below</p>
 
                     <div class="grid grid-cols-2 md:grid-cols-5 gap-3 portal-grid">
                         <!-- Register -->
                         <a href="{{ url_for('student_register') }}" 
-                           class="portal-card flex items-center justify-center gap-2.5 px-4 py-3 rounded-xl bg-blue-50/60 text-blue-600 font-semibold text-sm border border-blue-100/60 hover:bg-blue-100/60 hover:border-blue-200 hover:-translate-y-0.5 transition-all duration-200">
-                            <span class="icon-circle bg-blue-500 shadow-sm shadow-blue-200">
-                                <i class="fas fa-user-plus text-white text-xs"></i>
+                           class="portal-card register">
+                            <span class="icon-circle">
+                                <i class="fas fa-user-plus"></i>
                             </span>
                             <span class="portal-label">Register</span>
                         </a>
 
                         <!-- Student Login -->
                         <a href="{{ url_for('student_login') }}" 
-                           class="portal-card flex items-center justify-center gap-2.5 px-4 py-3 rounded-xl bg-emerald-50/60 text-emerald-600 font-semibold text-sm border border-emerald-100/60 hover:bg-emerald-100/60 hover:border-emerald-200 hover:-translate-y-0.5 transition-all duration-200">
-                            <span class="icon-circle bg-emerald-500 shadow-sm shadow-emerald-200">
-                                <i class="fas fa-sign-in-alt text-white text-xs"></i>
+                           class="portal-card login">
+                            <span class="icon-circle">
+                                <i class="fas fa-sign-in-alt"></i>
                             </span>
                             <span class="portal-label">Student Login</span>
                         </a>
 
                         <!-- Admin Login -->
                         <a href="{{ url_for('admin_login') }}" 
-                           class="portal-card flex items-center justify-center gap-2.5 px-4 py-3 rounded-xl bg-red-50/60 text-red-600 font-semibold text-sm border border-red-100/60 hover:bg-red-100/60 hover:border-red-200 hover:-translate-y-0.5 transition-all duration-200">
-                            <span class="icon-circle bg-red-500 shadow-sm shadow-red-200">
-                                <i class="fas fa-user-shield text-white text-xs"></i>
+                           class="portal-card admin">
+                            <span class="icon-circle">
+                                <i class="fas fa-user-shield"></i>
                             </span>
                             <span class="portal-label">Admin Login</span>
                         </a>
 
                         <!-- Check Status -->
                         <a href="{{ url_for('check_status') }}" 
-                           class="portal-card flex items-center justify-center gap-2.5 px-4 py-3 rounded-xl bg-purple-50/60 text-purple-600 font-semibold text-sm border border-purple-100/60 hover:bg-purple-100/60 hover:border-purple-200 hover:-translate-y-0.5 transition-all duration-200">
-                            <span class="icon-circle bg-purple-500 shadow-sm shadow-purple-200">
-                                <i class="fas fa-search text-white text-xs"></i>
+                           class="portal-card status">
+                            <span class="icon-circle">
+                                <i class="fas fa-search"></i>
                             </span>
                             <span class="portal-label">Check Status</span>
                         </a>
 
                         <!-- Course Content -->
                         <a href="#courses" 
-                           class="portal-card flex items-center justify-center gap-2.5 px-4 py-3 rounded-xl bg-amber-50/60 text-amber-600 font-semibold text-sm border border-amber-100/60 hover:bg-amber-100/60 hover:border-amber-200 hover:-translate-y-0.5 transition-all duration-200">
-                            <span class="icon-circle bg-amber-500 shadow-sm shadow-amber-200">
-                                <i class="fas fa-book text-white text-xs"></i>
+                           class="portal-card course">
+                            <span class="icon-circle">
+                                <i class="fas fa-book"></i>
                             </span>
                             <span class="portal-label">Course Content</span>
                         </a>
                     </div>
 
+                    <!-- Footer -->
                     <div class="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between flex-wrap gap-3">
                         <p class="text-sm text-gray-500">
                             <i class="fas fa-info-circle text-blue-400 mr-1.5"></i>
@@ -452,7 +496,7 @@
             </div>
 
             <div class="course-grid">
-                <!-- Networking Essentials -->
+                <!-- Course 1: Networking Essentials -->
                 <a href="{{ url_for('course_networking') }}" class="course-card fade-in">
                     <div class="course-icon" style="background: linear-gradient(135deg, #3b82f6, #2563eb);">
                         <i class="fas fa-network-wired"></i>
@@ -462,7 +506,7 @@
                     <span class="arrow">View Course <i class="fas fa-arrow-right"></i></span>
                 </a>
 
-                <!-- Software Development -->
+                <!-- Course 2: Software Development -->
                 <a href="#" class="course-card fade-in">
                     <div class="course-icon" style="background: linear-gradient(135deg, #10b981, #059669);">
                         <i class="fas fa-code"></i>
@@ -472,7 +516,7 @@
                     <span class="arrow">Coming Soon <i class="fas fa-arrow-right"></i></span>
                 </a>
 
-                <!-- Artificial Intelligence -->
+                <!-- Course 3: Artificial Intelligence -->
                 <a href="#" class="course-card fade-in">
                     <div class="course-icon" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);">
                         <i class="fas fa-robot"></i>
@@ -482,7 +526,7 @@
                     <span class="arrow">Coming Soon <i class="fas fa-arrow-right"></i></span>
                 </a>
 
-                <!-- Cybersecurity -->
+                <!-- Course 4: Cybersecurity -->
                 <a href="#" class="course-card fade-in">
                     <div class="course-icon" style="background: linear-gradient(135deg, #ef4444, #dc2626);">
                         <i class="fas fa-shield-alt"></i>
@@ -492,7 +536,7 @@
                     <span class="arrow">Coming Soon <i class="fas fa-arrow-right"></i></span>
                 </a>
 
-                <!-- Full Stack Web Development -->
+                <!-- Course 5: Full Stack Web Development -->
                 <a href="#" class="course-card fade-in">
                     <div class="course-icon" style="background: linear-gradient(135deg, #f59e0b, #d97706);">
                         <i class="fas fa-laptop-code"></i>
@@ -502,7 +546,7 @@
                     <span class="arrow">Coming Soon <i class="fas fa-arrow-right"></i></span>
                 </a>
 
-                <!-- Linux Server Administration -->
+                <!-- Course 6: Linux Server Administration -->
                 <a href="#" class="course-card fade-in">
                     <div class="course-icon" style="background: linear-gradient(135deg, #06b6d4, #0891b2);">
                         <i class="fab fa-linux"></i>
