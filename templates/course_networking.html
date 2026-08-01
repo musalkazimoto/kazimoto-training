@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        body { font-family: 'Inter', sans-serif; background: #f8fafc; }
+        body { font-family: 'Inter', sans-serif; background: #f1f5f9; }
         .fade-in {
             opacity: 0;
             transform: translateY(20px);
@@ -21,36 +21,61 @@
 
         .lab-card {
             background: white;
-            border-radius: 12px;
-            padding: 25px;
-            margin-bottom: 20px;
-            border-left: 5px solid #3b82f6;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid #e2e8f0;
             transition: all 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
         }
 
         .lab-card:hover {
-            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-            transform: translateY(-2px);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+            border-color: #3b82f6;
+        }
+
+        .lab-card .lab-number {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            color: #1a2332;
+            margin-bottom: 10px;
+        }
+
+        .lab-card .lab-number .num {
+            background: #3b82f6;
+            color: white;
+            padding: 2px 12px;
+            border-radius: 50px;
+            font-size: 0.7rem;
         }
 
         .lab-card .lab-title {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 700;
-            color: #1a2332;
-            margin-bottom: 8px;
+            color: #0d1b2a;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .lab-card .lab-title i {
             color: #3b82f6;
-            margin-right: 10px;
+            font-size: 1rem;
         }
 
         .lab-card .lab-objective {
             color: #4b5563;
-            line-height: 1.8;
+            line-height: 1.7;
+            font-size: 0.88rem;
+            flex-grow: 1;
             margin-bottom: 12px;
-            font-size: 0.95rem;
         }
 
         .lab-card .lab-objective strong {
@@ -60,16 +85,25 @@
         .lab-card .lab-skills {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 6px;
+            margin-top: auto;
+            padding-top: 12px;
+            border-top: 1px solid #f1f5f9;
         }
 
         .lab-card .lab-skills span {
             background: #eff6ff;
             color: #1e40af;
-            padding: 4px 14px;
+            padding: 3px 12px;
             border-radius: 50px;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: 600;
+        }
+
+        .lab-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
         }
 
         .back-btn {
@@ -82,12 +116,12 @@
             padding: 10px 24px;
             border-radius: 10px;
             transition: all 0.3s ease;
-            border: 2px solid #e5e7eb;
+            border: 2px solid #e2e8f0;
             background: white;
         }
 
         .back-btn:hover {
-            background: #f3f4f6;
+            background: #f8fafc;
             border-color: #3b82f6;
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
@@ -97,32 +131,73 @@
             background: linear-gradient(135deg, #0d1b2a 0%, #1b3a4b 50%, #0d47a1 100%);
         }
 
-        .lab-number {
-            display: inline-block;
-            background: #3b82f6;
-            color: white;
-            font-weight: 700;
-            font-size: 0.7rem;
-            padding: 2px 10px;
-            border-radius: 50px;
-            margin-right: 8px;
+        .info-box {
+            background: white;
+            border-radius: 16px;
+            padding: 28px 32px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
         }
 
-        @media (max-width: 640px) {
-            .lab-card {
-                padding: 18px;
+        @media (max-width: 768px) {
+            .lab-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
             }
+            .lab-card {
+                padding: 20px;
+            }
+            .info-box {
+                padding: 20px;
+            }
+            .header-gradient h1 {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
             .lab-card .lab-title {
                 font-size: 1rem;
             }
             .lab-card .lab-objective {
-                font-size: 0.88rem;
+                font-size: 0.82rem;
             }
             .lab-card .lab-skills span {
-                font-size: 0.7rem;
-                padding: 3px 10px;
+                font-size: 0.65rem;
+                padding: 2px 10px;
             }
         }
+
+        /* Color variants for labs */
+        .lab-card.color-1 .lab-number .num { background: #3b82f6; }
+        .lab-card.color-1 { border-top: 4px solid #3b82f6; }
+
+        .lab-card.color-2 .lab-number .num { background: #f59e0b; }
+        .lab-card.color-2 { border-top: 4px solid #f59e0b; }
+
+        .lab-card.color-3 .lab-number .num { background: #10b981; }
+        .lab-card.color-3 { border-top: 4px solid #10b981; }
+
+        .lab-card.color-4 .lab-number .num { background: #8b5cf6; }
+        .lab-card.color-4 { border-top: 4px solid #8b5cf6; }
+
+        .lab-card.color-5 .lab-number .num { background: #ef4444; }
+        .lab-card.color-5 { border-top: 4px solid #ef4444; }
+
+        .lab-card.color-6 .lab-number .num { background: #06b6d4; }
+        .lab-card.color-6 { border-top: 4px solid #06b6d4; }
+
+        .lab-card.color-7 .lab-number .num { background: #3b82f6; }
+        .lab-card.color-7 { border-top: 4px solid #3b82f6; }
+
+        .lab-card.color-8 .lab-number .num { background: #8b5cf6; }
+        .lab-card.color-8 { border-top: 4px solid #8b5cf6; }
+
+        .lab-card.color-9 .lab-number .num { background: #ef4444; }
+        .lab-card.color-9 { border-top: 4px solid #ef4444; }
+
+        .lab-card.color-10 .lab-number .num { background: #10b981; }
+        .lab-card.color-10 { border-top: 4px solid #10b981; }
     </style>
 </head>
 <body>
@@ -147,17 +222,17 @@
 
     <!-- ===== MAIN CONTENT ===== -->
     <section class="py-12">
-        <div class="container mx-auto px-6 max-w-4xl">
+        <div class="container mx-auto px-6 max-w-6xl">
 
             <!-- Info Box -->
-            <div class="bg-white rounded-2xl p-8 shadow-lg mb-10 border border-gray-100">
+            <div class="info-box fade-in mb-10">
                 <div class="flex items-start gap-4">
                     <div class="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center flex-shrink-0">
                         <i class="fas fa-graduation-cap text-blue-600 text-xl"></i>
                     </div>
                     <div>
-                        <h2 class="text-2xl font-bold text-gray-800">Complete Networking Hands-On Lab Manual</h2>
-                        <p class="text-gray-600 text-lg mt-1">
+                        <h2 class="text-xl font-bold text-gray-800">Complete Networking Hands-On Lab Manual</h2>
+                        <p class="text-gray-600 text-base mt-1">
                             For University Students (Computer Science, IT, Computer Engineering, ICT and Telecommunication Eng)
                         </p>
                         <p class="text-sm text-gray-400 mt-2">
@@ -167,216 +242,239 @@
                 </div>
             </div>
 
-            <!-- ===== LAB 1 ===== -->
-            <div class="lab-card fade-in">
-                <div class="lab-title">
-                    <span class="lab-number">LAB 1</span>
-                    <i class="fas fa-book"></i> Network Cabling & Termination
-                </div>
-                <div class="lab-objective">
-                    <strong>Lab Objective</strong><br>
-                    Students will learn the fundamental skills of creating and terminating network cables. By the end of this lab, students will be able to identify different cable types, properly strip and prepare cables, terminate RJ45 connectors using both T568A and T568B standards, create straight-through, crossover, and rollover cables, test cables using a cable tester, and troubleshoot common cabling issues. Students will also understand the importance of proper cable installation techniques including maintaining bend radius and using appropriate cable management.
-                </div>
-                <div class="lab-skills">
-                    <span>Cable stripping</span>
-                    <span>RJ45 termination</span>
-                    <span>T568A/T568B standards</span>
-                    <span>Straight-through/Crossover/Rollover cables</span>
-                    <span>Cable testing</span>
-                    <span>Troubleshooting</span>
-                </div>
-            </div>
+            <!-- ===== LABS GRID (2 Columns) ===== -->
+            <div class="lab-grid">
 
-            <!-- ===== LAB 2 ===== -->
-            <div class="lab-card fade-in" style="border-left-color: #f59e0b;">
-                <div class="lab-title">
-                    <span class="lab-number" style="background: #f59e0b;">LAB 2</span>
-                    <i class="fas fa-book"></i> Cable Trunking & Raceway Installation
+                <!-- LAB 1 -->
+                <div class="lab-card color-1 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 01</span>
+                        <span style="color: #6b7280; font-weight: 400;">Foundational</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-plug"></i> Network Cabling & Termination
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will learn the fundamental skills of creating and terminating network cables. By the end of this lab, students will be able to identify different cable types, properly strip and prepare cables, terminate RJ45 connectors using both T568A and T568B standards, create straight-through, crossover, and rollover cables, test cables using a cable tester, and troubleshoot common cabling issues. Students will also understand the importance of proper cable installation techniques including maintaining bend radius and using appropriate cable management.
+                    </div>
+                    <div class="lab-skills">
+                        <span>Cable stripping</span>
+                        <span>RJ45 termination</span>
+                        <span>T568A/T568B standards</span>
+                        <span>Straight-through/Crossover/Rollover</span>
+                        <span>Cable testing</span>
+                        <span>Troubleshooting</span>
+                    </div>
                 </div>
-                <div class="lab-objective">
-                    <strong>Lab Objective</strong><br>
-                    Students will learn how to install cable trunking, raceways, and cable trays for organized and professional network cable management. By the end of this lab, students will be able to select appropriate trunking types for different applications, measure and cut trunking accurately, install surface-mounted trunking on walls, install underfloor trunking, lay cables neatly within trunking systems, install raceways and conduits, apply proper cable segregation rules (power vs data), install cable ladders and trays in server rooms, and implement proper cable management techniques. Students will also understand the importance of trunking for cable protection, organization, aesthetics, and future scalability.
-                </div>
-                <div class="lab-skills">
-                    <span>Trunking selection</span>
-                    <span>Trunking cutting and installation</span>
-                    <span>Surface trunking installation</span>
-                    <span>Underfloor trunking</span>
-                    <span>Cable segregation (power/data separation)</span>
-                    <span>Raceway installation</span>
-                    <span>Cable ladder/tray installation</span>
-                    <span>Cable management</span>
-                    <span>Fire stopping</span>
-                </div>
-            </div>
 
-            <!-- ===== LAB 3 ===== -->
-            <div class="lab-card fade-in" style="border-left-color: #10b981;">
-                <div class="lab-title">
-                    <span class="lab-number" style="background: #10b981;">LAB 3</span>
-                    <i class="fas fa-book"></i> Ethernet Cable Jointing & Repair
+                <!-- LAB 2 -->
+                <div class="lab-card color-2 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 02</span>
+                        <span style="color: #6b7280; font-weight: 400;">Infrastructure</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-tools"></i> Ethernet Cable Jointing & Repair
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will learn how to repair damaged Ethernet cables and create cable joints for network installations. By the end of this lab, students will be able to identify different types of cable damage, properly prepare cable ends for jointing, use RJ45 couplers for indoor repairs, use gel-filled connectors for waterproof outdoor joints, apply heat shrink splices for permanent repairs, test the integrity of cable joints using cable testers, and properly document cable repairs for future reference. Students will also understand the importance of maintaining cable infrastructure and the cost-effectiveness of proper cable repair techniques.
+                    </div>
+                    <div class="lab-skills">
+                        <span>Cable damage identification</span>
+                        <span>RJ45 coupler jointing</span>
+                        <span>Gel-filled connectors</span>
+                        <span>Heat shrink splicing</span>
+                        <span>Cable testing</span>
+                        <span>Repair documentation</span>
+                    </div>
                 </div>
-                <div class="lab-objective">
-                    <strong>Lab Objective</strong><br>
-                    Students will learn how to repair damaged Ethernet cables and create cable joints for network installations. By the end of this lab, students will be able to identify different types of cable damage, properly prepare cable ends for jointing, use RJ45 couplers for indoor repairs, use gel-filled connectors for waterproof outdoor joints, apply heat shrink splices for permanent repairs, test the integrity of cable joints using cable testers, and properly document cable repairs for future reference. Students will also understand the importance of maintaining cable infrastructure and the cost-effectiveness of proper cable repair techniques.
-                </div>
-                <div class="lab-skills">
-                    <span>Cable damage identification</span>
-                    <span>RJ45 coupler jointing</span>
-                    <span>Gel-filled connector usage</span>
-                    <span>Heat shrink splicing</span>
-                    <span>Cable testing</span>
-                    <span>Repair documentation</span>
-                </div>
-            </div>
 
-            <!-- ===== LAB 4 ===== -->
-            <div class="lab-card fade-in" style="border-left-color: #8b5cf6;">
-                <div class="lab-title">
-                    <span class="lab-number" style="background: #8b5cf6;">LAB 4</span>
-                    <i class="fas fa-book"></i> Face Plate & Keystone Installation
+                <!-- LAB 3 -->
+                <div class="lab-card color-3 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 03</span>
+                        <span style="color: #6b7280; font-weight: 400;">Infrastructure</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-building"></i> Cable Trunking & Raceway Installation
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will learn how to install cable trunking, raceways, and cable trays for organized and professional network cable management. By the end of this lab, students will be able to select appropriate trunking types for different applications, measure and cut trunking accurately, install surface-mounted trunking on walls, install underfloor trunking, lay cables neatly within trunking systems, install raceways and conduits, apply proper cable segregation rules (power vs data), install cable ladders and trays in server rooms, and implement proper cable management techniques. Students will also understand the importance of trunking for cable protection, organization, aesthetics, and future scalability.
+                    </div>
+                    <div class="lab-skills">
+                        <span>Trunking selection</span>
+                        <span>Trunking cutting/installation</span>
+                        <span>Surface/underfloor trunking</span>
+                        <span>Cable segregation</span>
+                        <span>Raceway installation</span>
+                        <span>Cable ladder/tray</span>
+                        <span>Fire stopping</span>
+                    </div>
                 </div>
-                <div class="lab-objective">
-                    <strong>Lab Objective</strong><br>
-                    Students will learn the proper techniques for installing wall face plates and terminating keystone jacks. By the end of this lab, students will be able to identify different types of face plates and keystone jacks, properly terminate keystone jacks using the T568B wiring standard, install face plates on wall boxes, apply proper labeling conventions, and test their installations using cable testers. Students will also understand the importance of color coding and documentation in professional network installations.
-                </div>
-                <div class="lab-skills">
-                    <span>Keystone jack termination</span>
-                    <span>Punch down tool usage</span>
-                    <span>Face plate mounting</span>
-                    <span>Color coding</span>
-                    <span>Labeling conventions</span>
-                    <span>Cable testing</span>
-                </div>
-            </div>
 
-            <!-- ===== LAB 5 ===== -->
-            <div class="lab-card fade-in" style="border-left-color: #ef4444;">
-                <div class="lab-title">
-                    <span class="lab-number" style="background: #ef4444;">LAB 5</span>
-                    <i class="fas fa-book"></i> Patch Panel & Cable Management
+                <!-- LAB 4 -->
+                <div class="lab-card color-4 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 04</span>
+                        <span style="color: #6b7280; font-weight: 400;">Infrastructure</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-plug"></i> Face Plate & Keystone Installation
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will learn the proper techniques for installing wall face plates and terminating keystone jacks. By the end of this lab, students will be able to identify different types of face plates and keystone jacks, properly terminate keystone jacks using the T568B wiring standard, install face plates on wall boxes, apply proper labeling conventions, and test their installations using cable testers. Students will also understand the importance of color coding and documentation in professional network installations.
+                    </div>
+                    <div class="lab-skills">
+                        <span>Keystone jack termination</span>
+                        <span>Punch down tool usage</span>
+                        <span>Face plate mounting</span>
+                        <span>Color coding</span>
+                        <span>Labeling conventions</span>
+                        <span>Cable testing</span>
+                    </div>
                 </div>
-                <div class="lab-objective">
-                    <strong>Lab Objective</strong><br>
-                    Students will learn how to properly install and terminate patch panels in a network rack environment. By the end of this lab, students will be able to mount a patch panel in a rack, terminate cables to the patch panel using the T568B standard, organize cables using proper cable management techniques, label all connections according to professional standards, and test the completed installation. Students will also understand the importance of neat cable organization for maintainability and troubleshooting in enterprise networks.
-                </div>
-                <div class="lab-skills">
-                    <span>Patch panel mounting</span>
-                    <span>Cable termination</span>
-                    <span>110 punch down tool</span>
-                    <span>Cable management</span>
-                    <span>Velcro bundling</span>
-                    <span>Labeling</span>
-                    <span>Cable testing</span>
-                </div>
-            </div>
 
-            <!-- ===== LAB 6 ===== -->
-            <div class="lab-card fade-in" style="border-left-color: #06b6d4;">
-                <div class="lab-title">
-                    <span class="lab-number" style="background: #06b6d4;">LAB 6</span>
-                    <i class="fas fa-book"></i> Cabinet/Rack Installation
+                <!-- LAB 5 -->
+                <div class="lab-card color-5 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 05</span>
+                        <span style="color: #6b7280; font-weight: 400;">Infrastructure</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-server"></i> Patch Panel & Cable Management
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will learn how to properly install and terminate patch panels in a network rack environment. By the end of this lab, students will be able to mount a patch panel in a rack, terminate cables to the patch panel using the T568B standard, organize cables using proper cable management techniques, label all connections according to professional standards, and test the completed installation. Students will also understand the importance of neat cable organization for maintainability and troubleshooting in enterprise networks.
+                    </div>
+                    <div class="lab-skills">
+                        <span>Patch panel mounting</span>
+                        <span>Cable termination</span>
+                        <span>110 punch down tool</span>
+                        <span>Cable management</span>
+                        <span>Velcro bundling</span>
+                        <span>Labeling</span>
+                        <span>Cable testing</span>
+                    </div>
                 </div>
-                <div class="lab-objective">
-                    <strong>Lab Objective</strong><br>
-                    Students will learn the complete process of installing a network cabinet or server rack. By the end of this lab, students will be able to assemble a server rack, properly position and level it in the designated location, install equipment in the rack using proper rack units and spacing, manage power distribution, ensure proper grounding, and organize cables for optimal airflow and accessibility. Students will also understand the importance of proper rack placement for cooling, maintenance, and scalability in network infrastructure.
-                </div>
-                <div class="lab-skills">
-                    <span>Rack assembly and leveling</span>
-                    <span>Equipment mounting</span>
-                    <span>Rack unit spacing</span>
-                    <span>Power distribution</span>
-                    <span>Grounding</span>
-                    <span>Cable management</span>
-                    <span>Cooling and airflow planning</span>
-                </div>
-            </div>
 
-            <!-- ===== LAB 7 ===== -->
-            <div class="lab-card fade-in" style="border-left-color: #3b82f6;">
-                <div class="lab-title">
-                    <span class="lab-number">LAB 7</span>
-                    <i class="fas fa-book"></i> Switch Installation & VLAN Configuration
+                <!-- LAB 6 -->
+                <div class="lab-card color-6 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 06</span>
+                        <span style="color: #6b7280; font-weight: 400;">Infrastructure</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-warehouse"></i> Cabinet/Rack Installation
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will learn the complete process of installing a network cabinet or server rack. By the end of this lab, students will be able to assemble a server rack, properly position and level it in the designated location, install equipment in the rack using proper rack units and spacing, manage power distribution, ensure proper grounding, and organize cables for optimal airflow and accessibility. Students will also understand the importance of proper rack placement for cooling, maintenance, and scalability in network infrastructure.
+                    </div>
+                    <div class="lab-skills">
+                        <span>Rack assembly and leveling</span>
+                        <span>Equipment mounting</span>
+                        <span>Rack unit spacing</span>
+                        <span>Power distribution</span>
+                        <span>Grounding</span>
+                        <span>Cable management</span>
+                        <span>Cooling and airflow planning</span>
+                    </div>
                 </div>
-                <div class="lab-objective">
-                    <strong>Lab Objective</strong><br>
-                    Students will learn how to install and configure network switches in a structured network environment. By the end of this lab, students will be able to perform initial switch configuration including hostname, passwords, and management IP, create and configure VLANs for network segmentation, configure trunk ports for inter-switch connectivity, implement inter-VLAN routing using router-on-a-stick or layer 3 switching, configure DHCP services, and verify network connectivity across all VLANs. Students will also understand the security benefits of network segmentation and VLAN implementation.
-                </div>
-                <div class="lab-skills">
-                    <span>Switch initial configuration</span>
-                    <span>VLAN creation and assignment</span>
-                    <span>Trunk configuration</span>
-                    <span>Inter-VLAN routing</span>
-                    <span>DHCP configuration</span>
-                    <span>Network verification and testing</span>
-                </div>
-            </div>
 
-            <!-- ===== LAB 8 ===== -->
-            <div class="lab-card fade-in" style="border-left-color: #8b5cf6;">
-                <div class="lab-title">
-                    <span class="lab-number" style="background: #8b5cf6;">LAB 8</span>
-                    <i class="fas fa-book"></i> Router Installation & Configuration
+                <!-- LAB 7 -->
+                <div class="lab-card color-7 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 07</span>
+                        <span style="color: #6b7280; font-weight: 400;">Switching</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-network-wired"></i> Switch Installation & VLAN Configuration
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will learn how to install and configure network switches in a structured network environment. By the end of this lab, students will be able to perform initial switch configuration including hostname, passwords, and management IP, create and configure VLANs for network segmentation, configure trunk ports for inter-switch connectivity, implement inter-VLAN routing using router-on-a-stick or layer 3 switching, configure DHCP services, and verify network connectivity across all VLANs. Students will also understand the security benefits of network segmentation and VLAN implementation.
+                    </div>
+                    <div class="lab-skills">
+                        <span>Switch initial configuration</span>
+                        <span>VLAN creation and assignment</span>
+                        <span>Trunk configuration</span>
+                        <span>Inter-VLAN routing</span>
+                        <span>DHCP configuration</span>
+                        <span>Network verification and testing</span>
+                    </div>
                 </div>
-                <div class="lab-objective">
-                    <strong>Lab Objective</strong><br>
-                    Students will learn how to install and configure routers to enable network connectivity between different networks. By the end of this lab, students will be able to perform initial router configuration including hostname, passwords, and interface IP addressing, configure static routes for fixed network paths, implement dynamic routing protocols (RIP and OSPF) for automatic route learning, configure access control lists (ACLs) for traffic filtering, implement NAT for internet connectivity, and verify routing functionality through ping and traceroute tests. Students will also understand the differences between static and dynamic routing and when to use each approach.
-                </div>
-                <div class="lab-skills">
-                    <span>Router initial configuration</span>
-                    <span>Static routing</span>
-                    <span>Dynamic routing (RIP/OSPF)</span>
-                    <span>Access Control Lists (ACL)</span>
-                    <span>NAT configuration</span>
-                    <span>Route verification and troubleshooting</span>
-                </div>
-            </div>
 
-            <!-- ===== LAB 9 ===== -->
-            <div class="lab-card fade-in" style="border-left-color: #ef4444;">
-                <div class="lab-title">
-                    <span class="lab-number" style="background: #ef4444;">LAB 9</span>
-                    <i class="fas fa-book"></i> Firewall Installation & Configuration
+                <!-- LAB 8 -->
+                <div class="lab-card color-8 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 08</span>
+                        <span style="color: #6b7280; font-weight: 400;">Routing</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-route"></i> Router Installation & Configuration
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will learn how to install and configure routers to enable network connectivity between different networks. By the end of this lab, students will be able to perform initial router configuration including hostname, passwords, and interface IP addressing, configure static routes for fixed network paths, implement dynamic routing protocols (RIP and OSPF) for automatic route learning, configure access control lists (ACLs) for traffic filtering, implement NAT for internet connectivity, and verify routing functionality through ping and traceroute tests. Students will also understand the differences between static and dynamic routing and when to use each approach.
+                    </div>
+                    <div class="lab-skills">
+                        <span>Router initial configuration</span>
+                        <span>Static routing</span>
+                        <span>Dynamic routing (RIP/OSPF)</span>
+                        <span>Access Control Lists (ACL)</span>
+                        <span>NAT configuration</span>
+                        <span>Route verification and troubleshooting</span>
+                    </div>
                 </div>
-                <div class="lab-objective">
-                    <strong>Lab Objective</strong><br>
-                    Students will learn how to install and configure a firewall to secure a network environment. By the end of this lab, students will be able to install pfSense/OPNsense firewall software, configure network interfaces for WAN, LAN, and DMZ zones, implement firewall rules to control traffic flow between zones, configure NAT and port forwarding for public services, set up site-to-site VPN connectivity, implement traffic shaping for bandwidth management, and monitor firewall logs for security events. Students will also understand the importance of defense-in-depth and network security best practices.
-                </div>
-                <div class="lab-skills">
-                    <span>Firewall installation</span>
-                    <span>Interface configuration</span>
-                    <span>Firewall rule creation</span>
-                    <span>NAT and port forwarding</span>
-                    <span>VPN configuration</span>
-                    <span>Traffic shaping</span>
-                    <span>Security log monitoring</span>
-                </div>
-            </div>
 
-            <!-- ===== LAB 10 ===== -->
-            <div class="lab-card fade-in" style="border-left-color: #10b981;">
-                <div class="lab-title">
-                    <span class="lab-number" style="background: #10b981;">LAB 10</span>
-                    <i class="fas fa-book"></i> Complete Network Installation (Capstone)
+                <!-- LAB 9 -->
+                <div class="lab-card color-9 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 09</span>
+                        <span style="color: #6b7280; font-weight: 400;">Security</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-shield-alt"></i> Firewall Installation & Configuration
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will learn how to install and configure a firewall to secure a network environment. By the end of this lab, students will be able to install pfSense/OPNsense firewall software, configure network interfaces for WAN, LAN, and DMZ zones, implement firewall rules to control traffic flow between zones, configure NAT and port forwarding for public services, set up site-to-site VPN connectivity, implement traffic shaping for bandwidth management, and monitor firewall logs for security events. Students will also understand the importance of defense-in-depth and network security best practices.
+                    </div>
+                    <div class="lab-skills">
+                        <span>Firewall installation</span>
+                        <span>Interface configuration</span>
+                        <span>Firewall rule creation</span>
+                        <span>NAT and port forwarding</span>
+                        <span>VPN configuration</span>
+                        <span>Traffic shaping</span>
+                        <span>Security log monitoring</span>
+                    </div>
                 </div>
-                <div class="lab-objective">
-                    <strong>Lab Objective</strong><br>
-                    Students will apply all the skills learned throughout the course to design, install, and configure a complete functional network. By the end of this capstone lab, students will be able to design a network addressing scheme, install face plates and terminate keystone jacks, mount a patch panel and organize cable management, install switches and configure VLANs, install routers and configure routing, install a firewall and implement security policies, test the entire network for functionality, and create complete network documentation including diagrams and configuration files. Students will also develop project management skills, teamwork abilities, and professional documentation practices essential for real-world network deployment.
+
+                <!-- LAB 10 -->
+                <div class="lab-card color-10 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 10</span>
+                        <span style="color: #6b7280; font-weight: 400;">Capstone</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-star"></i> Complete Network Installation (Capstone)
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will apply all the skills learned throughout the course to design, install, and configure a complete functional network. By the end of this capstone lab, students will be able to design a network addressing scheme, install face plates and terminate keystone jacks, mount a patch panel and organize cable management, install switches and configure VLANs, install routers and configure routing, install a firewall and implement security policies, test the entire network for functionality, and create complete network documentation including diagrams and configuration files. Students will also develop project management skills, teamwork abilities, and professional documentation practices essential for real-world network deployment.
+                    </div>
+                    <div class="lab-skills">
+                        <span>Network design</span>
+                        <span>Complete physical installation</span>
+                        <span>Device configuration</span>
+                        <span>Inter-VLAN routing</span>
+                        <span>DHCP and DNS services</span>
+                        <span>Network testing and verification</span>
+                        <span>Documentation and reporting</span>
+                        <span>Project management and teamwork</span>
+                    </div>
                 </div>
-                <div class="lab-skills">
-                    <span>Network design</span>
-                    <span>Complete physical installation</span>
-                    <span>Device configuration (Switches/Routers/Firewall)</span>
-                    <span>Inter-VLAN routing</span>
-                    <span>DHCP and DNS services</span>
-                    <span>Network testing and verification</span>
-                    <span>Documentation and reporting</span>
-                    <span>Project management and teamwork</span>
-                </div>
+
             </div>
 
             <!-- Back Button -->
-            <div class="text-center mt-10">
+            <div class="text-center mt-12">
                 <a href="/#courses" class="back-btn">
                     <i class="fas fa-arrow-left"></i> Back to Courses
                 </a>
