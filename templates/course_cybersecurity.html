@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cybersecurity - Kazimoto Technologies</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; background: #f1f5f9; }
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .lab-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        }
+
+        .lab-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+            border-color: #ef4444;
+        }
+
+        .lab-card .lab-number {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            color: #1a2332;
+            margin-bottom: 10px;
+        }
+
+        .lab-card .lab-number .num {
+            background: #ef4444;
+            color: white;
+            padding: 2px 12px;
+            border-radius: 50px;
+            font-size: 0.7rem;
+        }
+
+        .lab-card .lab-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #0d1b2a;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .lab-card .lab-title i {
+            color: #ef4444;
+            font-size: 1rem;
+        }
+
+        .lab-card .lab-objective {
+            color: #4b5563;
+            line-height: 1.7;
+            font-size: 0.88rem;
+            flex-grow: 1;
+            margin-bottom: 12px;
+        }
+
+        .lab-card .lab-objective strong {
+            color: #1a2332;
+        }
+
+        .lab-card .lab-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: auto;
+            padding-top: 12px;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        .lab-card .lab-skills span {
+            background: #fef2f2;
+            color: #991b1b;
+            padding: 3px 12px;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .lab-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #ef4444;
+            font-weight: 600;
+            text-decoration: none;
+            padding: 10px 24px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            border: 2px solid #e2e8f0;
+            background: white;
+        }
+
+        .back-btn:hover {
+            background: #f8fafc;
+            border-color: #ef4444;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.1);
+        }
+
+        .header-gradient {
+            background: linear-gradient(135deg, #7f1d1d 0%, #dc2626 50%, #ef4444 100%);
+        }
+
+        .info-box {
+            background: white;
+            border-radius: 16px;
+            padding: 28px 32px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        }
+
+        @media (max-width: 768px) {
+            .lab-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            .lab-card {
+                padding: 20px;
+            }
+            .info-box {
+                padding: 20px;
+            }
+            .header-gradient h1 {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .lab-card .lab-title {
+                font-size: 1rem;
+            }
+            .lab-card .lab-objective {
+                font-size: 0.82rem;
+            }
+            .lab-card .lab-skills span {
+                font-size: 0.65rem;
+                padding: 2px 10px;
+            }
+        }
+
+        /* Color variants for labs */
+        .lab-card.color-1 .lab-number .num { background: #3b82f6; }
+        .lab-card.color-1 { border-top: 4px solid #3b82f6; }
+
+        .lab-card.color-2 .lab-number .num { background: #f59e0b; }
+        .lab-card.color-2 { border-top: 4px solid #f59e0b; }
+
+        .lab-card.color-3 .lab-number .num { background: #10b981; }
+        .lab-card.color-3 { border-top: 4px solid #10b981; }
+
+        .lab-card.color-4 .lab-number .num { background: #8b5cf6; }
+        .lab-card.color-4 { border-top: 4px solid #8b5cf6; }
+
+        .lab-card.color-5 .lab-number .num { background: #ef4444; }
+        .lab-card.color-5 { border-top: 4px solid #ef4444; }
+
+        .lab-card.color-6 .lab-number .num { background: #06b6d4; }
+        .lab-card.color-6 { border-top: 4px solid #06b6d4; }
+
+        .lab-card.color-7 .lab-number .num { background: #f43f5e; }
+        .lab-card.color-7 { border-top: 4px solid #f43f5e; }
+
+        .lab-card.color-8 .lab-number .num { background: #8b5cf6; }
+        .lab-card.color-8 { border-top: 4px solid #8b5cf6; }
+
+        .lab-card.color-9 .lab-number .num { background: #ef4444; }
+        .lab-card.color-9 { border-top: 4px solid #ef4444; }
+
+        .lab-card.color-10 .lab-number .num { background: #f59e0b; }
+        .lab-card.color-10 { border-top: 4px solid #f59e0b; }
+
+        .lab-card.color-11 .lab-number .num { background: #10b981; }
+        .lab-card.color-11 { border-top: 4px solid #10b981; }
+
+        .lab-card.color-12 .lab-number .num { background: #8b5cf6; }
+        .lab-card.color-12 { border-top: 4px solid #8b5cf6; }
+
+        .lab-card.color-13 .lab-number .num { background: #f59e0b; }
+        .lab-card.color-13 { border-top: 4px solid #f59e0b; }
+    </style>
+</head>
+<body>
+
+    <!-- ===== HEADER ===== -->
+    <header class="header-gradient text-white py-8">
+        <div class="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
+            <div class="flex items-center gap-3 mb-4 md:mb-0">
+                <div class="w-12 h-12 bg-red-500/20 rounded-full flex items-center justify-center">
+                    <i class="fas fa-shield-alt text-2xl text-red-300"></i>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold">Cybersecurity</h1>
+                    <p class="text-red-200/70 text-sm">Complete Hands-On Lab Manual</p>
+                </div>
+            </div>
+            <a href="/#courses" class="text-white/80 hover:text-white transition flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full hover:bg-white/20">
+                <i class="fas fa-arrow-left"></i> Back to Courses
+            </a>
+        </div>
+    </header>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <section class="py-12">
+        <div class="container mx-auto px-6 max-w-6xl">
+
+            <!-- Info Box -->
+            <div class="info-box fade-in mb-10">
+                <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 bg-red-50 rounded-full flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-graduation-cap text-red-600 text-xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold text-gray-800">Complete Cybersecurity Hands-On Lab Manual</h2>
+                        <p class="text-gray-600 text-base mt-1">
+                            For University Students (Computer Science, IT, Computer Engineering, ICT)
+                        </p>
+                        <p class="text-sm text-gray-400 mt-2">
+                            <i class="fas fa-info-circle mr-1"></i> Prerequisites: Students have theoretical knowledge of networking and security concepts
+                        </p>
+                        <p class="text-sm text-gray-400">
+                            <i class="fas fa-info-circle mr-1"></i> Focus: Practical implementation and hands-on security training
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== LABS GRID (2 Columns) ===== -->
+            <div class="lab-grid">
+
+                <!-- LAB 1 -->
+                <div class="lab-card color-1 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 01</span>
+                        <span style="color: #6b7280; font-weight: 400;">Environment</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-laptop"></i> Cybersecurity Lab Setup (Kali Linux & Target VMs)
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will set up a complete cybersecurity lab environment for ethical hacking and security testing. By the end of this module, students will be able to install and configure VirtualBox/VMware, install Kali Linux as the attacker machine, install Metasploitable 2 as a vulnerable target, install Windows 10 as a target, configure Host-Only and NAT networking, understand the lab network topology, and verify connectivity between all VMs. Students will also understand the importance of an isolated lab environment.
+                    </div>
+                    <div class="lab-skills">
+                        <span>VirtualBox/VMware setup</span>
+                        <span>Kali Linux installation</span>
+                        <span>Metasploitable 2 setup</span>
+                        <span>Windows target setup</span>
+                        <span>Host-Only network configuration</span>
+                        <span>NAT configuration</span>
+                        <span>Lab network topology</span>
+                        <span>VM connectivity verification</span>
+                    </div>
+                </div>
+
+                <!-- LAB 2 -->
+                <div class="lab-card color-2 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 02</span>
+                        <span style="color: #6b7280; font-weight: 400;">Reconnaissance</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-search"></i> Reconnaissance & OSINT
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will learn passive and active reconnaissance techniques for information gathering. By the end of this module, students will be able to perform passive reconnaissance using OSINT techniques (Google dorking, WHOIS, DNS enumeration), perform active reconnaissance using scanning tools, gather information about targets without detection, use tools like theHarvester, Maltego, and Recon-ng, understand the importance of footprinting in ethical hacking, and document findings professionally. Students will also understand the legal implications of reconnaissance.
+                    </div>
+                    <div class="lab-skills">
+                        <span>OSINT techniques</span>
+                        <span>Google dorking</span>
+                        <span>WHOIS lookup</span>
+                        <span>DNS enumeration</span>
+                        <span>theHarvester</span>
+                        <span>Maltego</span>
+                        <span>Recon-ng</span>
+                        <span>Footprinting</span>
+                        <span>Documentation</span>
+                    </div>
+                </div>
+
+                <!-- LAB 3 -->
+                <div class="lab-card color-3 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 03</span>
+                        <span style="color: #6b7280; font-weight: 400;">Scanning</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-network-wired"></i> Network Scanning & Enumeration
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will learn advanced network scanning and enumeration techniques. By the end of this module, students will be able to perform port scanning using Nmap (SYN, TCP, UDP), identify open ports and services, perform OS and version detection, enumerate services (SMB, FTP, SSH, HTTP), use Nmap scripting engine (NSE), perform vulnerability detection with Nmap, and create comprehensive scan reports. Students will also understand the importance of enumeration in penetration testing.
+                    </div>
+                    <div class="lab-skills">
+                        <span>Nmap (SYN, TCP, UDP scans)</span>
+                        <span>Port scanning</span>
+                        <span>Service enumeration</span>
+                        <span>OS detection</span>
+                        <span>Version detection</span>
+                        <span>NSE scripts</span>
+                        <span>Vulnerability detection</span>
+                        <span>Scan reporting</span>
+                    </div>
+                </div>
+
+                <!-- LAB 4 -->
+                <div class="lab-card color-4 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 04</span>
+                        <span style="color: #6b7280; font-weight: 400;">Assessment</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-clipboard-check"></i> Vulnerability Assessment
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will learn how to identify, assess, and prioritize vulnerabilities in systems and networks. By the end of this module, students will be able to use Nessus/OpenVAS for vulnerability scanning, interpret vulnerability scan results, prioritize vulnerabilities based on CVSS scores, identify common misconfigurations, use Nikto for web server scanning, use OWASP ZAP for web application scanning, create vulnerability assessment reports, and understand the vulnerability management lifecycle. Students will also understand the difference between vulnerability assessment and penetration testing.
+                    </div>
+                    <div class="lab-skills">
+                        <span>Nessus/OpenVAS vulnerability scanning</span>
+                        <span>CVSS scoring</span>
+                        <span>Vulnerability prioritization</span>
+                        <span>Nikto web server scanning</span>
+                        <span>OWASP ZAP web application scanning</span>
+                        <span>Misconfiguration identification</span>
+                        <span>Vulnerability assessment reports</span>
+                        <span>Vulnerability management lifecycle</span>
+                    </div>
+                </div>
+
+                <!-- LAB 5 -->
+                <div class="lab-card color-5 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 05</span>
+                        <span style="color: #6b7280; font-weight: 400;">Web Security</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-globe"></i> Web Application Security (OWASP Top 10)
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will learn to identify and exploit common web application vulnerabilities. By the end of this module, students will be able to perform SQL Injection attacks (Error-based, Union-based, Blind), conduct Cross-Site Scripting (XSS) attacks (Reflected, Stored, DOM), perform Cross-Site Request Forgery (CSRF) attacks, exploit File Inclusion vulnerabilities (LFI/RFI), use Burp Suite for web penetration testing, use SQLmap for automated SQL injection, implement OWASP Top 10 security controls, and create web application security reports. Students will also understand the importance of secure coding practices.
+                    </div>
+                    <div class="lab-skills">
+                        <span>SQL Injection (Error-based, Union-based, Blind)</span>
+                        <span>Cross-Site Scripting (XSS - Reflected, Stored, DOM)</span>
+                        <span>CSRF attacks</span>
+                        <span>File Inclusion (LFI/RFI)</span>
+                        <span>Burp Suite</span>
+                        <span>SQLmap</span>
+                        <span>OWASP Top 10</span>
+                        <span>Secure coding practices</span>
+                        <span>Web app security reports</span>
+                    </div>
+                </div>
+
+                <!-- LAB 6 -->
+                <div class="lab-card color-6 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 06</span>
+                        <span style="color: #6b7280; font-weight: 400;">Exploitation</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-bolt"></i> Exploitation with Metasploit
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will learn to use the Metasploit Framework for penetration testing and exploitation. By the end of this module, students will be able to navigate the Metasploit Framework, search for and use exploits, set payloads (Reverse Shell, Bind Shell, Meterpreter), exploit common vulnerabilities (vsftpd, Samba, UnrealIRCd), perform privilege escalation, use Meterpreter for post-exploitation, maintain persistence, and document exploitation findings. Students will also understand the ethical considerations of exploitation.
+                    </div>
+                    <div class="lab-skills">
+                        <span>Metasploit Framework</span>
+                        <span>Exploit search and selection</span>
+                        <span>Payload configuration (Reverse Shell, Bind Shell, Meterpreter)</span>
+                        <span>vsftpd exploitation</span>
+                        <span>Samba exploitation</span>
+                        <span>UnrealIRCd exploitation</span>
+                        <span>Privilege escalation</span>
+                        <span>Meterpreter post-exploitation</span>
+                        <span>Persistence</span>
+                        <span>Documentation</span>
+                    </div>
+                </div>
+
+                <!-- LAB 7 -->
+                <div class="lab-card color-7 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 07</span>
+                        <span style="color: #6b7280; font-weight: 400;">Authentication</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-key"></i> Password Cracking & Authentication Attacks
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will learn techniques for password cracking and authentication attacks. By the end of this module, students will be able to perform dictionary and brute-force attacks using tools like John the Ripper and Hashcat, capture password hashes using Responder, perform password spraying attacks, use Hydra for online brute-force attacks, crack Windows and Linux password hashes, understand password policies and best practices, implement multi-factor authentication (MFA), and create password security reports. Students will also understand the importance of strong password policies.
+                    </div>
+                    <div class="lab-skills">
+                        <span>John the Ripper</span>
+                        <span>Hashcat</span>
+                        <span>Dictionary attacks</span>
+                        <span>Brute-force attacks</span>
+                        <span>Responder (hash capture)</span>
+                        <span>Password spraying</span>
+                        <span>Hydra (online brute-force)</span>
+                        <span>Windows/Linux hash cracking</span>
+                        <span>Password policies</span>
+                        <span>Multi-factor authentication (MFA)</span>
+                    </div>
+                </div>
+
+                <!-- LAB 8 -->
+                <div class="lab-card color-8 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 08</span>
+                        <span style="color: #6b7280; font-weight: 400;">Wireless</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-wifi"></i> Wireless Network Security
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will learn wireless network security concepts and attack techniques. By the end of this module, students will be able to put wireless adapters in monitor mode, perform Wi-Fi reconnaissance (airodump-ng), capture WPA handshake (airodump-ng), perform deauthentication attacks (aireplay-ng), crack WPA passwords (aircrack-ng), perform Evil Twin attacks (airbase-ng), implement Wi-Fi security best practices (WPA3, Enterprise), and create wireless security assessment reports. Students will also understand the evolution of Wi-Fi security (WEP → WPA → WPA2 → WPA3).
+                    </div>
+                    <div class="lab-skills">
+                        <span>Monitor mode</span>
+                        <span>airodump-ng (Wi-Fi reconnaissance)</span>
+                        <span>Handshake capture</span>
+                        <span>Deauthentication attacks (aireplay-ng)</span>
+                        <span>WPA password cracking (aircrack-ng)</span>
+                        <span>Evil Twin attacks (airbase-ng)</span>
+                        <span>Wi-Fi security best practices</span>
+                        <span>WPA2/WPA3</span>
+                        <span>Wireless security assessment reports</span>
+                    </div>
+                </div>
+
+                <!-- LAB 9 -->
+                <div class="lab-card color-9 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 09</span>
+                        <span style="color: #6b7280; font-weight: 400;">Defense</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-shield-virus"></i> Network Defense & Firewall Configuration
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will learn to implement network defense mechanisms and configure firewalls. By the end of this module, students will be able to implement defense-in-depth strategies, configure firewalls (iptables/ufw on Linux, Windows Firewall), create firewall rules for inbound and outbound traffic, implement Network Address Translation (NAT), configure Intrusion Prevention Systems (IPS), implement network segmentation with VLANs, use network monitoring tools, and create security incident reports. Students will also understand the importance of proactive defense.
+                    </div>
+                    <div class="lab-skills">
+                        <span>Defense-in-depth</span>
+                        <span>Firewall configuration (iptables, ufw, Windows Firewall)</span>
+                        <span>Firewall rule creation</span>
+                        <span>Network Address Translation (NAT)</span>
+                        <span>Intrusion Prevention Systems (IPS)</span>
+                        <span>Network segmentation (VLANs)</span>
+                        <span>Network monitoring</span>
+                        <span>Security incident reports</span>
+                        <span>Proactive defense</span>
+                    </div>
+                </div>
+
+                <!-- LAB 10 -->
+                <div class="lab-card color-10 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 10</span>
+                        <span style="color: #6b7280; font-weight: 400;">Detection</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-eye"></i> Intrusion Detection & Prevention Systems (IDS/IPS)
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will learn to deploy and configure intrusion detection and prevention systems. By the end of this module, students will be able to install and configure Snort IDS/IPS, create custom Snort rules, install and configure Suricata, use the Elastic Stack (ELK) for security monitoring, analyze IDS/IPS logs, detect and respond to security events, implement Security Information and Event Management (SIEM), and create security incident reports. Students will also understand the difference between IDS and IPS.
+                    </div>
+                    <div class="lab-skills">
+                        <span>Snort IDS/IPS installation and configuration</span>
+                        <span>Custom Snort rules</span>
+                        <span>Suricata installation and configuration</span>
+                        <span>Elastic Stack (ELK) for security monitoring</span>
+                        <span>Log analysis</span>
+                        <span>Security event detection</span>
+                        <span>SIEM implementation</span>
+                        <span>Security incident reports</span>
+                    </div>
+                </div>
+
+                <!-- LAB 11 -->
+                <div class="lab-card color-11 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 11</span>
+                        <span style="color: #6b7280; font-weight: 400;">Malware</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-bug"></i> Malware Analysis & Detection
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will learn techniques for analyzing and detecting malware. By the end of this module, students will be able to perform static malware analysis (file hashing, strings analysis, PE headers), perform dynamic malware analysis (sandbox execution, process monitoring), use YARA rules for malware detection, use VirusTotal for hash analysis, analyze malware behavior and Indicators of Compromise (IOCs), create YARA rules for custom detection, use ClamAV for virus scanning, and create malware analysis reports. Students will also understand the importance of malware analysis in incident response.
+                    </div>
+                    <div class="lab-skills">
+                        <span>Static malware analysis (file hashing, strings analysis, PE headers)</span>
+                        <span>Dynamic malware analysis (sandbox execution, process monitoring)</span>
+                        <span>YARA rules</span>
+                        <span>VirusTotal</span>
+                        <span>Indicators of Compromise (IOCs)</span>
+                        <span>ClamAV</span>
+                        <span>Malware analysis reports</span>
+                        <span>Incident response</span>
+                    </div>
+                </div>
+
+                <!-- LAB 12 -->
+                <div class="lab-card color-12 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 12</span>
+                        <span style="color: #6b7280; font-weight: 400;">Forensics</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-search"></i> Digital Forensics & Incident Response
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will learn digital forensics and incident response techniques. By the end of this module, students will be able to create forensic images (dd, FTK Imager), analyze memory dumps using Volatility, analyze disk images using Autopsy, recover deleted files (Foremost, Scalpel), maintain chain of custody, perform incident response (containment, eradication, recovery), analyze security logs, and create forensic investigation reports. Students will also understand the legal considerations of digital forensics.
+                    </div>
+                    <div class="lab-skills">
+                        <span>Forensic imaging (dd, FTK Imager)</span>
+                        <span>Memory forensics (Volatility)</span>
+                        <span>Disk forensics (Autopsy)</span>
+                        <span>File recovery (Foremost, Scalpel)</span>
+                        <span>Chain of custody</span>
+                        <span>Incident response (containment, eradication, recovery)</span>
+                        <span>Log analysis</span>
+                        <span>Forensic investigation reports</span>
+                    </div>
+                </div>
+
+                <!-- LAB 13 -->
+                <div class="lab-card color-13 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 13</span>
+                        <span style="color: #6b7280; font-weight: 400;">Capstone</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-star"></i> Complete Security Assessment
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will apply all the skills learned throughout the course to complete a comprehensive security assessment. By the end of this capstone project, students will be able to plan and execute a complete penetration test, conduct reconnaissance and OSINT, perform vulnerability scanning and exploitation, document all findings and evidence, provide remediation recommendations, create a comprehensive security assessment report, and present findings to stakeholders. Students will also develop project management, teamwork, and communication skills essential for real-world cybersecurity.
+                    </div>
+                    <div class="lab-skills">
+                        <span>Penetration testing planning and execution</span>
+                        <span>Reconnaissance and OSINT</span>
+                        <span>Vulnerability scanning and exploitation</span>
+                        <span>Evidence documentation</span>
+                        <span>Remediation recommendations</span>
+                        <span>Security assessment reports</span>
+                        <span>Presentation and communication</span>
+                        <span>Project management and teamwork</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Back Button -->
+            <div class="text-center mt-12">
+                <a href="/#courses" class="back-btn">
+                    <i class="fas fa-arrow-left"></i> Back to Courses
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="bg-gray-800 text-white py-6 mt-8">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-sm">© 2025 Musa Kazimoto, ICT Specialist. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const elements = document.querySelectorAll('.fade-in');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+            elements.forEach(element => observer.observe(element));
+        });
+    </script>
+
+</body>
+</html>
