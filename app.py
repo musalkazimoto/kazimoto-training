@@ -278,6 +278,12 @@ def course_networking():
 def course_software_development():
     return render_template('course_software_development.html')
 
+#========artificial-intelligence route=================
+@app.route('/course/artificial-intelligence')
+def course_artificial_intelligence():
+    return render_template('course_artificial_intelligence.html')
+
+
 # ===== RUN APP =====
 
 if __name__ == '__main__':
