@@ -283,7 +283,11 @@ def course_software_development():
 def course_artificial_intelligence():
     return render_template('course_artificial_intelligence.html')
 
+#=========course_cybersecurity route===========
 
+@app.route('/course/cybersecurity')
+def course_cybersecurity():
+    return render_template('course_cybersecurity.html')
 # ===== RUN APP =====
 
 if __name__ == '__main__':
