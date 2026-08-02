@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artificial Intelligence - Kazimoto Technologies</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; background: #f1f5f9; }
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .lab-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        }
+
+        .lab-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+            border-color: #8b5cf6;
+        }
+
+        .lab-card .lab-number {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            color: #1a2332;
+            margin-bottom: 10px;
+        }
+
+        .lab-card .lab-number .num {
+            background: #8b5cf6;
+            color: white;
+            padding: 2px 12px;
+            border-radius: 50px;
+            font-size: 0.7rem;
+        }
+
+        .lab-card .lab-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #0d1b2a;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .lab-card .lab-title i {
+            color: #8b5cf6;
+            font-size: 1rem;
+        }
+
+        .lab-card .lab-objective {
+            color: #4b5563;
+            line-height: 1.7;
+            font-size: 0.88rem;
+            flex-grow: 1;
+            margin-bottom: 12px;
+        }
+
+        .lab-card .lab-objective strong {
+            color: #1a2332;
+        }
+
+        .lab-card .lab-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: auto;
+            padding-top: 12px;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        .lab-card .lab-skills span {
+            background: #f5f3ff;
+            color: #5b21b6;
+            padding: 3px 12px;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .lab-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #8b5cf6;
+            font-weight: 600;
+            text-decoration: none;
+            padding: 10px 24px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            border: 2px solid #e2e8f0;
+            background: white;
+        }
+
+        .back-btn:hover {
+            background: #f8fafc;
+            border-color: #8b5cf6;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.1);
+        }
+
+        .header-gradient {
+            background: linear-gradient(135deg, #2e1065 0%, #5b21b6 50%, #7c3aed 100%);
+        }
+
+        .info-box {
+            background: white;
+            border-radius: 16px;
+            padding: 28px 32px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        }
+
+        @media (max-width: 768px) {
+            .lab-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            .lab-card {
+                padding: 20px;
+            }
+            .info-box {
+                padding: 20px;
+            }
+            .header-gradient h1 {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .lab-card .lab-title {
+                font-size: 1rem;
+            }
+            .lab-card .lab-objective {
+                font-size: 0.82rem;
+            }
+            .lab-card .lab-skills span {
+                font-size: 0.65rem;
+                padding: 2px 10px;
+            }
+        }
+
+        /* Color variants for labs */
+        .lab-card.color-1 .lab-number .num { background: #3b82f6; }
+        .lab-card.color-1 { border-top: 4px solid #3b82f6; }
+
+        .lab-card.color-2 .lab-number .num { background: #f59e0b; }
+        .lab-card.color-2 { border-top: 4px solid #f59e0b; }
+
+        .lab-card.color-3 .lab-number .num { background: #10b981; }
+        .lab-card.color-3 { border-top: 4px solid #10b981; }
+
+        .lab-card.color-4 .lab-number .num { background: #8b5cf6; }
+        .lab-card.color-4 { border-top: 4px solid #8b5cf6; }
+
+        .lab-card.color-5 .lab-number .num { background: #ef4444; }
+        .lab-card.color-5 { border-top: 4px solid #ef4444; }
+
+        .lab-card.color-6 .lab-number .num { background: #06b6d4; }
+        .lab-card.color-6 { border-top: 4px solid #06b6d4; }
+
+        .lab-card.color-7 .lab-number .num { background: #f43f5e; }
+        .lab-card.color-7 { border-top: 4px solid #f43f5e; }
+
+        .lab-card.color-8 .lab-number .num { background: #8b5cf6; }
+        .lab-card.color-8 { border-top: 4px solid #8b5cf6; }
+
+        .lab-card.color-9 .lab-number .num { background: #ef4444; }
+        .lab-card.color-9 { border-top: 4px solid #ef4444; }
+
+        .lab-card.color-10 .lab-number .num { background: #f59e0b; }
+        .lab-card.color-10 { border-top: 4px solid #f59e0b; }
+
+        .lab-card.color-11 .lab-number .num { background: #10b981; }
+        .lab-card.color-11 { border-top: 4px solid #10b981; }
+
+        .lab-card.color-12 .lab-number .num { background: #8b5cf6; }
+        .lab-card.color-12 { border-top: 4px solid #8b5cf6; }
+
+        .lab-card.color-13 .lab-number .num { background: #f59e0b; }
+        .lab-card.color-13 { border-top: 4px solid #f59e0b; }
+    </style>
+</head>
+<body>
+
+    <!-- ===== HEADER ===== -->
+    <header class="header-gradient text-white py-8">
+        <div class="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
+            <div class="flex items-center gap-3 mb-4 md:mb-0">
+                <div class="w-12 h-12 bg-purple-500/20 rounded-full flex items-center justify-center">
+                    <i class="fas fa-robot text-2xl text-purple-300"></i>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold">Artificial Intelligence</h1>
+                    <p class="text-purple-200/70 text-sm">Complete Hands-On Lab Manual</p>
+                </div>
+            </div>
+            <a href="/#courses" class="text-white/80 hover:text-white transition flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full hover:bg-white/20">
+                <i class="fas fa-arrow-left"></i> Back to Courses
+            </a>
+        </div>
+    </header>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <section class="py-12">
+        <div class="container mx-auto px-6 max-w-6xl">
+
+            <!-- Info Box -->
+            <div class="info-box fade-in mb-10">
+                <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 bg-purple-50 rounded-full flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-graduation-cap text-purple-600 text-xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold text-gray-800">Complete Artificial Intelligence Hands-On Lab Manual</h2>
+                        <p class="text-gray-600 text-base mt-1">
+                            For University Students (Computer Science, IT, Computer Engineering, ICT)
+                        </p>
+                        <p class="text-sm text-gray-400 mt-2">
+                            <i class="fas fa-info-circle mr-1"></i> Prerequisites: Students have theoretical knowledge of AI/ML concepts
+                        </p>
+                        <p class="text-sm text-gray-400">
+                            <i class="fas fa-info-circle mr-1"></i> Focus: Practical implementation and data analysis
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== LABS GRID (2 Columns) ===== -->
+            <div class="lab-grid">
+
+                <!-- LAB 1 -->
+                <div class="lab-card color-1 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 01</span>
+                        <span style="color: #6b7280; font-weight: 400;">Environment</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-laptop"></i> Python for Data Analysis & AI
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will set up a complete Python environment for data analysis and AI with all essential libraries. By the end of this module, students will be able to install and configure Anaconda/Jupyter Notebook, install essential data analysis libraries (NumPy, Pandas, Matplotlib, Seaborn, Scikit-learn, TensorFlow), set up virtual environments, understand the Python data science ecosystem, and verify all installations with a test script. Students will also understand the workflow of a data science project.
+                    </div>
+                    <div class="lab-skills">
+                        <span>Anaconda/Jupyter setup</span>
+                        <span>NumPy</span>
+                        <span>Pandas</span>
+                        <span>Matplotlib</span>
+                        <span>Seaborn</span>
+                        <span>Scikit-learn</span>
+                        <span>TensorFlow</span>
+                        <span>Virtual environments</span>
+                    </div>
+                </div>
+
+                <!-- LAB 2 -->
+                <div class="lab-card color-2 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 02</span>
+                        <span style="color: #6b7280; font-weight: 400;">Data Collection</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-database"></i> Data Collection & Loading Techniques
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will learn various methods to collect and load data from different sources. By the end of this module, students will be able to load data from CSV, Excel, and JSON files, connect to and query SQL databases, scrape data from websites using BeautifulSoup, fetch data from APIs (RESTful APIs), handle different data formats, deal with large datasets efficiently, and merge/concatenate data from multiple sources. Students will also understand the importance of data collection in the AI pipeline.
+                    </div>
+                    <div class="lab-skills">
+                        <span>CSV/Excel/JSON loading</span>
+                        <span>SQL database connection</span>
+                        <span>Web scraping (BeautifulSoup)</span>
+                        <span>API integration</span>
+                        <span>Large dataset handling</span>
+                        <span>Data merging</span>
+                    </div>
+                </div>
+
+                <!-- LAB 3 -->
+                <div class="lab-card color-3 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 03</span>
+                        <span style="color: #6b7280; font-weight: 400;">Data Analysis</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-chart-bar"></i> Exploratory Data Analysis (EDA) & Visualization
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will perform comprehensive EDA to understand data patterns, distributions, and relationships. By the end of this module, students will be able to generate summary statistics for data, identify data types and missing values, create various visualizations (histograms, box plots, scatter plots, heatmaps), understand correlations between variables, identify outliers and anomalies, perform univariate, bivariate, and multivariate analysis, and effectively communicate insights through visualizations. Students will also understand the role of EDA in the AI workflow.
+                    </div>
+                    <div class="lab-skills">
+                        <span>Summary statistics</span>
+                        <span>Data profiling</span>
+                        <span>Missing value analysis</span>
+                        <span>Data visualization (histograms, box plots, scatter plots, heatmaps)</span>
+                        <span>Correlation analysis</span>
+                        <span>Outlier detection</span>
+                        <span>Univariate/Bivariate/Multivariate analysis</span>
+                    </div>
+                </div>
+
+                <!-- LAB 4 -->
+                <div class="lab-card color-4 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 04</span>
+                        <span style="color: #6b7280; font-weight: 400;">Data Preparation</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-filter"></i> Data Preprocessing & Feature Engineering
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will learn how to prepare data for machine learning models through preprocessing and feature engineering. By the end of this module, students will be able to handle missing values using various imputation techniques, encode categorical variables (One-Hot Encoding, Label Encoding), scale and normalize features (StandardScaler, MinMaxScaler), handle outliers using IQR and Z-score methods, create new features through feature engineering, perform feature selection for model improvement, split data for training and testing, and implement data pipelines. Students will also understand the impact of preprocessing on model performance.
+                    </div>
+                    <div class="lab-skills">
+                        <span>Missing value imputation</span>
+                        <span>Categorical encoding (One-Hot, Label)</span>
+                        <span>Feature scaling (StandardScaler, MinMaxScaler)</span>
+                        <span>Outlier handling (IQR, Z-score)</span>
+                        <span>Feature engineering</span>
+                        <span>Feature selection</span>
+                        <span>Train/test split</span>
+                        <span>Data pipelines</span>
+                    </div>
+                </div>
+
+                <!-- LAB 5 -->
+                <div class="lab-card color-5 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 05</span>
+                        <span style="color: #6b7280; font-weight: 400;">Statistics</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-calculator"></i> Statistical Analysis for Data Science
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will learn essential statistical concepts and techniques for data analysis. By the end of this module, students will be able to perform hypothesis testing (t-test, chi-square), conduct ANOVA for comparing multiple groups, calculate correlation coefficients (Pearson, Spearman), perform regression analysis, conduct time series decomposition, test for normality and homogeneity, perform A/B testing analysis, and create confidence intervals. Students will also understand the role of statistics in data-driven decision making.
+                    </div>
+                    <div class="lab-skills">
+                        <span>Hypothesis testing (t-test, chi-square)</span>
+                        <span>ANOVA</span>
+                        <span>Correlation (Pearson, Spearman)</span>
+                        <span>Regression analysis</span>
+                        <span>Time series decomposition</span>
+                        <span>Normality testing (Shapiro-Wilk)</span>
+                        <span>Homogeneity testing (Levene's)</span>
+                        <span>A/B testing</span>
+                        <span>Confidence intervals</span>
+                    </div>
+                </div>
+
+                <!-- LAB 6 -->
+                <div class="lab-card color-6 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 06</span>
+                        <span style="color: #6b7280; font-weight: 400;">Regression</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-chart-line"></i> Regression Analysis (Predictive Modeling)
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will implement and evaluate regression models for predictive analysis. By the end of this module, students will be able to implement linear regression for prediction, implement polynomial regression for non-linear relationships, implement Ridge and Lasso regression for regularization, implement logistic regression for binary classification, evaluate regression models using appropriate metrics (MSE, RMSE, MAE, R²), perform feature selection using L1 regularization, understand the assumptions of linear regression, and apply regression to real-world datasets. Students will also understand the limitations and assumptions of regression models.
+                    </div>
+                    <div class="lab-skills">
+                        <span>Linear regression</span>
+                        <span>Polynomial regression</span>
+                        <span>Ridge and Lasso regression</span>
+                        <span>Logistic regression</span>
+                        <span>Model evaluation (MSE, RMSE, MAE, R²)</span>
+                        <span>Feature selection with L1 regularization</span>
+                        <span>Regression assumptions</span>
+                        <span>Real-world regression applications</span>
+                    </div>
+                </div>
+
+                <!-- LAB 7 -->
+                <div class="lab-card color-7 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 07</span>
+                        <span style="color: #6b7280; font-weight: 400;">Classification</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-sitemap"></i> Classification Algorithms (Practical)
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will implement and evaluate classification algorithms for predictive modeling. By the end of this module, students will be able to implement classification algorithms (KNN, Decision Trees, Random Forest, SVM, Naive Bayes), evaluate classification models using appropriate metrics (Accuracy, Precision, Recall, F1-Score, ROC-AUC), handle imbalanced datasets, perform hyperparameter tuning using GridSearchCV, understand ensemble methods for improved performance, and interpret model predictions using confusion matrix and classification report.
+                    </div>
+                    <div class="lab-skills">
+                        <span>K-Nearest Neighbors (KNN)</span>
+                        <span>Decision Trees</span>
+                        <span>Random Forest</span>
+                        <span>Support Vector Machines (SVM)</span>
+                        <span>Naive Bayes</span>
+                        <span>Model evaluation (Accuracy, Precision, Recall, F1-Score, ROC-AUC)</span>
+                        <span>Imbalanced data handling</span>
+                        <span>Hyperparameter tuning (GridSearchCV)</span>
+                        <span>Ensemble methods</span>
+                        <span>Confusion matrix</span>
+                    </div>
+                </div>
+
+                <!-- LAB 8 -->
+                <div class="lab-card color-8 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 08</span>
+                        <span style="color: #6b7280; font-weight: 400;">Clustering</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-layer-group"></i> Clustering & Segmentation
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will implement clustering algorithms for customer segmentation and pattern discovery. By the end of this module, students will be able to implement K-Means clustering for segmentation, implement Hierarchical clustering for hierarchy discovery, implement DBSCAN for density-based clustering, determine optimal number of clusters using Elbow Method and Silhouette Score, visualize clustering results, interpret cluster characteristics, and apply clustering to real-world problems (customer segmentation, image compression, anomaly detection). Students will also understand the strengths and weaknesses of different clustering algorithms.
+                    </div>
+                    <div class="lab-skills">
+                        <span>K-Means clustering</span>
+                        <span>Hierarchical clustering</span>
+                        <span>DBSCAN</span>
+                        <span>Elbow Method</span>
+                        <span>Silhouette Score</span>
+                        <span>Cluster visualization</span>
+                        <span>Cluster interpretation</span>
+                        <span>Customer segmentation</span>
+                        <span>Anomaly detection</span>
+                    </div>
+                </div>
+
+                <!-- LAB 9 -->
+                <div class="lab-card color-9 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 09</span>
+                        <span style="color: #6b7280; font-weight: 400;">Feature Engineering</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-compress-alt"></i> Dimensionality Reduction & Feature Selection
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will learn techniques to reduce data dimensionality and select relevant features for model improvement. By the end of this module, students will be able to implement Principal Component Analysis (PCA) for dimensionality reduction, implement t-SNE for data visualization, implement Linear Discriminant Analysis (LDA) for supervised feature extraction, perform feature selection using various techniques (filter, wrapper, embedded methods), interpret and visualize reduced dimensions, and understand the trade-offs between dimensionality reduction and information loss. Students will also understand the computational benefits of dimensionality reduction.
+                    </div>
+                    <div class="lab-skills">
+                        <span>Principal Component Analysis (PCA)</span>
+                        <span>t-SNE</span>
+                        <span>Linear Discriminant Analysis (LDA)</span>
+                        <span>Feature selection (filter, wrapper, embedded)</span>
+                        <span>Dimensionality reduction visualization</span>
+                        <span>Information loss trade-off</span>
+                        <span>Computational efficiency</span>
+                    </div>
+                </div>
+
+                <!-- LAB 10 -->
+                <div class="lab-card color-10 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 10</span>
+                        <span style="color: #6b7280; font-weight: 400;">Time Series</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-clock"></i> Time Series Analysis & Forecasting
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will learn techniques for analyzing and forecasting time series data. By the end of this module, students will be able to decompose time series into trend, seasonality, and residual components, implement ARIMA models for forecasting, implement SARIMA for seasonal data, use Prophet for time series forecasting, create lag features for regression-based forecasting, evaluate forecasting models using appropriate metrics (MAE, RMSE, MAPE), and visualize time series patterns. Students will also understand the challenges of time series forecasting.
+                    </div>
+                    <div class="lab-skills">
+                        <span>Time series decomposition</span>
+                        <span>ARIMA models</span>
+                        <span>SARIMA models</span>
+                        <span>Prophet forecasting</span>
+                        <span>Lag feature creation</span>
+                        <span>Forecasting metrics (MAE, RMSE, MAPE)</span>
+                        <span>Time series visualization</span>
+                        <span>Trend and seasonality detection</span>
+                    </div>
+                </div>
+
+                <!-- LAB 11 -->
+                <div class="lab-card color-11 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 11</span>
+                        <span style="color: #6b7280; font-weight: 400;">Deep Learning</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-brain"></i> Deep Learning with TensorFlow/Keras (Practical)
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will implement deep learning models using TensorFlow and Keras for real-world problems. By the end of this module, students will be able to build neural networks using Keras Sequential API, create custom architectures with Functional API, implement transfer learning for image classification, use pre-trained models (VGG16, ResNet50), train models with data augmentation, implement regularization techniques (Dropout, BatchNormalization), save and load models, and evaluate model performance. Students will also understand the practical considerations of training deep learning models.
+                    </div>
+                    <div class="lab-skills">
+                        <span>TensorFlow/Keras</span>
+                        <span>Sequential API</span>
+                        <span>Functional API</span>
+                        <span>Transfer learning</span>
+                        <span>Pre-trained models</span>
+                        <span>Data augmentation</span>
+                        <span>Dropout and BatchNormalization</span>
+                        <span>Model saving and loading</span>
+                        <span>Model evaluation</span>
+                    </div>
+                </div>
+
+                <!-- LAB 12 -->
+                <div class="lab-card color-12 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 12</span>
+                        <span style="color: #6b7280; font-weight: 400;">NLP</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-language"></i> NLP for Data Analysis
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will implement NLP techniques for text data analysis. By the end of this module, students will be able to preprocess text data (tokenization, stopword removal, lemmatization), convert text to numerical features (Bag-of-Words, TF-IDF, Word Embeddings), build text classification models (sentiment analysis, spam detection), perform topic modeling (LDA), use transformers for text analysis (BERT, RoBERTa), visualize text data with word clouds, and extract insights from text data. Students will also understand the applications of NLP in business and social media analysis.
+                    </div>
+                    <div class="lab-skills">
+                        <span>Text preprocessing (tokenization, stopword removal, lemmatization)</span>
+                        <span>Bag-of-Words</span>
+                        <span>TF-IDF</span>
+                        <span>Word Embeddings (Word2Vec, GloVe)</span>
+                        <span>Text classification</span>
+                        <span>Sentiment analysis</span>
+                        <span>Topic modeling (LDA)</span>
+                        <span>Transformers (BERT, RoBERTa)</span>
+                        <span>Word cloud visualization</span>
+                        <span>Text data insights extraction</span>
+                    </div>
+                </div>
+
+                <!-- LAB 13 -->
+                <div class="lab-card color-13 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 13</span>
+                        <span style="color: #6b7280; font-weight: 400;">Capstone</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-star"></i> End-to-End Data Analysis & AI Project
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will apply all the skills learned throughout the course to complete an end-to-end data analysis and AI project. By the end of this capstone project, students will be able to define a problem and collect relevant data, perform comprehensive EDA and preprocessing, build and evaluate AI/ML models, deploy the solution as a web API or application, create interactive dashboards, document the project thoroughly, and present findings to stakeholders. Students will also develop project management, teamwork, and communication skills essential for real-world AI development.
+                    </div>
+                    <div class="lab-skills">
+                        <span>Problem definition and project planning</span>
+                        <span>Data collection and preparation</span>
+                        <span>EDA and visualization</span>
+                        <span>Feature engineering</span>
+                        <span>Model building and evaluation</span>
+                        <span>Model deployment</span>
+                        <span>Dashboard creation</span>
+                        <span>Documentation and presentation</span>
+                        <span>Project management and teamwork</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Back Button -->
+            <div class="text-center mt-12">
+                <a href="/#courses" class="back-btn">
+                    <i class="fas fa-arrow-left"></i> Back to Courses
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="bg-gray-800 text-white py-6 mt-8">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-sm">© 2025 Musa Kazimoto, ICT Specialist. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const elements = document.querySelectorAll('.fade-in');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+            elements.forEach(element => observer.observe(element));
+        });
+    </script>
+
+</body>
+</html>
