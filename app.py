@@ -273,6 +273,10 @@ def course_networking():
     """Networking course content page"""
     return render_template('course_networking.html')
 
+#============Software Development Route=================
+@app.route('/course/software-development')
+def course_software_development():
+    return render_template('course_software_development.html')
 
 # ===== RUN APP =====
 
