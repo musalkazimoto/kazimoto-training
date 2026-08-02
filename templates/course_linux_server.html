@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linux Server Administration - Kazimoto Technologies</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; background: #f1f5f9; }
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .lab-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        }
+
+        .lab-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+            border-color: #06b6d4;
+        }
+
+        .lab-card .lab-number {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            color: #1a2332;
+            margin-bottom: 10px;
+        }
+
+        .lab-card .lab-number .num {
+            background: #06b6d4;
+            color: white;
+            padding: 2px 12px;
+            border-radius: 50px;
+            font-size: 0.7rem;
+        }
+
+        .lab-card .lab-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #0d1b2a;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .lab-card .lab-title i {
+            color: #06b6d4;
+            font-size: 1rem;
+        }
+
+        .lab-card .lab-objective {
+            color: #4b5563;
+            line-height: 1.7;
+            font-size: 0.88rem;
+            flex-grow: 1;
+            margin-bottom: 12px;
+        }
+
+        .lab-card .lab-objective strong {
+            color: #1a2332;
+        }
+
+        .lab-card .lab-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: auto;
+            padding-top: 12px;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        .lab-card .lab-skills span {
+            background: #ecfdf5;
+            color: #065f46;
+            padding: 3px 12px;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .lab-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #06b6d4;
+            font-weight: 600;
+            text-decoration: none;
+            padding: 10px 24px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            border: 2px solid #e2e8f0;
+            background: white;
+        }
+
+        .back-btn:hover {
+            background: #f8fafc;
+            border-color: #06b6d4;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(6, 182, 212, 0.1);
+        }
+
+        .header-gradient {
+            background: linear-gradient(135deg, #164e63 0%, #0891b2 50%, #06b6d4 100%);
+        }
+
+        .info-box {
+            background: white;
+            border-radius: 16px;
+            padding: 28px 32px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        }
+
+        @media (max-width: 768px) {
+            .lab-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            .lab-card {
+                padding: 20px;
+            }
+            .info-box {
+                padding: 20px;
+            }
+            .header-gradient h1 {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .lab-card .lab-title {
+                font-size: 1rem;
+            }
+            .lab-card .lab-objective {
+                font-size: 0.82rem;
+            }
+            .lab-card .lab-skills span {
+                font-size: 0.65rem;
+                padding: 2px 10px;
+            }
+        }
+
+        /* Color variants for labs */
+        .lab-card.color-1 .lab-number .num { background: #3b82f6; }
+        .lab-card.color-1 { border-top: 4px solid #3b82f6; }
+
+        .lab-card.color-2 .lab-number .num { background: #f59e0b; }
+        .lab-card.color-2 { border-top: 4px solid #f59e0b; }
+
+        .lab-card.color-3 .lab-number .num { background: #10b981; }
+        .lab-card.color-3 { border-top: 4px solid #10b981; }
+
+        .lab-card.color-4 .lab-number .num { background: #8b5cf6; }
+        .lab-card.color-4 { border-top: 4px solid #8b5cf6; }
+
+        .lab-card.color-5 .lab-number .num { background: #ef4444; }
+        .lab-card.color-5 { border-top: 4px solid #ef4444; }
+
+        .lab-card.color-6 .lab-number .num { background: #06b6d4; }
+        .lab-card.color-6 { border-top: 4px solid #06b6d4; }
+
+        .lab-card.color-7 .lab-number .num { background: #f43f5e; }
+        .lab-card.color-7 { border-top: 4px solid #f43f5e; }
+
+        .lab-card.color-8 .lab-number .num { background: #8b5cf6; }
+        .lab-card.color-8 { border-top: 4px solid #8b5cf6; }
+
+        .lab-card.color-9 .lab-number .num { background: #ef4444; }
+        .lab-card.color-9 { border-top: 4px solid #ef4444; }
+
+        .lab-card.color-10 .lab-number .num { background: #f59e0b; }
+        .lab-card.color-10 { border-top: 4px solid #f59e0b; }
+
+        .lab-card.color-11 .lab-number .num { background: #10b981; }
+        .lab-card.color-11 { border-top: 4px solid #10b981; }
+
+        .lab-card.color-12 .lab-number .num { background: #8b5cf6; }
+        .lab-card.color-12 { border-top: 4px solid #8b5cf6; }
+
+        .lab-card.color-13 .lab-number .num { background: #f59e0b; }
+        .lab-card.color-13 { border-top: 4px solid #f59e0b; }
+    </style>
+</head>
+<body>
+
+    <!-- ===== HEADER ===== -->
+    <header class="header-gradient text-white py-8">
+        <div class="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
+            <div class="flex items-center gap-3 mb-4 md:mb-0">
+                <div class="w-12 h-12 bg-cyan-500/20 rounded-full flex items-center justify-center">
+                    <i class="fab fa-linux text-2xl text-cyan-300"></i>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold">Linux Server Administration</h1>
+                    <p class="text-cyan-200/70 text-sm">Complete Hands-On Lab Manual</p>
+                </div>
+            </div>
+            <a href="/#courses" class="text-white/80 hover:text-white transition flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full hover:bg-white/20">
+                <i class="fas fa-arrow-left"></i> Back to Courses
+            </a>
+        </div>
+    </header>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <section class="py-12">
+        <div class="container mx-auto px-6 max-w-6xl">
+
+            <!-- Info Box -->
+            <div class="info-box fade-in mb-10">
+                <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 bg-cyan-50 rounded-full flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-graduation-cap text-cyan-600 text-xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold text-gray-800">Complete Linux Server Administration Hands-On Lab Manual</h2>
+                        <p class="text-gray-600 text-base mt-1">
+                            For University Students (Computer Science, IT, Computer Engineering, ICT)
+                        </p>
+                        <p class="text-sm text-gray-400 mt-2">
+                            <i class="fas fa-info-circle mr-1"></i> Prerequisites: Students have theoretical knowledge of Linux operating systems and basic command-line usage
+                        </p>
+                        <p class="text-sm text-gray-400">
+                            <i class="fas fa-info-circle mr-1"></i> Focus: Practical implementation and hands-on server administration
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== LABS GRID (2 Columns) ===== -->
+            <div class="lab-grid">
+
+                <!-- LAB 1 -->
+                <div class="lab-card color-1 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 01</span>
+                        <span style="color: #6b7280; font-weight: 400;">Environment</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-laptop"></i> Linux Server Environment Setup (WSL/VM)
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will set up a complete Linux server environment using WSL (Windows Subsystem for Linux) or a virtual machine. By the end of this module, students will be able to install and configure Ubuntu Server on WSL/VM, set up SSH access for remote administration, install essential server tools, configure basic system settings, understand the Linux file system hierarchy, and verify the server environment. Students will also understand the importance of a secure and consistent server environment.
+                    </div>
+                    <div class="lab-skills">
+                        <span>WSL/VM installation</span>
+                        <span>Ubuntu Server setup</span>
+                        <span>SSH configuration</span>
+                        <span>Essential server tools</span>
+                        <span>System settings</span>
+                        <span>File system hierarchy</span>
+                        <span>Environment verification</span>
+                    </div>
+                </div>
+
+                <!-- LAB 2 -->
+                <div class="lab-card color-2 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 02</span>
+                        <span style="color: #6b7280; font-weight: 400;">File System</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-folder-tree"></i> Linux File System & Permission Management
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will learn Linux file system structure and permission management. By the end of this module, students will be able to navigate the Linux file system, understand the directory structure, manage file permissions (chmod, chown, chgrp), set up file ownership, create and manage files and directories, use symbolic and hard links, and configure disk quotas. Students will also understand the importance of proper permission management for server security.
+                    </div>
+                    <div class="lab-skills">
+                        <span>File system navigation</span>
+                        <span>Directory structure</span>
+                        <span>File permissions (chmod, chown, chgrp)</span>
+                        <span>File ownership</span>
+                        <span>Symbolic and hard links</span>
+                        <span>Disk quotas</span>
+                        <span>Permission management</span>
+                    </div>
+                </div>
+
+                <!-- LAB 3 -->
+                <div class="lab-card color-3 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 03</span>
+                        <span style="color: #6b7280; font-weight: 400;">User Management</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-users"></i> User & Group Administration
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will learn user and group administration on Linux servers. By the end of this module, students will be able to create and manage user accounts, create and manage groups, set password policies, configure user environments, use sudo for privilege escalation, manage user profiles, and enforce password aging policies. Students will also understand the importance of proper user management for server security.
+                    </div>
+                    <div class="lab-skills">
+                        <span>User creation and management</span>
+                        <span>Group creation and management</span>
+                        <span>Password policies</span>
+                        <span>Sudo configuration</span>
+                        <span>User environments</span>
+                        <span>Password aging</span>
+                        <span>User profiles</span>
+                    </div>
+                </div>
+
+                <!-- LAB 4 -->
+                <div class="lab-card color-4 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 04</span>
+                        <span style="color: #6b7280; font-weight: 400;">Package Management</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-box"></i> Package Management (APT/YUM)
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will learn package management on Linux servers using APT (Debian/Ubuntu) and YUM (RHEL/CentOS). By the end of this module, students will be able to install, update, and remove software packages, manage repositories, use package dependencies, compile software from source, and manage package updates. Students will also understand the importance of regular software updates for server security.
+                    </div>
+                    <div class="lab-skills">
+                        <span>APT package management</span>
+                        <span>YUM package management</span>
+                        <span>Repository management</span>
+                        <span>Package installation/update/removal</span>
+                        <span>Dependency resolution</span>
+                        <span>Source compilation</span>
+                        <span>Software updates</span>
+                    </div>
+                </div>
+
+                <!-- LAB 5 -->
+                <div class="lab-card color-5 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 05</span>
+                        <span style="color: #6b7280; font-weight: 400;">System Management</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-microchip"></i> Process Management & System Monitoring
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will learn process management and system monitoring on Linux servers. By the end of this module, students will be able to view and manage running processes, use process monitoring tools (top, htop, ps), manage system services, set process priorities, monitor system resources (CPU, memory, disk, network), and troubleshoot performance issues. Students will also understand the importance of system monitoring for server health.
+                    </div>
+                    <div class="lab-skills">
+                        <span>Process viewing (ps, top, htop)</span>
+                        <span>Process management (kill, nice, renice)</span>
+                        <span>Service management (systemctl)</span>
+                        <span>System monitoring (htop, iostat, netstat)</span>
+                        <span>Resource monitoring</span>
+                        <span>Performance troubleshooting</span>
+                    </div>
+                </div>
+
+                <!-- LAB 6 -->
+                <div class="lab-card color-6 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 06</span>
+                        <span style="color: #6b7280; font-weight: 400;">Networking</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-network-wired"></i> Network Configuration & Services
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will learn network configuration and services on Linux servers. By the end of this module, students will be able to configure network interfaces, set static IP addresses, configure DNS settings, manage network services, troubleshoot network connectivity, and implement network security measures. Students will also understand the importance of proper network configuration for server accessibility.
+                    </div>
+                    <div class="lab-skills">
+                        <span>Network interface configuration</span>
+                        <span>Static IP setup</span>
+                        <span>DNS configuration</span>
+                        <span>Network service management</span>
+                        <span>Network troubleshooting</span>
+                        <span>Network security</span>
+                    </div>
+                </div>
+
+                <!-- LAB 7 -->
+                <div class="lab-card color-7 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 07</span>
+                        <span style="color: #6b7280; font-weight: 400;">Networking & Security</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-server"></i> SSH, DNS, DHCP & Syslog Server Configuration
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will learn to configure and manage essential network services including SSH, DNS, DHCP, and Syslog servers on Linux. By the end of this module, students will be able to configure SSH server with key-based authentication and security hardening, set up DNS server (Bind9) for domain name resolution, configure DHCP server (isc-dhcp-server) for automatic IP assignment, set up Syslog server (rsyslog) for centralized logging, implement security best practices for all services, and troubleshoot common issues. Students will also understand the importance of these core network services in a server environment.
+                    </div>
+                    <div class="lab-skills">
+                        <span>SSH server configuration and security hardening</span>
+                        <span>DNS server setup (Bind9)</span>
+                        <span>DHCP server configuration (isc-dhcp-server)</span>
+                        <span>Syslog server setup (rsyslog)</span>
+                        <span>Service integration and troubleshooting</span>
+                        <span>Network service security</span>
+                        <span>Centralized logging</span>
+                    </div>
+                </div>
+
+                <!-- LAB 8 -->
+                <div class="lab-card color-8 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 08</span>
+                        <span style="color: #6b7280; font-weight: 400;">Web Server</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-globe"></i> Web Server (Apache/Nginx) Configuration
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will learn web server configuration using Apache or Nginx. By the end of this module, students will be able to install and configure Apache/Nginx, set up virtual hosts, configure SSL/TLS certificates, implement URL rewriting, configure load balancing, and secure the web server. Students will also understand the importance of web server security and performance tuning.
+                    </div>
+                    <div class="lab-skills">
+                        <span>Apache installation and configuration</span>
+                        <span>Nginx installation and configuration</span>
+                        <span>Virtual hosts</span>
+                        <span>SSL/TLS configuration</span>
+                        <span>URL rewriting</span>
+                        <span>Load balancing</span>
+                        <span>Web server security</span>
+                    </div>
+                </div>
+
+                <!-- LAB 9 -->
+                <div class="lab-card color-9 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 09</span>
+                        <span style="color: #6b7280; font-weight: 400;">Database</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-database"></i> Database Server (MySQL/PostgreSQL) Setup
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will learn database server setup and management using MySQL or PostgreSQL. By the end of this module, students will be able to install and configure MySQL/PostgreSQL, create and manage databases, create users and manage privileges, perform backups and restores, optimize database performance, and secure the database server. Students will also understand the importance of database security and regular backups.
+                    </div>
+                    <div class="lab-skills">
+                        <span>MySQL/PostgreSQL installation</span>
+                        <span>Database creation and management</span>
+                        <span>User management and privileges</span>
+                        <span>Backups and restores</span>
+                        <span>Performance optimization</span>
+                        <span>Database security</span>
+                    </div>
+                </div>
+
+                <!-- LAB 10 -->
+                <div class="lab-card color-10 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 10</span>
+                        <span style="color: #6b7280; font-weight: 400;">Security</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-shield-alt"></i> Firewall Configuration (UFW/iptables)
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will learn firewall configuration using UFW and iptables. By the end of this module, students will be able to configure UFW for basic firewall rules, implement advanced firewall rules with iptables, set up NAT and port forwarding, block malicious IP addresses, and monitor firewall logs. Students will also understand the importance of firewall protection for server security.
+                    </div>
+                    <div class="lab-skills">
+                        <span>UFW configuration</span>
+                        <span>iptables rules</span>
+                        <span>NAT and port forwarding</span>
+                        <span>IP blocking</span>
+                        <span>Firewall logging</span>
+                        <span>Server security</span>
+                    </div>
+                </div>
+
+                <!-- LAB 11 -->
+                <div class="lab-card color-11 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 11</span>
+                        <span style="color: #6b7280; font-weight: 400;">Backup</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-archive"></i> Backup & Recovery Strategies
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will learn backup and recovery strategies for Linux servers. By the end of this module, students will be able to implement file-level backups with rsync, implement system backups with tar, schedule automated backups with cron, manage backup rotation, perform disaster recovery, and test backup integrity. Students will also understand the importance of regular backups for data protection.
+                    </div>
+                    <div class="lab-skills">
+                        <span>rsync backups</span>
+                        <span>tar backups</span>
+                        <span>Cron scheduling</span>
+                        <span>Backup rotation</span>
+                        <span>Disaster recovery</span>
+                        <span>Backup integrity testing</span>
+                    </div>
+                </div>
+
+                <!-- LAB 12 -->
+                <div class="lab-card color-12 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 12</span>
+                        <span style="color: #6b7280; font-weight: 400;">Automation</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-code"></i> Server Automation with Bash Scripting
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will learn server automation using Bash scripting. By the end of this module, students will be able to write Bash scripts for server administration, create automated deployment scripts, implement system monitoring scripts, manage backups with scripts, and automate routine maintenance tasks. Students will also understand the importance of automation for efficient server management.
+                    </div>
+                    <div class="lab-skills">
+                        <span>Bash scripting</span>
+                        <span>Automated deployments</span>
+                        <span>System monitoring scripts</span>
+                        <span>Backup automation</span>
+                        <span>Maintenance automation</span>
+                    </div>
+                </div>
+
+                <!-- LAB 13 -->
+                <div class="lab-card color-13 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 13</span>
+                        <span style="color: #6b7280; font-weight: 400;">Capstone</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-star"></i> Complete Server Deployment
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will apply all the skills learned throughout the course to deploy a complete Linux server. By the end of this capstone project, students will be able to plan and deploy a production-ready Linux server, configure web and database services, implement security measures, set up monitoring and logging, create backup strategies, automate routine tasks, and document the deployment process. Students will also develop project management, teamwork, and documentation skills essential for real-world server administration.
+                    </div>
+                    <div class="lab-skills">
+                        <span>Server planning and deployment</span>
+                        <span>Web and database services</span>
+                        <span>Security implementation</span>
+                        <span>Monitoring and logging</span>
+                        <span>Backup strategies</span>
+                        <span>Automation</span>
+                        <span>Documentation and reporting</span>
+                        <span>Project management and teamwork</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Back Button -->
+            <div class="text-center mt-12">
+                <a href="/#courses" class="back-btn">
+                    <i class="fas fa-arrow-left"></i> Back to Courses
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="bg-gray-800 text-white py-6 mt-8">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-sm">© 2025 Musa Kazimoto, ICT Specialist. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const elements = document.querySelectorAll('.fade-in');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+            elements.forEach(element => observer.observe(element));
+        });
+    </script>
+
+</body>
+</html>
