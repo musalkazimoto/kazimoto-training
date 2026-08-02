@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Full Stack Web Development - Kazimoto Technologies</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; background: #f1f5f9; }
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .lab-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        }
+
+        .lab-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+            border-color: #f59e0b;
+        }
+
+        .lab-card .lab-number {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            color: #1a2332;
+            margin-bottom: 10px;
+        }
+
+        .lab-card .lab-number .num {
+            background: #f59e0b;
+            color: white;
+            padding: 2px 12px;
+            border-radius: 50px;
+            font-size: 0.7rem;
+        }
+
+        .lab-card .lab-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #0d1b2a;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .lab-card .lab-title i {
+            color: #f59e0b;
+            font-size: 1rem;
+        }
+
+        .lab-card .lab-objective {
+            color: #4b5563;
+            line-height: 1.7;
+            font-size: 0.88rem;
+            flex-grow: 1;
+            margin-bottom: 12px;
+        }
+
+        .lab-card .lab-objective strong {
+            color: #1a2332;
+        }
+
+        .lab-card .lab-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: auto;
+            padding-top: 12px;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        .lab-card .lab-skills span {
+            background: #fffbeb;
+            color: #92400e;
+            padding: 3px 12px;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .lab-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #f59e0b;
+            font-weight: 600;
+            text-decoration: none;
+            padding: 10px 24px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            border: 2px solid #e2e8f0;
+            background: white;
+        }
+
+        .back-btn:hover {
+            background: #f8fafc;
+            border-color: #f59e0b;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.1);
+        }
+
+        .header-gradient {
+            background: linear-gradient(135deg, #78350f 0%, #d97706 50%, #f59e0b 100%);
+        }
+
+        .info-box {
+            background: white;
+            border-radius: 16px;
+            padding: 28px 32px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        }
+
+        @media (max-width: 768px) {
+            .lab-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            .lab-card {
+                padding: 20px;
+            }
+            .info-box {
+                padding: 20px;
+            }
+            .header-gradient h1 {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .lab-card .lab-title {
+                font-size: 1rem;
+            }
+            .lab-card .lab-objective {
+                font-size: 0.82rem;
+            }
+            .lab-card .lab-skills span {
+                font-size: 0.65rem;
+                padding: 2px 10px;
+            }
+        }
+
+        /* Color variants for labs */
+        .lab-card.color-1 .lab-number .num { background: #3b82f6; }
+        .lab-card.color-1 { border-top: 4px solid #3b82f6; }
+
+        .lab-card.color-2 .lab-number .num { background: #f59e0b; }
+        .lab-card.color-2 { border-top: 4px solid #f59e0b; }
+
+        .lab-card.color-3 .lab-number .num { background: #10b981; }
+        .lab-card.color-3 { border-top: 4px solid #10b981; }
+
+        .lab-card.color-4 .lab-number .num { background: #8b5cf6; }
+        .lab-card.color-4 { border-top: 4px solid #8b5cf6; }
+
+        .lab-card.color-5 .lab-number .num { background: #ef4444; }
+        .lab-card.color-5 { border-top: 4px solid #ef4444; }
+
+        .lab-card.color-6 .lab-number .num { background: #06b6d4; }
+        .lab-card.color-6 { border-top: 4px solid #06b6d4; }
+
+        .lab-card.color-7 .lab-number .num { background: #f43f5e; }
+        .lab-card.color-7 { border-top: 4px solid #f43f5e; }
+
+        .lab-card.color-8 .lab-number .num { background: #8b5cf6; }
+        .lab-card.color-8 { border-top: 4px solid #8b5cf6; }
+
+        .lab-card.color-9 .lab-number .num { background: #ef4444; }
+        .lab-card.color-9 { border-top: 4px solid #ef4444; }
+
+        .lab-card.color-10 .lab-number .num { background: #f59e0b; }
+        .lab-card.color-10 { border-top: 4px solid #f59e0b; }
+
+        .lab-card.color-11 .lab-number .num { background: #10b981; }
+        .lab-card.color-11 { border-top: 4px solid #10b981; }
+
+        .lab-card.color-12 .lab-number .num { background: #8b5cf6; }
+        .lab-card.color-12 { border-top: 4px solid #8b5cf6; }
+
+        .lab-card.color-13 .lab-number .num { background: #f59e0b; }
+        .lab-card.color-13 { border-top: 4px solid #f59e0b; }
+    </style>
+</head>
+<body>
+
+    <!-- ===== HEADER ===== -->
+    <header class="header-gradient text-white py-8">
+        <div class="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
+            <div class="flex items-center gap-3 mb-4 md:mb-0">
+                <div class="w-12 h-12 bg-amber-500/20 rounded-full flex items-center justify-center">
+                    <i class="fas fa-laptop-code text-2xl text-amber-300"></i>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold">Full Stack Web Development</h1>
+                    <p class="text-amber-200/70 text-sm">Complete Hands-On Lab Manual</p>
+                </div>
+            </div>
+            <a href="/#courses" class="text-white/80 hover:text-white transition flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full hover:bg-white/20">
+                <i class="fas fa-arrow-left"></i> Back to Courses
+            </a>
+        </div>
+    </header>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <section class="py-12">
+        <div class="container mx-auto px-6 max-w-6xl">
+
+            <!-- Info Box -->
+            <div class="info-box fade-in mb-10">
+                <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 bg-amber-50 rounded-full flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-graduation-cap text-amber-600 text-xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold text-gray-800">Complete Full Stack Web Development Hands-On Lab Manual</h2>
+                        <p class="text-gray-600 text-base mt-1">
+                            For University Students (Computer Science, IT, Computer Engineering, ICT)
+                        </p>
+                        <p class="text-sm text-gray-400 mt-2">
+                            <i class="fas fa-info-circle mr-1"></i> Prerequisites: Students have theoretical knowledge of programming concepts
+                        </p>
+                        <p class="text-sm text-gray-400">
+                            <i class="fas fa-info-circle mr-1"></i> Focus: Practical implementation using WSL environment
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== LABS GRID (2 Columns) ===== -->
+            <div class="lab-grid">
+
+                <!-- LAB 1 -->
+                <div class="lab-card color-1 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 01</span>
+                        <span style="color: #6b7280; font-weight: 400;">Environment</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-laptop"></i> Full Stack Development Environment Setup (WSL)
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will set up a complete full stack development environment using WSL (Windows Subsystem for Linux). By the end of this module, students will be able to install and configure WSL 2 with Ubuntu, install and configure Visual Studio Code with WSL extension, install Node.js and npm using nvm (Node Version Manager), install Git and configure SSH keys, install MongoDB and PostgreSQL, set up project structure, and verify all installations with test scripts. Students will also understand the importance of a consistent development environment.
+                    </div>
+                    <div class="lab-skills">
+                        <span>WSL 2 installation and configuration</span>
+                        <span>Ubuntu setup</span>
+                        <span>VS Code with WSL extension</span>
+                        <span>Node.js installation (nvm)</span>
+                        <span>npm package management</span>
+                        <span>Git configuration</span>
+                        <span>MongoDB installation</span>
+                        <span>PostgreSQL installation</span>
+                        <span>Project structure</span>
+                        <span>Environment verification</span>
+                    </div>
+                </div>
+
+                <!-- LAB 2 -->
+                <div class="lab-card color-2 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 02</span>
+                        <span style="color: #6b7280; font-weight: 400;">Frontend</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fab fa-html5"></i> HTML5 & CSS3 Fundamentals
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will learn the fundamentals of HTML5 and CSS3 for building web interfaces. By the end of this module, students will be able to create semantic HTML5 documents, use HTML5 elements (header, nav, section, article, footer), apply CSS3 styling (colors, fonts, layouts), use CSS Flexbox and Grid for layouts, implement CSS transitions and animations, create forms and input validation, and build a responsive landing page. Students will also understand the importance of semantic HTML for accessibility and SEO.
+                    </div>
+                    <div class="lab-skills">
+                        <span>HTML5 semantics</span>
+                        <span>CSS3 styling</span>
+                        <span>Flexbox</span>
+                        <span>CSS Grid</span>
+                        <span>CSS transitions/animations</span>
+                        <span>HTML forms</span>
+                        <span>Responsive design</span>
+                        <span>Accessibility</span>
+                        <span>SEO</span>
+                    </div>
+                </div>
+
+                <!-- LAB 3 -->
+                <div class="lab-card color-3 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 03</span>
+                        <span style="color: #6b7280; font-weight: 400;">Frontend</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fab fa-tailwind"></i> Responsive Web Design with Tailwind CSS
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will learn responsive web design principles and Tailwind CSS framework. By the end of this module, students will be able to implement responsive design using media queries, use Tailwind CSS for rapid development, create mobile-first designs, implement responsive navigation (hamburger menu), use Tailwind grid system and flex utilities, optimize images for responsive design, and build a fully responsive website. Students will also understand the importance of mobile-first design.
+                    </div>
+                    <div class="lab-skills">
+                        <span>Responsive design principles</span>
+                        <span>Media queries</span>
+                        <span>Tailwind CSS</span>
+                        <span>Mobile-first design</span>
+                        <span>Responsive navigation</span>
+                        <span>CSS grid systems</span>
+                        <span>Image optimization</span>
+                        <span>Mobile-first design</span>
+                    </div>
+                </div>
+
+                <!-- LAB 4 -->
+                <div class="lab-card color-4 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 04</span>
+                        <span style="color: #6b7280; font-weight: 400;">Frontend</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fab fa-js"></i> JavaScript Fundamentals & DOM Manipulation
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will learn JavaScript fundamentals and DOM manipulation. By the end of this module, students will be able to write JavaScript code (variables, functions, loops, conditionals), manipulate the DOM (selecting elements, changing content, adding events), handle user events (click, hover, submit), implement form validation, create dynamic content, use the browser console for debugging, and build interactive web applications. Students will also understand the role of JavaScript in modern web development.
+                    </div>
+                    <div class="lab-skills">
+                        <span>JavaScript fundamentals (variables, functions, loops, conditionals)</span>
+                        <span>DOM manipulation</span>
+                        <span>Event handling</span>
+                        <span>Form validation</span>
+                        <span>Dynamic content creation</span>
+                        <span>Browser console debugging</span>
+                        <span>Interactive web applications</span>
+                    </div>
+                </div>
+
+                <!-- LAB 5 -->
+                <div class="lab-card color-5 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 05</span>
+                        <span style="color: #6b7280; font-weight: 400;">Frontend</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fab fa-js-square"></i> Modern JavaScript (ES6+) & Async Programming
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will learn modern JavaScript features and asynchronous programming. By the end of this module, students will be able to use ES6+ features (arrow functions, template literals, destructuring, spread/rest operators), implement classes and modules, use Promises and async/await for asynchronous operations, make API calls using fetch and axios, handle errors in asynchronous code, use map, filter, and reduce for array manipulation, and build a modern JavaScript application. Students will also understand the importance of asynchronous programming.
+                    </div>
+                    <div class="lab-skills">
+                        <span>ES6+ features (arrow functions, template literals, destructuring)</span>
+                        <span>Classes and modules</span>
+                        <span>Promises and async/await</span>
+                        <span>API calls (fetch/axios)</span>
+                        <span>Error handling</span>
+                        <span>Array methods (map, filter, reduce)</span>
+                        <span>Modern JavaScript applications</span>
+                    </div>
+                </div>
+
+                <!-- LAB 6 -->
+                <div class="lab-card color-6 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 06</span>
+                        <span style="color: #6b7280; font-weight: 400;">Frontend</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fab fa-react"></i> Frontend Framework: React.js (Practical)
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will learn React.js for building modern user interfaces. By the end of this module, students will be able to set up a React project using Create React App or Vite, create functional and class components, use JSX syntax, manage state using useState and useReducer, manage side effects using useEffect, implement routing with React Router, handle forms and user input, use props and component composition, and build a complete React application. Students will also understand the component-based architecture of React.
+                    </div>
+                    <div class="lab-skills">
+                        <span>Create React App/Vite setup</span>
+                        <span>Functional components</span>
+                        <span>JSX syntax</span>
+                        <span>useState and useReducer</span>
+                        <span>useEffect for side effects</span>
+                        <span>React Router</span>
+                        <span>Form handling</span>
+                        <span>Props and component composition</span>
+                        <span>React application development</span>
+                        <span>Component-based architecture</span>
+                    </div>
+                </div>
+
+                <!-- LAB 7 -->
+                <div class="lab-card color-7 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 07</span>
+                        <span style="color: #6b7280; font-weight: 400;">Backend</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fab fa-node"></i> Backend Development with Node.js & Express
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will learn backend development using Node.js and Express. By the end of this module, students will be able to set up a Node.js server with Express, create routes and handle HTTP methods (GET, POST, PUT, DELETE), implement middleware for request processing, handle request parameters and body data, implement error handling and logging, use environment variables for configuration, structure a Node.js application with MVC pattern, and build a RESTful API. Students will also understand the role of backend in full stack development.
+                    </div>
+                    <div class="lab-skills">
+                        <span>Node.js server setup</span>
+                        <span>Express routes and HTTP methods</span>
+                        <span>Middleware</span>
+                        <span>Request handling</span>
+                        <span>Error handling and logging</span>
+                        <span>Environment variables</span>
+                        <span>MVC pattern</span>
+                        <span>RESTful API development</span>
+                    </div>
+                </div>
+
+                <!-- LAB 8 -->
+                <div class="lab-card color-8 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 08</span>
+                        <span style="color: #6b7280; font-weight: 400;">Backend</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-plug"></i> RESTful API Development
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will learn RESTful API development and best practices. By the end of this module, students will be able to design RESTful API endpoints, implement CRUD operations, handle request validation and sanitization, implement pagination, sorting, and filtering, write API documentation using Swagger/OpenAPI, test APIs using Postman, implement rate limiting and security headers, and build a complete RESTful API. Students will also understand the principles of REST architecture.
+                    </div>
+                    <div class="lab-skills">
+                        <span>RESTful API design</span>
+                        <span>CRUD operations</span>
+                        <span>Request validation and sanitization</span>
+                        <span>Pagination, sorting, and filtering</span>
+                        <span>Swagger/OpenAPI documentation</span>
+                        <span>Postman API testing</span>
+                        <span>Rate limiting and security headers</span>
+                        <span>REST architecture principles</span>
+                    </div>
+                </div>
+
+                <!-- LAB 9 -->
+                <div class="lab-card color-9 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 09</span>
+                        <span style="color: #6b7280; font-weight: 400;">Database</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-database"></i> Database Integration (PostgreSQL/MongoDB)
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will learn database integration for full stack applications. By the end of this module, students will be able to set up MongoDB with Mongoose ODM, set up PostgreSQL with Sequelize ORM, create schemas and models, perform CRUD operations, implement relationships and data validation, use query builders and aggregation, handle database migrations and seeding, optimize database queries with indexes, and build a full stack application with database integration. Students will also understand the differences between SQL and NoSQL databases.
+                    </div>
+                    <div class="lab-skills">
+                        <span>MongoDB setup and Mongoose ODM</span>
+                        <span>PostgreSQL setup and Sequelize ORM</span>
+                        <span>Schemas and models</span>
+                        <span>CRUD operations</span>
+                        <span>Relationships and data validation</span>
+                        <span>Query builders and aggregation</span>
+                        <span>Database migrations and seeding</span>
+                        <span>Query optimization with indexes</span>
+                        <span>Full stack database integration</span>
+                    </div>
+                </div>
+
+                <!-- LAB 10 -->
+                <div class="lab-card color-10 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 10</span>
+                        <span style="color: #6b7280; font-weight: 400;">Security</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-lock"></i> Authentication & Authorization (JWT)
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will learn authentication and authorization for full stack applications. By the end of this module, students will be able to implement JWT (JSON Web Token) authentication, implement session-based authentication with cookies, implement role-based access control (RBAC), implement password hashing and salting (bcrypt), protect routes and APIs, implement social authentication (OAuth), implement refresh tokens and password reset, handle authentication errors, and build a secure authentication system. Students will also understand the importance of security in web applications.
+                    </div>
+                    <div class="lab-skills">
+                        <span>JWT authentication</span>
+                        <span>Session-based authentication with cookies</span>
+                        <span>Role-based access control (RBAC)</span>
+                        <span>Password hashing and salting (bcrypt)</span>
+                        <span>Route and API protection</span>
+                        <span>Social authentication (OAuth)</span>
+                        <span>Refresh tokens and password reset</span>
+                        <span>Authentication error handling</span>
+                        <span>Secure authentication systems</span>
+                    </div>
+                </div>
+
+                <!-- LAB 11 -->
+                <div class="lab-card color-11 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 11</span>
+                        <span style="color: #6b7280; font-weight: 400;">Frontend</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-layer-group"></i> State Management (Redux/Context API)
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will learn state management for complex React applications. By the end of this module, students will be able to implement Redux for global state management, use Redux Toolkit for simplified Redux, implement Context API for component-level state, manage async actions with Redux Thunk, use React Query for server state management, implement Redux DevTools for debugging, handle complex state updates, and build a React application with efficient state management. Students will also understand the importance of state management in large applications.
+                    </div>
+                    <div class="lab-skills">
+                        <span>Redux global state management</span>
+                        <span>Redux Toolkit</span>
+                        <span>Context API</span>
+                        <span>Redux Thunk for async actions</span>
+                        <span>React Query for server state</span>
+                        <span>Redux DevTools debugging</span>
+                        <span>Complex state updates</span>
+                        <span>State management in React</span>
+                    </div>
+                </div>
+
+                <!-- LAB 12 -->
+                <div class="lab-card color-12 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 12</span>
+                        <span style="color: #6b7280; font-weight: 400;">Deployment</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-rocket"></i> Deployment & DevOps (Render/AWS)
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will learn deployment and DevOps practices for full stack applications. By the end of this module, students will be able to deploy applications to Render, AWS, or similar platforms, configure environment variables and secrets, implement CI/CD pipelines with GitHub Actions, use containerization with Docker, manage logs and monitoring, implement SSL/TLS for secure connections, scale applications for traffic, and create deployment documentation. Students will also understand the importance of DevOps in modern development.
+                    </div>
+                    <div class="lab-skills">
+                        <span>Cloud deployment (Render/AWS)</span>
+                        <span>Environment variables and secrets</span>
+                        <span>CI/CD pipelines (GitHub Actions)</span>
+                        <span>Docker containerization</span>
+                        <span>Logs and monitoring</span>
+                        <span>SSL/TLS configuration</span>
+                        <span>Application scaling</span>
+                        <span>Deployment documentation</span>
+                        <span>DevOps practices</span>
+                    </div>
+                </div>
+
+                <!-- LAB 13 -->
+                <div class="lab-card color-13 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 13</span>
+                        <span style="color: #6b7280; font-weight: 400;">Capstone</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-star"></i> Full Stack Application Development
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will apply all the skills learned throughout the course to build a complete full stack application. By the end of this capstone project, students will be able to design and architect a full stack application, implement frontend using React, implement backend using Node.js/Express, integrate a database (MongoDB/PostgreSQL), implement authentication and authorization, build RESTful APIs, write comprehensive tests, deploy the application to production, create project documentation, and present the project to stakeholders. Students will also develop project management, teamwork, and communication skills essential for real-world full stack development.
+                    </div>
+                    <div class="lab-skills">
+                        <span>Application architecture and design</span>
+                        <span>Full stack implementation</span>
+                        <span>Database integration</span>
+                        <span>Authentication and authorization</span>
+                        <span>RESTful API development</span>
+                        <span>Testing</span>
+                        <span>Deployment</span>
+                        <span>Documentation and presentation</span>
+                        <span>Project management and teamwork</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Back Button -->
+            <div class="text-center mt-12">
+                <a href="/#courses" class="back-btn">
+                    <i class="fas fa-arrow-left"></i> Back to Courses
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="bg-gray-800 text-white py-6 mt-8">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-sm">© 2025 Musa Kazimoto, ICT Specialist. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const elements = document.querySelectorAll('.fade-in');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+            elements.forEach(element => observer.observe(element));
+        });
+    </script>
+
+</body>
+</html>
