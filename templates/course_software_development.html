@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Software Development - Kazimoto Technologies</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; background: #f1f5f9; }
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .lab-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        }
+
+        .lab-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+            border-color: #10b981;
+        }
+
+        .lab-card .lab-number {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            color: #1a2332;
+            margin-bottom: 10px;
+        }
+
+        .lab-card .lab-number .num {
+            background: #10b981;
+            color: white;
+            padding: 2px 12px;
+            border-radius: 50px;
+            font-size: 0.7rem;
+        }
+
+        .lab-card .lab-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #0d1b2a;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .lab-card .lab-title i {
+            color: #10b981;
+            font-size: 1rem;
+        }
+
+        .lab-card .lab-objective {
+            color: #4b5563;
+            line-height: 1.7;
+            font-size: 0.88rem;
+            flex-grow: 1;
+            margin-bottom: 12px;
+        }
+
+        .lab-card .lab-objective strong {
+            color: #1a2332;
+        }
+
+        .lab-card .lab-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: auto;
+            padding-top: 12px;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        .lab-card .lab-skills span {
+            background: #ecfdf5;
+            color: #065f46;
+            padding: 3px 12px;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .lab-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #10b981;
+            font-weight: 600;
+            text-decoration: none;
+            padding: 10px 24px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            border: 2px solid #e2e8f0;
+            background: white;
+        }
+
+        .back-btn:hover {
+            background: #f8fafc;
+            border-color: #10b981;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.1);
+        }
+
+        .header-gradient {
+            background: linear-gradient(135deg, #064e3b 0%, #065f46 50%, #059669 100%);
+        }
+
+        .info-box {
+            background: white;
+            border-radius: 16px;
+            padding: 28px 32px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        }
+
+        @media (max-width: 768px) {
+            .lab-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            .lab-card {
+                padding: 20px;
+            }
+            .info-box {
+                padding: 20px;
+            }
+            .header-gradient h1 {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .lab-card .lab-title {
+                font-size: 1rem;
+            }
+            .lab-card .lab-objective {
+                font-size: 0.82rem;
+            }
+            .lab-card .lab-skills span {
+                font-size: 0.65rem;
+                padding: 2px 10px;
+            }
+        }
+
+        /* Color variants for labs */
+        .lab-card.color-1 .lab-number .num { background: #3b82f6; }
+        .lab-card.color-1 { border-top: 4px solid #3b82f6; }
+
+        .lab-card.color-2 .lab-number .num { background: #f59e0b; }
+        .lab-card.color-2 { border-top: 4px solid #f59e0b; }
+
+        .lab-card.color-3 .lab-number .num { background: #10b981; }
+        .lab-card.color-3 { border-top: 4px solid #10b981; }
+
+        .lab-card.color-4 .lab-number .num { background: #8b5cf6; }
+        .lab-card.color-4 { border-top: 4px solid #8b5cf6; }
+
+        .lab-card.color-5 .lab-number .num { background: #ef4444; }
+        .lab-card.color-5 { border-top: 4px solid #ef4444; }
+
+        .lab-card.color-6 .lab-number .num { background: #06b6d4; }
+        .lab-card.color-6 { border-top: 4px solid #06b6d4; }
+
+        .lab-card.color-7 .lab-number .num { background: #f43f5e; }
+        .lab-card.color-7 { border-top: 4px solid #f43f5e; }
+
+        .lab-card.color-8 .lab-number .num { background: #8b5cf6; }
+        .lab-card.color-8 { border-top: 4px solid #8b5cf6; }
+
+        .lab-card.color-9 .lab-number .num { background: #ef4444; }
+        .lab-card.color-9 { border-top: 4px solid #ef4444; }
+
+        .lab-card.color-10 .lab-number .num { background: #f59e0b; }
+        .lab-card.color-10 { border-top: 4px solid #f59e0b; }
+
+        .lab-card.color-11 .lab-number .num { background: #10b981; }
+        .lab-card.color-11 { border-top: 4px solid #10b981; }
+    </style>
+</head>
+<body>
+
+    <!-- ===== HEADER ===== -->
+    <header class="header-gradient text-white py-8">
+        <div class="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
+            <div class="flex items-center gap-3 mb-4 md:mb-0">
+                <div class="w-12 h-12 bg-emerald-500/20 rounded-full flex items-center justify-center">
+                    <i class="fas fa-code text-2xl text-emerald-300"></i>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold">Software Development</h1>
+                    <p class="text-emerald-200/70 text-sm">Complete Hands-On Lab Manual</p>
+                </div>
+            </div>
+            <a href="/#courses" class="text-white/80 hover:text-white transition flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full hover:bg-white/20">
+                <i class="fas fa-arrow-left"></i> Back to Courses
+            </a>
+        </div>
+    </header>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <section class="py-12">
+        <div class="container mx-auto px-6 max-w-6xl">
+
+            <!-- Info Box -->
+            <div class="info-box fade-in mb-10">
+                <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 bg-emerald-50 rounded-full flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-graduation-cap text-emerald-600 text-xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold text-gray-800">Complete Software Development Hands-On Lab Manual</h2>
+                        <p class="text-gray-600 text-base mt-1">
+                            For University Students (Computer Science, IT, Computer Engineering, ICT)
+                        </p>
+                        <p class="text-sm text-gray-400 mt-2">
+                            <i class="fas fa-info-circle mr-1"></i> Prerequisites: Students have theoretical knowledge of programming concepts
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== LABS GRID (2 Columns) ===== -->
+            <div class="lab-grid">
+
+                <!-- LAB 1 -->
+                <div class="lab-card color-1 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 01</span>
+                        <span style="color: #6b7280; font-weight: 400;">Foundational</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-book"></i> Introduction to Software Development
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will learn the fundamentals of software development, including the software development lifecycle (SDLC), development methodologies, and essential tools. By the end of this module, students will be able to understand different development methodologies (Waterfall, Agile, Scrum), set up a development environment, use an IDE effectively, write basic programs, and understand coding standards and best practices. Students will also understand the role of a software developer in the industry.
+                    </div>
+                    <div class="lab-skills">
+                        <span>SDLC understanding</span>
+                        <span>Development environment setup</span>
+                        <span>IDE usage</span>
+                        <span>Basic programming</span>
+                        <span>Coding standards</span>
+                        <span>Problem-solving</span>
+                    </div>
+                </div>
+
+                <!-- LAB 2 -->
+                <div class="lab-card color-2 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 02</span>
+                        <span style="color: #6b7280; font-weight: 400;">Collaboration</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fab fa-git-alt"></i> Version Control with Git & GitHub
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will learn how to use Git for version control and GitHub for collaboration. By the end of this module, students will be able to initialize a Git repository, commit changes, create and merge branches, resolve merge conflicts, use GitHub for collaborative development, implement pull requests and code reviews, and use Git workflows like GitFlow. Students will also understand the importance of version control in team development.
+                    </div>
+                    <div class="lab-skills">
+                        <span>Git commands (init, add, commit, push, pull, branch, merge)</span>
+                        <span>GitHub workflows</span>
+                        <span>Pull requests</span>
+                        <span>Code reviews</span>
+                        <span>Conflict resolution</span>
+                        <span>GitFlow</span>
+                    </div>
+                </div>
+
+                <!-- LAB 3 -->
+                <div class="lab-card color-3 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 03</span>
+                        <span style="color: #6b7280; font-weight: 400;">Environment</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-laptop"></i> Development Environment Setup
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will set up a complete development environment for Python-based web development on Windows using WSL, VS Code, and essential tools. By the end of this module, students will be able to install and configure Windows Subsystem for Linux (WSL), set up Ubuntu on WSL, install and configure Visual Studio Code with essential extensions, set up Python development environment with pyenv/venv, understand the WSL/Windows file system integration, configure Git within WSL, and verify that all tools are working properly. Students will also understand the importance of a consistent development environment for team collaboration.
+                    </div>
+                    <div class="lab-skills">
+                        <span>WSL installation and configuration</span>
+                        <span>Ubuntu setup on WSL</span>
+                        <span>VS Code installation and extensions</span>
+                        <span>Python environment setup (pyenv/venv)</span>
+                        <span>Git configuration</span>
+                        <span>WSL/Windows integration</span>
+                        <span>Development environment verification</span>
+                    </div>
+                </div>
+
+                <!-- LAB 4 -->
+                <div class="lab-card color-4 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 04</span>
+                        <span style="color: #6b7280; font-weight: 400;">Web Development</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fab fa-html5"></i> Frontend Development (HTML, CSS, JavaScript)
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will learn how to build responsive and interactive user interfaces using modern frontend technologies. By the end of this module, students will be able to create semantic HTML5 documents, style websites using CSS3 (Flexbox, Grid, animations), implement interactivity using JavaScript (DOM manipulation, event handling, async operations), use responsive design principles, and integrate frontend frameworks like Bootstrap or Tailwind CSS. Students will also understand user experience (UX) and user interface (UI) design principles.
+                    </div>
+                    <div class="lab-skills">
+                        <span>HTML5 semantics</span>
+                        <span>CSS3 (Flexbox, Grid, Animations)</span>
+                        <span>JavaScript (ES6+)</span>
+                        <span>DOM manipulation</span>
+                        <span>Event handling</span>
+                        <span>Responsive design</span>
+                        <span>Bootstrap/Tailwind CSS</span>
+                    </div>
+                </div>
+
+                <!-- LAB 5 -->
+                <div class="lab-card color-5 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 05</span>
+                        <span style="color: #6b7280; font-weight: 400;">Server-Side</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fab fa-python"></i> Backend Development (Python/Django)
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will learn how to build server-side applications using Python and Django. By the end of this module, students will be able to set up a Django project, create models and databases, implement views and URL routing, create templates for dynamic content, handle user authentication and authorization, build REST APIs, and implement security best practices. Students will also understand server-side architecture and MVC pattern.
+                    </div>
+                    <div class="lab-skills">
+                        <span>Python programming</span>
+                        <span>Django setup</span>
+                        <span>Models and databases</span>
+                        <span>Views and URLs</span>
+                        <span>Templates</span>
+                        <span>Authentication</span>
+                        <span>REST APIs</span>
+                        <span>Security best practices</span>
+                    </div>
+                </div>
+
+                <!-- LAB 6 -->
+                <div class="lab-card color-6 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 06</span>
+                        <span style="color: #6b7280; font-weight: 400;">Data Storage</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-database"></i> Database Design & Management
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will learn how to design, implement, and manage databases for software applications. By the end of this module, students will be able to design normalized database schemas, write SQL queries (DDL, DML, DQL), implement relationships (one-to-one, one-to-many, many-to-many), use ORM (Object-Relational Mapping), perform database migrations, optimize query performance, and manage database security. Students will also understand the differences between SQL and NoSQL databases.
+                    </div>
+                    <div class="lab-skills">
+                        <span>Database design</span>
+                        <span>Normalization</span>
+                        <span>SQL (SELECT, INSERT, UPDATE, DELETE)</span>
+                        <span>JOINS</span>
+                        <span>ORM (Django ORM/SQLAlchemy)</span>
+                        <span>Database migrations</span>
+                        <span>Query optimization</span>
+                        <span>Database security</span>
+                    </div>
+                </div>
+
+                <!-- LAB 7 -->
+                <div class="lab-card color-7 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 07</span>
+                        <span style="color: #6b7280; font-weight: 400;">Communication</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-plug"></i> API Development & Integration
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will learn how to build and consume APIs for application integration. By the end of this module, students will be able to design RESTful APIs, implement CRUD operations, handle authentication (JWT, OAuth), write API documentation (Swagger/OpenAPI), consume third-party APIs, implement error handling and validation, and test APIs using tools like Postman. Students will also understand API security best practices.
+                    </div>
+                    <div class="lab-skills">
+                        <span>REST API design</span>
+                        <span>CRUD operations</span>
+                        <span>Authentication (JWT, OAuth)</span>
+                        <span>API documentation (Swagger)</span>
+                        <span>API consumption</span>
+                        <span>Error handling</span>
+                        <span>API testing (Postman)</span>
+                        <span>Security best practices</span>
+                    </div>
+                </div>
+
+                <!-- LAB 8 -->
+                <div class="lab-card color-8 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 08</span>
+                        <span style="color: #6b7280; font-weight: 400;">Quality</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-vial"></i> Testing & Quality Assurance
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will learn how to ensure software quality through testing and quality assurance practices. By the end of this module, students will be able to write unit tests, integration tests, and end-to-end tests, use testing frameworks (pytest, unittest), implement test-driven development (TDD), perform code reviews, use debugging tools, implement continuous integration, and measure code coverage. Students will also understand the importance of quality assurance in software development.
+                    </div>
+                    <div class="lab-skills">
+                        <span>Unit testing</span>
+                        <span>Integration testing</span>
+                        <span>End-to-end testing</span>
+                        <span>pytest/unittest</span>
+                        <span>TDD</span>
+                        <span>Code reviews</span>
+                        <span>Debugging</span>
+                        <span>CI/CD</span>
+                        <span>Code coverage</span>
+                    </div>
+                </div>
+
+                <!-- LAB 9 -->
+                <div class="lab-card color-9 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 09</span>
+                        <span style="color: #6b7280; font-weight: 400;">Production</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-rocket"></i> Deployment & DevOps
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will learn how to deploy applications to production environments and implement DevOps practices. By the end of this module, students will be able to deploy applications to cloud platforms (Render, AWS, Azure), configure servers and environments, implement CI/CD pipelines, use containerization with Docker, manage environment variables and secrets, implement monitoring and logging, and handle application scaling. Students will also understand DevOps culture and practices.
+                    </div>
+                    <div class="lab-skills">
+                        <span>Cloud deployment (Render/AWS/Azure)</span>
+                        <span>Server configuration</span>
+                        <span>CI/CD pipelines (GitHub Actions)</span>
+                        <span>Docker containerization</span>
+                        <span>Environment variables</span>
+                        <span>Monitoring and logging</span>
+                        <span>Application scaling</span>
+                    </div>
+                </div>
+
+                <!-- LAB 10 -->
+                <div class="lab-card color-10 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 10</span>
+                        <span style="color: #6b7280; font-weight: 400;">Management</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-tasks"></i> Project Management & Agile Methodologies
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will learn how to manage software projects using Agile methodologies. By the end of this module, students will be able to implement Scrum and Kanban frameworks, write user stories and acceptance criteria, conduct sprint planning and retrospectives, use project management tools (Jira, Trello, Asana), estimate project timelines and effort, manage stakeholder expectations, and understand project management best practices. Students will also understand the role of a project manager in software development.
+                    </div>
+                    <div class="lab-skills">
+                        <span>Scrum</span>
+                        <span>Kanban</span>
+                        <span>User stories</span>
+                        <span>Sprint planning</span>
+                        <span>Retrospectives</span>
+                        <span>Project management tools (Jira/Trello)</span>
+                        <span>Estimation techniques</span>
+                        <span>Stakeholder management</span>
+                    </div>
+                </div>
+
+                <!-- LAB 11 -->
+                <div class="lab-card color-11 fade-in">
+                    <div class="lab-number">
+                        <span class="num">LAB 11</span>
+                        <span style="color: #6b7280; font-weight: 400;">Capstone</span>
+                    </div>
+                    <div class="lab-title">
+                        <i class="fas fa-star"></i> Complete Software Development Project (Capstone)
+                    </div>
+                    <div class="lab-objective">
+                        <strong>Objective:</strong> Students will apply all the skills learned throughout the course to build a complete software application. By the end of this capstone project, students will be able to plan and design a software application from requirements to deployment, implement both frontend and backend components, integrate a database, implement authentication and authorization, write comprehensive tests, deploy the application to production, create project documentation, and present the project to stakeholders. Students will also develop project management, teamwork, and communication skills essential for real-world software development.
+                    </div>
+                    <div class="lab-skills">
+                        <span>Project planning and design</span>
+                        <span>Full-stack development</span>
+                        <span>Database integration</span>
+                        <span>Authentication and authorization</span>
+                        <span>Testing</span>
+                        <span>Deployment</span>
+                        <span>Documentation</span>
+                        <span>Presentation</span>
+                        <span>Project management and teamwork</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Back Button -->
+            <div class="text-center mt-12">
+                <a href="/#courses" class="back-btn">
+                    <i class="fas fa-arrow-left"></i> Back to Courses
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="bg-gray-800 text-white py-6 mt-8">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-sm">© 2025 Musa Kazimoto, ICT Specialist. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const elements = document.querySelectorAll('.fade-in');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+            elements.forEach(element => observer.observe(element));
+        });
+    </script>
+
+</body>
+</html>
