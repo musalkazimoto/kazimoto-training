@@ -294,6 +294,11 @@ def course_cybersecurity():
 def course_web_development():
     return render_template('course_web_development.html')
 
+#=============course_linux_server.html route=============
+@app.route('/course/linux-server')
+def course_linux_server():
+    return render_template('course_linux_server.html')
+
 # ===== RUN APP =====
 
 if __name__ == '__main__':
